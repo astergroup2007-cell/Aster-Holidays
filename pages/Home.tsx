@@ -41,6 +41,28 @@ const Home: React.FC = () => {
         </div>
       </section>
 
+      {/* Video Experience Section */}
+      <section className="py-20 bg-gradient-to-b from-gray-50 to-background">
+        <div className="container mx-auto px-6 text-center">
+          <h2 className="text-3xl font-bold font-heading text-secondary mb-10">
+            Experience the Journey Before You Travel
+          </h2>
+          <div className="max-w-4xl mx-auto shadow-xl rounded-xl overflow-hidden">
+            <div className="relative" style={{ paddingTop: '56.25%' }}> {/* 16:9 Aspect Ratio */}
+              <iframe
+                className="absolute top-0 left-0 w-full h-full"
+                src="https://www.youtube.com/embed/20gW6-2atGk?si=iznB0zzG7ZKzpWHA&autoplay=1&mute=1&loop=1&playlist=20gW6-2atGk"
+                title="Aster Holidays Travel Experience"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+              ></iframe>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Featured Hotels Section */}
       <section className="py-16 bg-background">
         <div className="container mx-auto px-6">
