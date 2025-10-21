@@ -196,7 +196,7 @@ const HotelAsterGangtok: React.FC = () => {
             </div>
              <div>
                 <h4 className="font-bold text-accent">Email</h4>
-                <a href="mailto:nevidgautam@hotelastergangtok.com" className="text-xl hover:underline">nevidgautam@hotelastergangtok.com</a>
+                <a href="mailto:reservation@asterholidays.in" className="text-xl hover:underline">reservation@asterholidays.in</a>
             </div>
           </div>
           <p className="font-semibold">M.P.Golai, Tadong, Gangtok, Sikkim 737102</p>

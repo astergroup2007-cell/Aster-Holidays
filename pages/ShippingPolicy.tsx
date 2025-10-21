@@ -29,7 +29,7 @@ const ShippingPolicy: React.FC = () => {
         <h2>4. Non-Receipt of Documents</h2>
         <p>If you have not received your booking confirmation or vouchers within the stated time, please contact our support team at:</p>
         <ul>
-            <li>📧 Email: <a href="mailto:asterhpolidays2007@gmail.com">asterhpolidays2007@gmail.com</a></li>
+            <li>📧 Email: <a href="mailto:reservation@asterholidays.in">reservation@asterholidays.in</a></li>
             <li>📞 Phone: <a href="tel:+917047514663">+91 7047514663</a></li>
         </ul>
         <p>We will re-send your documents promptly.</p>

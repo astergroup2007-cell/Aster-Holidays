@@ -40,7 +40,7 @@ const CancellationPolicy: React.FC = () => {
         <h2>6. Contact for Cancellations &amp; Refunds</h2>
         <p>For cancellation requests or refund inquiries, please contact:</p>
         <ul>
-            <li>📧 Email: <a href="mailto:asterhpolidays2007@gmail.com">asterhpolidays2007@gmail.com</a></li>
+            <li>📧 Email: <a href="mailto:reservation@asterholidays.in">reservation@asterholidays.in</a></li>
             <li>📞 Phone: <a href="tel:+917047514663">+91 7047514663</a></li>
             <li>🕒 Working hours: Monday–Saturday, 10 AM – 6 PM (IST)</li>
         </ul>

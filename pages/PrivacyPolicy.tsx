@@ -56,7 +56,7 @@ const PrivacyPolicy: React.FC = () => {
         <ul>
             <li><strong>Company Name:</strong> Aster Holidays.in</li>
             <li><strong>Phone:</strong> <a href="tel:+917047514663">+91 7047514663</a></li>
-            <li><strong>Email:</strong> <a href="mailto:asterhpolidays2007@gmail.com">asterhpolidays2007@gmail.com</a></li>
+            <li><strong>Email:</strong> <a href="mailto:reservation@asterholidays.in">reservation@asterholidays.in</a></li>
         </ul>
       </div>
     </div>

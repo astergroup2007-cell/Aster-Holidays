@@ -39,7 +39,7 @@ const TermsAndConditions: React.FC = () => {
         
         <h2>7. Contact Us</h2>
         <p>
-          If you have any questions about these Terms and Conditions, please contact us at <a href="mailto:asterhpolidays2007@gmail.com">asterhpolidays2007@gmail.com</a>.
+          If you have any questions about these Terms and Conditions, please contact us at <a href="mailto:reservation@asterholidays.in">reservation@asterholidays.in</a>.
         </p>
       </div>
     </div>
