@@ -1,36 +1,59 @@
-import React, { createContext, useState, ReactNode } from 'react';
+import React, { createContext, useState, useEffect, ReactNode } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+interface AdminUser {
+  username: string;
+}
 
 interface AdminAuthContextType {
-  isAdmin: boolean;
-  login: (password: string) => boolean;
+  admin: AdminUser | null;
+  login: (username: string, password: string) => Promise<string | null>;
   logout: () => void;
 }
 
 export const AdminAuthContext = createContext<AdminAuthContextType | undefined>(undefined);
 
-export const AdminAuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [isAdmin, setIsAdmin] = useState<boolean>(() => {
-    return sessionStorage.getItem('isAdmin') === 'true';
-  });
+interface AdminAuthProviderProps {
+  children: ReactNode;
+}
 
-  const login = (password: string): boolean => {
-    // In a real app, this would be a secure API call.
-    // For this project, we use a simple hardcoded password.
-    if (password === 'admin123') {
-      sessionStorage.setItem('isAdmin', 'true');
-      setIsAdmin(true);
-      return true;
+export const AdminAuthProvider: React.FC<AdminAuthProviderProps> = ({ children }) => {
+  const [admin, setAdmin] = useState<AdminUser | null>(() => {
+    try {
+      const storedAdmin = sessionStorage.getItem('currentAdmin');
+      return storedAdmin ? JSON.parse(storedAdmin) : null;
+    } catch {
+      return null;
     }
-    return false;
+  });
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (admin) {
+      sessionStorage.setItem('currentAdmin', JSON.stringify(admin));
+    } else {
+      sessionStorage.removeItem('currentAdmin');
+    }
+  }, [admin]);
+
+  const login = async (username: string, password: string): Promise<string | null> => {
+    // In a real application, this would be a call to a secure backend.
+    // For this demo, we'll use hardcoded credentials.
+    if (username === 'admin' && password === 'password123') {
+      const adminUser: AdminUser = { username };
+      setAdmin(adminUser);
+      return null; // Success
+    }
+    return 'Invalid admin username or password.'; // Error
   };
 
   const logout = () => {
-    sessionStorage.removeItem('isAdmin');
-    setIsAdmin(false);
+    setAdmin(null);
+    navigate('/admin/login');
   };
 
   return (
-    <AdminAuthContext.Provider value={{ isAdmin, login, logout }}>
+    <AdminAuthContext.Provider value={{ admin, login, logout }}>
       {children}
     </AdminAuthContext.Provider>
   );
