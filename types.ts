@@ -1,11 +1,5 @@
-// types.ts
-
-export interface User {
-  id: string;
-  name: string;
-  email: string;
-  password?: string; // Should not be sent to client
-}
+// FIX: Export each interface and type to make this file a module.
+// This resolves "File is not a module" errors in files that import from here.
 
 export interface Destination {
   name: string;
@@ -15,20 +9,13 @@ export interface Destination {
 
 export interface TourPackage {
   id: string;
-  name:string;
+  name: string;
   duration: string;
   price: number;
   image: string;
   destinationsCovered: string[];
   highlights: string[];
   category: 'Family' | 'Honeymoon' | 'Cultural' | 'Adventure';
-  itinerary?: ItineraryDay[];
-}
-
-export interface ItineraryDay {
-  day: number;
-  title: string;
-  description: string;
 }
 
 export interface Testimonial {
@@ -36,6 +23,13 @@ export interface Testimonial {
   image: string;
   review: string;
   tour: string;
+}
+
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  password?: string; // Should be optional for security
 }
 
 export interface Flight {
@@ -61,13 +55,24 @@ export interface Hotel {
 }
 
 export interface HotelBooking {
+    id: string;
+    hotelId: string;
+    hotelName: string;
+    userName: string;
+    userEmail: string;
+    checkInDate: string;
+    checkOutDate: string;
+    totalPrice: number;
+    status: 'Confirmed' | 'Pending' | 'Cancelled';
+}
+
+export interface Article {
   id: string;
-  hotelId: string;
-  hotelName: string;
-  userName: string;
-  userEmail: string;
-  checkInDate: string;
-  checkOutDate: string;
-  totalPrice: number;
-  status: 'Pending' | 'Confirmed' | 'Cancelled';
+  title: string;
+  author: string;
+  content: string; // This could be Markdown or HTML
+  imageUrl: string;
+  createdAt: string; // ISO string date
+  tags: string[];
+  slug: string; // for URL-friendly paths
 }

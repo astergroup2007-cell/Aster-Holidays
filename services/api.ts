@@ -1,154 +1,232 @@
-// services/api.ts
-
-import {
-  collection,
-  getDocs,
-  doc,
-  getDoc,
-  addDoc,
-  updateDoc,
+import { db, storage } from '../firebase';
+import { 
+  collection, 
+  getDocs, 
+  getDoc, 
+  doc, 
+  addDoc, 
+  updateDoc, 
   deleteDoc,
   query,
-  where,
+  where
 } from 'firebase/firestore';
-import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
-import { db, storage } from '../firebase';
-import type { TourPackage, Flight, Hotel, HotelBooking } from '../types';
-import { tourPackages, flights, hotels, hotelBookings } from '../data/mockData'; // Using mock data as a fallback
+import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
+
+import type { TourPackage, Flight, Hotel, HotelBooking, Article } from '../types';
+import { tourPackages, flights, hotels, hotelBookings } from '../data/mockData';
+
+// --- Local Storage Fallback for simpler setup ---
+// This part can be used if Firebase isn't fully configured
+const useLocalStorage = true;
+
+const getFromStorage = <T>(key: string, fallback: T[]): T[] => {
+  if (!useLocalStorage) return [];
+  const data = localStorage.getItem(key);
+  if (data) {
+    return JSON.parse(data);
+  } else {
+    localStorage.setItem(key, JSON.stringify(fallback));
+    return fallback;
+  }
+};
+
+const saveToStorage = <T>(key: string, data: T[]) => {
+  if (useLocalStorage) {
+    localStorage.setItem(key, JSON.stringify(data));
+  }
+};
+
+
+// --- Image Upload Service ---
+export const uploadImage = async (file: File): Promise<string> => {
+  const storageRef = ref(storage, `images/${Date.now()}_${file.name}`);
+  const snapshot = await uploadBytes(storageRef, file);
+  const downloadURL = await getDownloadURL(snapshot.ref);
+  return downloadURL;
+};
 
 // --- Tour Package API ---
-
-const tourCollection = collection(db, 'tours');
-
 export const getTourPackages = async (): Promise<TourPackage[]> => {
-  try {
-    const snapshot = await getDocs(tourCollection);
-    if (snapshot.empty) {
-        console.warn("No tour packages found in Firestore, returning mock data.");
-        return tourPackages;
-    }
-    return snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id } as TourPackage));
-  } catch (error) {
-    console.error("Error fetching tours from Firestore, returning mock data: ", error);
-    return tourPackages;
-  }
+    if (useLocalStorage) return getFromStorage('tourPackages', tourPackages);
+    // Firebase implementation
+    const toursCollection = collection(db, "tourPackages");
+    const tourSnapshot = await getDocs(toursCollection);
+    return tourSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as TourPackage));
 };
 
 export const getTourPackageById = async (id: string): Promise<TourPackage | null> => {
-  try {
-    const docRef = doc(db, 'tours', id);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      return { ...docSnap.data(), id: docSnap.id } as TourPackage;
+    if (useLocalStorage) {
+      const tours = getFromStorage('tourPackages', tourPackages);
+      return tours.find(tour => tour.id === id) || null;
     }
-    console.warn(`Tour with id ${id} not found in Firestore, checking mock data.`);
-  } catch (error) {
-     console.error(`Error fetching tour ${id} from Firestore, checking mock data: `, error);
-  }
-  return tourPackages.find(p => p.id === id) || null;
+    // Firebase implementation
+    const tourDoc = await getDoc(doc(db, "tourPackages", id));
+    return tourDoc.exists() ? { id: tourDoc.id, ...tourDoc.data() } as TourPackage : null;
 };
 
-export const addTourPackage = async (tourData: Omit<TourPackage, 'id'>): Promise<void> => {
-  await addDoc(tourCollection, tourData);
+export const addTourPackage = async (tour: Omit<TourPackage, 'id'>): Promise<TourPackage> => {
+    if (useLocalStorage) {
+      const tours = getFromStorage('tourPackages', tourPackages);
+      const newTour = { ...tour, id: `tour_${Date.now()}` };
+      saveToStorage('tourPackages', [...tours, newTour]);
+      return newTour;
+    }
+    // Firebase implementation
+    const docRef = await addDoc(collection(db, "tourPackages"), tour);
+    return { id: docRef.id, ...tour };
 };
 
-export const updateTourPackage = async (tourData: TourPackage): Promise<void> => {
-  const { id, ...data } = tourData;
-  const docRef = doc(db, 'tours', id);
-  await updateDoc(docRef, data);
+export const updateTourPackage = async (tour: TourPackage): Promise<void> => {
+    if (useLocalStorage) {
+      const tours = getFromStorage('tourPackages', tourPackages);
+      const updatedTours = tours.map(t => t.id === tour.id ? tour : t);
+      saveToStorage('tourPackages', updatedTours);
+      return;
+    }
+    // Firebase implementation
+    const tourRef = doc(db, "tourPackages", tour.id);
+    await updateDoc(tourRef, { ...tour });
 };
 
-export const deleteTourPackage = async (tourId: string): Promise<void> => {
-  const docRef = doc(db, 'tours', tourId);
-  await deleteDoc(docRef);
+export const deleteTourPackage = async (id: string): Promise<void> => {
+    if (useLocalStorage) {
+      const tours = getFromStorage('tourPackages', tourPackages);
+      saveToStorage('tourPackages', tours.filter(t => t.id !== id));
+      return;
+    }
+    // Firebase implementation
+    await deleteDoc(doc(db, "tourPackages", id));
 };
 
 
-// --- Flight API (using mock data) ---
-
+// --- Flights API --- (Likely to stay mock as flight APIs are complex)
 export const getFlights = async (): Promise<Flight[]> => {
-  return Promise.resolve(flights);
+    return Promise.resolve(flights);
 };
 
 export const getFlightById = async (id: string): Promise<Flight | null> => {
-  return Promise.resolve(flights.find(f => f.id === id) || null);
+    return Promise.resolve(flights.find(f => f.id === id) || null);
 };
 
-// --- Hotel API ---
 
-const hotelCollection = collection(db, 'hotels');
-
+// --- Hotels API ---
 export const getHotels = async (): Promise<Hotel[]> => {
-  try {
-    const snapshot = await getDocs(hotelCollection);
-    if (snapshot.empty) {
-        console.warn("No hotels found in Firestore, returning mock data.");
-        return hotels;
+    if (useLocalStorage) return getFromStorage('hotels', hotels);
+    // Firebase
+    const hotelsCollection = collection(db, "hotels");
+    const snapshot = await getDocs(hotelsCollection);
+    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Hotel));
+};
+
+export const addHotel = async (hotel: Omit<Hotel, 'id'>): Promise<Hotel> => {
+    if (useLocalStorage) {
+        const currentHotels = getFromStorage('hotels', hotels);
+        const newHotel = { ...hotel, id: `hotel_${Date.now()}` };
+        saveToStorage('hotels', [...currentHotels, newHotel]);
+        return newHotel;
     }
-    return snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id } as Hotel));
-  } catch(error) {
-    console.error("Error fetching hotels from Firestore, returning mock data: ", error);
-    return hotels;
-  }
+    // Firebase
+    const docRef = await addDoc(collection(db, "hotels"), hotel);
+    return { id: docRef.id, ...hotel };
 };
 
-export const addHotel = async (hotelData: Omit<Hotel, 'id'>): Promise<void> => {
-    await addDoc(hotelCollection, hotelData);
+export const updateHotel = async (hotel: Hotel): Promise<void> => {
+    if (useLocalStorage) {
+        const currentHotels = getFromStorage('hotels', hotels);
+        const updatedHotels = currentHotels.map(h => h.id === hotel.id ? hotel : h);
+        saveToStorage('hotels', updatedHotels);
+        return;
+    }
+    // Firebase
+    const hotelRef = doc(db, "hotels", hotel.id);
+    const { id, ...data } = hotel;
+    await updateDoc(hotelRef, data);
 };
 
-export const updateHotel = async (hotelData: Hotel): Promise<void> => {
-    const { id, ...data } = hotelData;
-    const docRef = doc(db, 'hotels', id);
-    await updateDoc(docRef, data);
-};
-
-export const deleteHotel = async (hotel: Hotel): Promise<void> => {
+export const deleteHotel = async (hotelToDelete: Hotel): Promise<void> => {
     // Delete images from storage first
-    if (hotel.images) {
-      const deletePromises = hotel.images.map(imageUrl => {
-        try {
-          const imageRef = ref(storage, imageUrl);
-          return deleteObject(imageRef);
-        } catch (error) {
-          console.error(`Failed to create ref for image ${imageUrl}: `, error);
-          return Promise.resolve();
+    if (hotelToDelete.images) {
+        for (const imageUrl of hotelToDelete.images) {
+            try {
+                const imageRef = ref(storage, imageUrl);
+                await deleteObject(imageRef);
+            } catch (error) {
+                console.error(`Failed to delete image ${imageUrl}:`, error);
+                // Don't block deletion of document if one image fails
+            }
         }
-      });
-      await Promise.all(deletePromises);
     }
-    
-    // Delete hotel document from firestore
-    const docRef = doc(db, 'hotels', hotel.id);
-    await deleteDoc(docRef);
+
+    if (useLocalStorage) {
+        const currentHotels = getFromStorage('hotels', hotels);
+        saveToStorage('hotels', currentHotels.filter(h => h.id !== hotelToDelete.id));
+        return;
+    }
+    // Firebase
+    await deleteDoc(doc(db, "hotels", hotelToDelete.id));
 };
 
-// --- Hotel Booking API ---
-const bookingCollection = collection(db, 'hotelBookings');
 
+// --- Hotel Bookings API ---
 export const getHotelBookings = async (): Promise<HotelBooking[]> => {
-    try {
-        const snapshot = await getDocs(bookingCollection);
-        if (snapshot.empty) {
-            console.warn("No bookings found in Firestore, returning mock data.");
-            return hotelBookings;
-        }
-        return snapshot.docs.map(doc => ({...doc.data(), id: doc.id} as HotelBooking));
-    } catch (error) {
-        console.error("Error fetching bookings from Firestore, returning mock data: ", error);
-        return hotelBookings;
-    }
+    if (useLocalStorage) return getFromStorage('hotelBookings', hotelBookings);
+    // Firebase
+    const bookingsCollection = collection(db, "hotelBookings");
+    const snapshot = await getDocs(bookingsCollection);
+    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as HotelBooking));
 };
 
 export const updateBookingStatus = async (bookingId: string, status: HotelBooking['status']): Promise<void> => {
-    const docRef = doc(db, 'hotelBookings', bookingId);
-    await updateDoc(docRef, { status });
+    if (useLocalStorage) {
+        const bookings = getFromStorage('hotelBookings', hotelBookings);
+        const updatedBookings = bookings.map(b => b.id === bookingId ? { ...b, status } : b);
+        saveToStorage('hotelBookings', updatedBookings);
+        return;
+    }
+    // Firebase
+    const bookingRef = doc(db, "hotelBookings", bookingId);
+    await updateDoc(bookingRef, { status });
 };
 
 
-// --- Firebase Storage for Images ---
-export const uploadImage = async (file: File): Promise<string> => {
-  const storageRef = ref(storage, `images/${Date.now()}_${file.name}`);
-  await uploadBytes(storageRef, file);
-  const downloadURL = await getDownloadURL(storageRef);
-  return downloadURL;
+// --- Articles API ---
+export const getArticles = async (): Promise<Article[]> => {
+    const articlesCollection = collection(db, "articles");
+    const snapshot = await getDocs(articlesCollection);
+    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Article));
+};
+
+export const getArticleById = async (id: string): Promise<Article | null> => {
+    const articleDoc = await getDoc(doc(db, "articles", id));
+    return articleDoc.exists() ? { id: articleDoc.id, ...articleDoc.data() } as Article : null;
+};
+
+export const getArticleBySlug = async (slug: string): Promise<Article | null> => {
+    const q = query(collection(db, "articles"), where("slug", "==", slug));
+    const snapshot = await getDocs(q);
+    if (snapshot.empty) {
+        return null;
+    }
+    const docData = snapshot.docs[0];
+    return { id: docData.id, ...docData.data() } as Article;
+};
+
+
+export const saveArticle = async (article: Omit<Article, 'id'> & { id?: string }): Promise<string> => {
+    if (article.id) {
+        // Update existing article
+        const articleRef = doc(db, "articles", article.id);
+        const { id, ...data } = article;
+        await updateDoc(articleRef, data);
+        return id;
+    } else {
+        // Create new article
+        const docRef = await addDoc(collection(db, "articles"), article);
+        return docRef.id;
+    }
+};
+
+
+export const deleteArticle = async (articleId: string): Promise<void> => {
+    await deleteDoc(doc(db, "articles", articleId));
 };
