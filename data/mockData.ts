@@ -1,4 +1,4 @@
-import type { Hotel, Flight } from '../types';
+import type { Hotel, Flight, Destination } from '../types';
 import { Amenity } from '../types';
 
 export const hotels: Hotel[] = [
@@ -172,5 +172,38 @@ export const flights: Flight[] = [
     duration: '1h 10m',
     price: 3600,
     stops: 0,
+  },
+];
+
+export const destinations: Destination[] = [
+  {
+    name: 'Paris, France',
+    tagline: 'The City of Love & Lights',
+    image: 'https://picsum.photos/seed/paris/400/500',
+  },
+  {
+    name: 'Kyoto, Japan',
+    tagline: 'Ancient Temples & Serene Gardens',
+    image: 'https://picsum.photos/seed/kyoto/400/500',
+  },
+  {
+    name: 'Santorini, Greece',
+    tagline: 'Iconic Sunsets & Caldera Views',
+    image: 'https://picsum.photos/seed/santorini/400/500',
+  },
+  {
+    name: 'Bora Bora',
+    tagline: 'Overwater Bungalows & Turquoise Lagoons',
+    image: 'https://picsum.photos/seed/borabora/400/500',
+  },
+   {
+    name: 'New York, USA',
+    tagline: 'The City That Never Sleeps',
+    image: 'https://picsum.photos/seed/newyork/400/500',
+  },
+   {
+    name: 'Rome, Italy',
+    tagline: 'Eternal City of History & Art',
+    image: 'https://picsum.photos/seed/rome/400/500',
   },
 ];

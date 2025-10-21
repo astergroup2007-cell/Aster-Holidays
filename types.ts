@@ -37,3 +37,9 @@ export interface Flight {
   price: number;
   stops: number;
 }
+
+export interface Destination {
+  name: string;
+  tagline: string;
+  image: string;
+}
