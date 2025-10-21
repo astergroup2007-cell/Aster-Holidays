@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AdminAuthContext } from '../../context/AdminAuthContext';
 
@@ -6,13 +6,38 @@ const AdminSettings: React.FC = () => {
     const authContext = useContext(AdminAuthContext);
     const navigate = useNavigate();
 
+    const [currentPassword, setCurrentPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+
     const handleLogout = () => {
-        if (authContext) {
-            authContext.logout();
-        } else {
-            navigate('/admin/login');
-        }
+        authContext?.logout();
     }
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setMessage(null);
+
+        if (newPassword !== confirmPassword) {
+            setMessage({ type: 'error', text: "New passwords do not match." });
+            return;
+        }
+        if (!authContext) {
+            setMessage({ type: 'error', text: "Authentication service not available." });
+            return;
+        }
+
+        const error = await authContext.changePassword(currentPassword, newPassword);
+        if (error) {
+            setMessage({ type: 'error', text: error });
+        } else {
+            setMessage({ type: 'success', text: "Password changed successfully!" });
+            setCurrentPassword('');
+            setNewPassword('');
+            setConfirmPassword('');
+        }
+    };
 
     return (
         <div className="flex h-screen bg-gray-100">
@@ -38,28 +63,61 @@ const AdminSettings: React.FC = () => {
                 <header className="flex justify-between items-center p-6 bg-white border-b">
                     <h1 className="text-2xl font-semibold text-gray-800">Admin Settings</h1>
                     <div className="flex items-center space-x-2">
-                        <span>Welcome, {authContext?.admin?.username}</span>
+                        <span>Welcome, {authContext?.admin?.email}</span>
                     </div>
                 </header>
                 <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200 p-6">
                     <div className="container mx-auto">
-                        <div className="bg-white p-6 rounded-lg shadow-md">
-                            <h2 className="text-xl font-bold mb-4">Change Password</h2>
-                            <form>
-                                <div className="mb-4">
-                                    <label className="block text-gray-700">Current Password</label>
-                                    <input type="password" className="w-full p-2 border rounded mt-1" placeholder="Enter current password" disabled />
+                        <div className="bg-white p-8 rounded-lg shadow-md max-w-lg mx-auto">
+                            <h2 className="text-xl font-bold mb-6 text-secondary">Change Password</h2>
+                            
+                            {message && (
+                                <div className={`p-3 rounded mb-4 text-sm ${
+                                    message.type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                                }`}>
+                                    {message.text}
                                 </div>
-                                <div className="mb-4">
-                                    <label className="block text-gray-700">New Password</label>
-                                    <input type="password" className="w-full p-2 border rounded mt-1" placeholder="Enter new password" disabled />
+                            )}
+                            
+                            <form onSubmit={handleSubmit} className="space-y-4">
+                                <div>
+                                    <label className="block text-gray-700 font-medium">Current Password</label>
+                                    <input 
+                                        type="password" 
+                                        className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-accent" 
+                                        placeholder="Enter current password"
+                                        value={currentPassword}
+                                        onChange={(e) => setCurrentPassword(e.target.value)}
+                                        required
+                                    />
                                 </div>
-                                <div className="mb-4">
-                                    <label className="block text-gray-700">Confirm New Password</label>
-                                    <input type="password" className="w-full p-2 border rounded mt-1" placeholder="Confirm new password" disabled />
+                                <div>
+                                    <label className="block text-gray-700 font-medium">New Password</label>
+                                    <input 
+                                        type="password" 
+                                        className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-accent" 
+                                        placeholder="Enter new password"
+                                        value={newPassword}
+                                        onChange={(e) => setNewPassword(e.target.value)}
+                                        required
+                                    />
                                 </div>
-                                <button type="submit" className="bg-primary text-white px-4 py-2 rounded disabled:bg-gray-400" disabled>Save Changes</button>
-                                <p className="text-sm text-gray-500 mt-2">This feature is not yet implemented.</p>
+                                <div>
+                                    <label className="block text-gray-700 font-medium">Confirm New Password</label>
+                                    <input 
+                                        type="password" 
+                                        className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-accent" 
+                                        placeholder="Confirm new password"
+                                        value={confirmPassword}
+                                        onChange={(e) => setConfirmPassword(e.target.value)}
+                                        required
+                                    />
+                                </div>
+                                <div className="pt-2">
+                                    <button type="submit" className="w-full bg-primary text-white font-bold px-4 py-2 rounded hover:bg-orange-600 transition-colors">
+                                        Save Changes
+                                    </button>
+                                </div>
                             </form>
                         </div>
                     </div>

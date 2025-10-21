@@ -38,7 +38,7 @@ const AdminDashboard: React.FC = () => {
                 <header className="flex justify-between items-center p-6 bg-white border-b">
                     <h1 className="text-2xl font-semibold text-gray-800">Admin Dashboard</h1>
                     <div className="flex items-center space-x-2">
-                        <span>Welcome, {authContext?.admin?.username}</span>
+                        <span>Welcome, {authContext?.admin?.email}</span>
                     </div>
                 </header>
                 <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200 p-6">
