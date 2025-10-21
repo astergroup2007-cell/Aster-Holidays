@@ -12,30 +12,30 @@ export const destinations: Destination[] = [
 export const tourPackages: TourPackage[] = [
   {
     id: 'sikkim-delight',
-    name: 'Enchanting Sikkim Delight',
+    name: 'Enchanting Sikkim Wonders',
     duration: '5 Nights / 6 Days',
     price: 18500,
-    image: 'https://i.ibb.co/cKSqXWVT/Whats-App-Image-2025-10-21-at-4-23-24-PM-1.jpg',
+    image: 'https://i.ibb.co/rRk0k5Bz/1.png',
     destinationsCovered: ['Gangtok', 'Pelling', 'Lachung'],
     highlights: ['Tsomgo Lake', 'Yumthang Valley', 'Khangchendzonga Falls'],
     category: 'Family'
   },
   {
     id: 'darjeeling-romance',
-    name: 'Romantic Darjeeling Getaway',
+    name: 'Darjeeling Queen of Hills',
     duration: '3 Nights / 4 Days',
     price: 12000,
-    image: 'https://i.ibb.co/5hDC4XrC/Whats-App-Image-2025-10-21-at-4-23-24-PM.jpg',
+    image: 'https://i.ibb.co/DPtMw9X6/2.png',
     destinationsCovered: ['Darjeeling', 'Mirik'],
     highlights: ['Tiger Hill Sunrise', 'Batasia Loop', 'Tea Garden Visit'],
     category: 'Honeymoon'
   },
   {
     id: 'bhutan-discovery',
-    name: 'Mystical Bhutan Discovery',
+    name: 'Mystical Bhutan Gateway',
     duration: '6 Nights / 7 Days',
     price: 35000,
-    image: 'https://i.ibb.co/jZ92Z3Th/Whats-App-Image-2025-10-21-at-4-23-25-PM.jpg',
+    image: 'https://i.ibb.co/twQ0d7N5/3.png',
     destinationsCovered: ['Paro', 'Thimphu', 'Punakha'],
     highlights: ["Tiger's Nest Monastery", 'Punakha Dzong', 'Buddha Dordenma'],
     category: 'Cultural'
