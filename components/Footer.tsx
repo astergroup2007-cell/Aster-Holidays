@@ -7,7 +7,11 @@ const Footer: React.FC = () => {
       <div className="container mx-auto px-6 py-10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
-            <h3 className="text-xl font-bold mb-4">Aster Holidays.in</h3>
+            <img 
+              className="h-12 w-auto mb-4" 
+              src="https://drive.google.com/uc?export=view&id=1jYd_5c5QukwUh739fM8KT1JFuqx9XMVP" 
+              alt="Aster Holidays.in logo" 
+            />
             <p className="text-gray-400">Your perfect getaway is just a click away. Discover amazing deals on hotels and flights.</p>
           </div>
           <div>

@@ -1,5 +1,4 @@
-
-import type { Hotel } from '../types';
+import type { Hotel, Flight } from '../types';
 import { Amenity } from '../types';
 
 export const hotels: Hotel[] = [
@@ -99,4 +98,79 @@ export const hotels: Hotel[] = [
       'https://picsum.photos/400/300?random=30',
     ],
   }
+];
+
+export const flights: Flight[] = [
+  {
+    id: 'fl1',
+    airline: 'IndiGo',
+    airlineLogo: 'https://www.logo.wine/a/logo/IndiGo/IndiGo-Logo.wine.svg',
+    origin: 'DEL',
+    destination: 'BOM',
+    departureTime: '08:30',
+    arrivalTime: '10:45',
+    duration: '2h 15m',
+    price: 75,
+    stops: 0,
+  },
+  {
+    id: 'fl2',
+    airline: 'Vistara',
+    airlineLogo: 'https://www.logo.wine/a/logo/Vistara/Vistara-Logo.wine.svg',
+    origin: 'DEL',
+    destination: 'BOM',
+    departureTime: '10:00',
+    arrivalTime: '12:10',
+    duration: '2h 10m',
+    price: 90,
+    stops: 0,
+  },
+  {
+    id: 'fl3',
+    airline: 'Air India',
+    airlineLogo: 'https://www.logo.wine/a/logo/Air_India/Air_India-Logo.wine.svg',
+    origin: 'DEL',
+    destination: 'BOM',
+    departureTime: '11:45',
+    arrivalTime: '15:30',
+    duration: '3h 45m',
+    price: 65,
+    stops: 1,
+  },
+  {
+    id: 'fl4',
+    airline: 'SpiceJet',
+    airlineLogo: 'https://www.logo.wine/a/logo/SpiceJet/SpiceJet-Logo.wine.svg',
+    origin: 'DEL',
+    destination: 'BOM',
+    departureTime: '14:00',
+    arrivalTime: '16:20',
+    duration: '2h 20m',
+    price: 70,
+    stops: 0,
+  },
+  {
+    id: 'fl5',
+    airline: 'Vistara',
+    airlineLogo: 'https://www.logo.wine/a/logo/Vistara/Vistara-Logo.wine.svg',
+    origin: 'CCU',
+    destination: 'GAU',
+    departureTime: '07:00',
+    arrivalTime: '08:15',
+    duration: '1h 15m',
+    price: 50,
+    stops: 0,
+  },
+  {
+    id: 'fl6',
+    airline: 'IndiGo',
+    airlineLogo: 'https://www.logo.wine/a/logo/IndiGo/IndiGo-Logo.wine.svg',
+    origin: 'BLR',
+    destination: 'HYD',
+    departureTime: '18:00',
+    arrivalTime: '19:10',
+    duration: '1h 10m',
+    price: 45,
+    stops: 0,
+  },
 ];

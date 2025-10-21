@@ -1,9 +1,9 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const SearchForm: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'hotels' | 'flights'>('hotels');
+  const [flightType, setFlightType] = useState<'return' | 'one-way'>('return');
   const navigate = useNavigate();
 
   const handleSearch = (e: React.FormEvent) => {
@@ -11,7 +11,7 @@ const SearchForm: React.FC = () => {
     if (activeTab === 'hotels') {
       navigate('/hotels');
     } else {
-      alert('Flight search is coming soon!');
+      navigate('/flights');
     }
   };
 
@@ -57,9 +57,38 @@ const SearchForm: React.FC = () => {
           </div>
         )}
         {activeTab === 'flights' && (
-           <div className="text-center p-8 bg-gray-100 rounded-md">
-             <p className="text-gray-600 font-semibold">Flight search functionality is currently under development.</p>
-             <p className="text-gray-500 mt-2">We are working hard to integrate with Cleartrip to bring you the best flight deals. Stay tuned!</p>
+           <div>
+            <div className="flex items-center space-x-4 mb-4">
+              <label className="flex items-center">
+                <input type="radio" name="flightType" value="return" checked={flightType === 'return'} onChange={() => setFlightType('return')} className="form-radio text-blue-600" />
+                <span className="ml-2 text-gray-700">Return</span>
+              </label>
+              <label className="flex items-center">
+                <input type="radio" name="flightType" value="one-way" checked={flightType === 'one-way'} onChange={() => setFlightType('one-way')} className="form-radio text-blue-600" />
+                <span className="ml-2 text-gray-700">One-way</span>
+              </label>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 items-end">
+              <div>
+                <label htmlFor="origin" className="block text-sm font-medium text-gray-700">Origin</label>
+                <input type="text" id="origin" placeholder="e.g. Delhi" className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500" />
+              </div>
+              <div>
+                <label htmlFor="flight-destination" className="block text-sm font-medium text-gray-700">Destination</label>
+                <input type="text" id="flight-destination" placeholder="e.g. Mumbai" className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500" />
+              </div>
+              <div>
+                <label htmlFor="departure-date" className="block text-sm font-medium text-gray-700">Departure</label>
+                <input type="date" id="departure-date" className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500" />
+              </div>
+              <div>
+                <label htmlFor="return-date" className="block text-sm font-medium text-gray-700">Return</label>
+                <input type="date" id="return-date" disabled={flightType === 'one-way'} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100" />
+              </div>
+              <div className="col-span-1 md:col-span-2 lg:col-span-1">
+                <button type="submit" className="w-full bg-blue-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-300 font-semibold">Search</button>
+              </div>
+            </div>
            </div>
         )}
       </form>

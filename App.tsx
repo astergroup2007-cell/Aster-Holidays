@@ -12,6 +12,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
+import FlightList from './pages/FlightList';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/hotels" element={<HotelList />} />
             <Route path="/hotel/:id" element={<HotelDetails />} />
+            <Route path="/flights" element={<FlightList />} />
             <Route 
               path="/booking/:id" 
               element={

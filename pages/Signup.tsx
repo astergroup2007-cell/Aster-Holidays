@@ -3,21 +3,28 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
 const Signup: React.FC = () => {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState<string | null>(null);
   const authContext = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
     if (password !== confirmPassword) {
-      alert("Passwords don't match");
+      setError("Passwords don't match");
       return;
     }
     if (authContext) {
-      authContext.signup(email);
-      navigate('/');
+      const errorMessage = await authContext.signup(name, email, password);
+      if (errorMessage) {
+        setError(errorMessage);
+      } else {
+        navigate('/');
+      }
     }
   };
 
@@ -36,7 +43,24 @@ const Signup: React.FC = () => {
             </p>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          <div className="rounded-md shadow-sm">
+           {error && <div className="p-3 bg-red-100 text-red-700 rounded-md">{error}</div>}
+          <div className="rounded-md shadow-sm -space-y-px">
+             <div>
+              <label htmlFor="name" className="sr-only">
+                Name
+              </label>
+              <input
+                id="name"
+                name="name"
+                type="text"
+                autoComplete="name"
+                required
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                placeholder="Name"
+              />
+            </div>
              <div>
               <label htmlFor="email-address" className="sr-only">
                 Email address
@@ -49,11 +73,11 @@ const Signup: React.FC = () => {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
                 placeholder="Email address"
               />
             </div>
-            <div className="-mt-px">
+            <div>
               <label htmlFor="password"className="sr-only">
                 Password
               </label>
@@ -69,7 +93,7 @@ const Signup: React.FC = () => {
                 placeholder="Password"
               />
             </div>
-             <div className="-mt-px">
+             <div>
               <label htmlFor="confirm-password"className="sr-only">
                 Confirm Password
               </label>

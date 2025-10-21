@@ -3,7 +3,8 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
 interface ProtectedRouteProps {
-  children: JSX.Element;
+  // Fix: Replaced JSX.Element with React.ReactElement to resolve namespace issue.
+  children: React.ReactElement;
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {

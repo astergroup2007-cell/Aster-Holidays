@@ -5,17 +5,23 @@ import { AuthContext } from '../context/AuthContext';
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState<string | null>(null);
   const authContext = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
 
   const from = location.state?.from?.pathname || "/";
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
     if (authContext) {
-      authContext.login(email);
-      navigate(from, { replace: true });
+      const errorMessage = await authContext.login(email, password);
+      if (errorMessage) {
+        setError(errorMessage);
+      } else {
+        navigate(from, { replace: true });
+      }
     }
   };
 
@@ -34,6 +40,7 @@ const Login: React.FC = () => {
             </p>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+          {error && <div className="p-3 bg-red-100 text-red-700 rounded-md">{error}</div>}
           <div className="rounded-md shadow-sm -space-y-px">
             <div>
               <label htmlFor="email-address" className="sr-only">
