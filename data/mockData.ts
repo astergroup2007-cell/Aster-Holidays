@@ -1,0 +1,102 @@
+
+import type { Hotel } from '../types';
+import { Amenity } from '../types';
+
+export const hotels: Hotel[] = [
+  {
+    id: '1',
+    name: 'Seaside Serenity Resort',
+    location: 'Goa, India',
+    rating: 4.8,
+    pricePerNight: 150,
+    description: 'A luxurious resort offering breathtaking views of the Arabian Sea. Enjoy our private beach, infinity pool, and world-class spa. Perfect for a romantic getaway or a family vacation.',
+    amenities: [Amenity.Wifi, Amenity.Pool, Amenity.Restaurant, Amenity.Parking, Amenity.Gym],
+    images: [
+      'https://picsum.photos/800/600?random=1',
+      'https://picsum.photos/400/300?random=2',
+      'https://picsum.photos/400/300?random=3',
+      'https://picsum.photos/400/300?random=4',
+      'https://picsum.photos/400/300?random=5',
+    ],
+  },
+  {
+    id: '2',
+    name: 'Mountain Vista Lodge',
+    location: 'Manali, Himachal Pradesh',
+    rating: 4.5,
+    pricePerNight: 120,
+    description: 'Nestled in the Himalayas, our lodge offers cozy rooms with stunning mountain views. Ideal for trekkers and nature lovers, with easy access to popular trails and local attractions.',
+    amenities: [Amenity.Wifi, Amenity.Parking, Amenity.Restaurant, Amenity.PetFriendly],
+     images: [
+      'https://picsum.photos/800/600?random=6',
+      'https://picsum.photos/400/300?random=7',
+      'https://picsum.photos/400/300?random=8',
+      'https://picsum.photos/400/300?random=9',
+      'https://picsum.photos/400/300?random=10',
+    ],
+  },
+  {
+    id: '3',
+    name: 'The Royal Heritage',
+    location: 'Jaipur, Rajasthan',
+    rating: 4.9,
+    pricePerNight: 250,
+    description: 'Experience the grandeur of Rajasthan in our heritage hotel. Converted from a royal palace, it features opulent suites, traditional decor, and exceptional hospitality.',
+    amenities: [Amenity.Wifi, Amenity.Pool, Amenity.Restaurant, Amenity.Parking, Amenity.Gym],
+     images: [
+      'https://picsum.photos/800/600?random=11',
+      'https://picsum.photos/400/300?random=12',
+      'https://picsum.photos/400/300?random=13',
+      'https://picsum.photos/400/300?random=14',
+      'https://picsum.photos/400/300?random=15',
+    ],
+  },
+   {
+    id: '4',
+    name: 'Backwater Bliss Houseboat',
+    location: 'Alleppey, Kerala',
+    rating: 4.7,
+    pricePerNight: 180,
+    description: 'Float through the serene backwaters of Kerala on our luxurious houseboat. Enjoy authentic local cuisine and watch the picturesque villages pass by from the comfort of your room.',
+    amenities: [Amenity.Restaurant, Amenity.Wifi],
+     images: [
+      'https://picsum.photos/800/600?random=16',
+      'https://picsum.photos/400/300?random=17',
+      'https://picsum.photos/400/300?random=18',
+      'https://picsum.photos/400/300?random=19',
+      'https://picsum.photos/400/300?random=20',
+    ],
+  },
+  {
+    id: '5',
+    name: 'Urban Oasis Suites',
+    location: 'Mumbai, Maharashtra',
+    rating: 4.6,
+    pricePerNight: 160,
+    description: 'A modern hotel in the heart of Mumbai, offering a peaceful retreat from the bustling city. Features a rooftop pool, a state-of-the-art gym, and easy access to business districts.',
+    amenities: [Amenity.Wifi, Amenity.Pool, Amenity.Gym, Amenity.Restaurant, Amenity.Parking],
+     images: [
+      'https://picsum.photos/800/600?random=21',
+      'https://picsum.photos/400/300?random=22',
+      'https://picsum.photos/400/300?random=23',
+      'https://picsum.photos/400/300?random=24',
+      'https://picsum.photos/400/300?random=25',
+    ],
+  },
+   {
+    id: '6',
+    name: 'Jungle Hideaway Resort',
+    location: 'Thekkady, Kerala',
+    rating: 4.4,
+    pricePerNight: 130,
+    description: 'Immerse yourself in nature at our eco-friendly resort bordering the Periyar National Park. Stay in private cottages and enjoy wildlife safaris, nature walks, and bird watching.',
+    amenities: [Amenity.Parking, Amenity.Restaurant, Amenity.PetFriendly],
+     images: [
+      'https://picsum.photos/800/600?random=26',
+      'https://picsum.photos/400/300?random=27',
+      'https://picsum.photos/400/300?random=28',
+      'https://picsum.photos/400/300?random=29',
+      'https://picsum.photos/400/300?random=30',
+    ],
+  }
+];
