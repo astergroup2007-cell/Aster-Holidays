@@ -4,7 +4,7 @@ import { uploadImage } from '../../services/api';
 
 interface HotelFormProps {
   hotel?: Hotel | null;
-  onSave: (hotel: Omit<Hotel, 'id'>, newImages: File[]) => void;
+  onSave: (hotel: Omit<Hotel, 'id'>) => void;
   onCancel: () => void;
 }
 
@@ -67,7 +67,7 @@ const HotelForm: React.FC<HotelFormProps> = ({ hotel, onSave, onCancel }) => {
         images: [...formData.images, ...newImageUrls], // Combine existing and new image URLs
       };
 
-      onSave(finalHotelData, newImageFiles);
+      onSave(finalHotelData);
 
     } catch (error) {
       console.error("Error uploading images:", error);

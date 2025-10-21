@@ -34,6 +34,13 @@ const Booking: React.FC = () => {
   }, [id]);
   
   const handlePayment = async () => {
+    // --- RAZORPAY INTEGRATION TEMPORARILY DISABLED ---
+    // The original payment logic has been commented out to allow for deployment.
+    // To re-enable, uncomment the code below and follow the restoration steps.
+    alert('Booking successful! (Payment Gateway Disabled)');
+    navigate('/');
+
+    /*
     if (!tour || !authContext?.user) return;
 
     try {
@@ -80,6 +87,7 @@ const Booking: React.FC = () => {
       console.error("Payment Error:", error);
       alert("Payment failed. Please try again.");
     }
+    */
   };
 
   const handleSubmit = (e: React.FormEvent) => {

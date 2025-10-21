@@ -48,7 +48,7 @@ const ManageHotels: React.FC = () => {
     }
   };
   
-  const handleSave = async (hotelData: Omit<Hotel, 'id'>, newImages: File[]) => {
+  const handleSave = async (hotelData: Omit<Hotel, 'id'>) => {
     try {
       if (editingHotel) {
         await updateHotel({ ...hotelData, id: editingHotel.id });

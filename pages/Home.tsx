@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import SearchForm from '../components/SearchForm';
 import { destinations, tourPackages, testimonials } from '../data/mockData';
-import type { Destination, TourPackage, Testimonial } from '../types';
+import type { Destination, Testimonial } from '../types';
 import TourPackageCard from '../components/HotelCard'; // Repurposed as TourPackageCard
 
 // --- INLINE COMPONENTS (DUE TO FILE CONSTRAINTS) ---
