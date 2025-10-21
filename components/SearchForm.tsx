@@ -46,7 +46,7 @@ const InputField: React.FC<{ id: string, label: string, type: string, value: str
       id={id}
       value={value}
       onChange={onChange}
-      className="w-full pl-10 pr-3 py-3 border border-gray-200 bg-white/50 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent transition-all duration-300"
+      className="w-full pl-10 pr-3 py-3 border border-gray-300 bg-white/75 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 text-secondary placeholder:text-gray-500"
       placeholder={placeholder}
       required={required}
     />
@@ -64,7 +64,7 @@ const SelectField: React.FC<{ id: string, label: string, value: string, onChange
       id={id}
       value={value}
       onChange={onChange}
-      className="w-full pl-10 pr-8 py-3 border border-gray-200 bg-white/50 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent transition-all duration-300 appearance-none"
+      className="w-full pl-10 pr-8 py-3 border border-gray-300 bg-white/75 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 appearance-none text-secondary"
     >
       {children}
     </select>
@@ -103,41 +103,45 @@ const SearchForm: React.FC = () => {
   };
   
   return (
-    <div className="bg-white/70 backdrop-blur-md p-6 md:p-8 rounded-3xl shadow-2xl w-full transition-all duration-500">
+    <div className="bg-white/80 backdrop-blur-lg p-6 rounded-2xl shadow-lg w-full transition-all duration-500">
       {/* Tabs */}
       <div className="flex mb-6 border-b border-gray-200">
         <button 
           onClick={() => setActiveTab('hotels')}
           className={`relative py-3 px-6 text-lg font-bold transition-colors duration-300 ${activeTab === 'hotels' ? 'text-secondary' : 'text-gray-500 hover:text-secondary'}`}
         >
-          <span><HotelIcon className="inline-block mr-2 h-5 w-5" />Hotels</span>
-          {activeTab === 'hotels' && <div className="absolute bottom-[-1px] left-0 w-full h-1 bg-gradient-to-r from-primary to-accent rounded-full" />}
+          <span className="flex items-center gap-2"><HotelIcon />Hotels</span>
+          {activeTab === 'hotels' && <div className="absolute bottom-[-1px] left-0 w-full h-1 bg-primary rounded-full" />}
         </button>
         <button 
           onClick={() => setActiveTab('flights')}
           className={`relative py-3 px-6 text-lg font-bold transition-colors duration-300 ${activeTab === 'flights' ? 'text-secondary' : 'text-gray-500 hover:text-secondary'}`}
         >
-          <span><AirplaneIcon className="inline-block mr-2 h-5 w-5" />Flights</span>
-          {activeTab === 'flights' && <div className="absolute bottom-[-1px] left-0 w-full h-1 bg-gradient-to-r from-primary to-accent rounded-full" />}
+          <span className="flex items-center gap-2"><AirplaneIcon />Flights</span>
+          {activeTab === 'flights' && <div className="absolute bottom-[-1px] left-0 w-full h-1 bg-primary rounded-full" />}
         </button>
       </div>
       
       {/* Hotels Form */}
       <div style={{ display: activeTab === 'hotels' ? 'block' : 'none' }}>
-        <form onSubmit={handleHotelSearch} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 items-end animate-fade-in-up">
-          <InputField id="destination" label="Destination" type="text" value={destination} onChange={(e) => setDestination(e.target.value)} placeholder="e.g. Goa, Manali..." icon={<LocationIcon />} />
-          <InputField id="check-in" label="Check-in" type="date" value={checkIn} onChange={(e) => setCheckIn(e.target.value)} icon={<CalendarIcon />} />
-          <InputField id="check-out" label="Check-out" type="date" value={checkOut} onChange={(e) => setCheckOut(e.target.value)} icon={<CalendarIcon />} />
-          <SelectField id="guests" label="Guests" value={guests} onChange={(e) => setGuests(e.target.value)} icon={<UserIcon />}>
-            <option>1 Guest</option>
-            <option>2 Guests</option>
-            <option>3 Guests</option>
-            <option>4 Guests</option>
-            <option>5+ Guests</option>
-          </SelectField>
-          <button type="submit" className="w-full lg:col-span-1 flex items-center justify-center gap-2 bg-gradient-to-r from-orange-500 to-primary text-white font-bold py-3.5 px-4 rounded-xl shadow-lg hover:shadow-xl hover:scale-[1.03] transform transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary h-[54px] mt-2 sm:mt-0">
+        <form onSubmit={handleHotelSearch} className="space-y-4 animate-fade-in-up">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <InputField id="destination" label="Destination" type="text" value={destination} onChange={(e) => setDestination(e.target.value)} placeholder="e.g. Goa, Manali..." icon={<LocationIcon />} />
+            <SelectField id="guests" label="Guests" value={guests} onChange={(e) => setGuests(e.target.value)} icon={<UserIcon />}>
+              <option>1 Guest</option>
+              <option>2 Guests</option>
+              <option>3 Guests</option>
+              <option>4 Guests</option>
+              <option>5+ Guests</option>
+            </SelectField>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <InputField id="check-in" label="Check-in" type="date" value={checkIn} onChange={(e) => setCheckIn(e.target.value)} icon={<CalendarIcon />} />
+            <InputField id="check-out" label="Check-out" type="date" value={checkOut} onChange={(e) => setCheckOut(e.target.value)} icon={<CalendarIcon />} />
+          </div>
+          <button type="submit" className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-orange-500 to-primary text-white font-bold py-3.5 px-4 rounded-xl shadow-lg hover:shadow-xl hover:scale-[1.03] transform transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
             <HotelIcon />
-            <span>Search</span>
+            <span>Search Hotels</span>
           </button>
         </form>
       </div>

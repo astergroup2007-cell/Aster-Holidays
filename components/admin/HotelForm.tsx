@@ -42,7 +42,8 @@ const HotelForm: React.FC<HotelFormProps> = ({ hotel, onSave, onCancel }) => {
       const files = Array.from(e.target.files);
       setNewImageFiles(files);
       
-      const previews = files.map(file => URL.createObjectURL(file));
+      // FIX: Added type assertion `as Blob` to resolve TypeScript error where `file` was inferred as `unknown`.
+      const previews = files.map(file => URL.createObjectURL(file as Blob));
       setImagePreviews(previews);
     }
   };
