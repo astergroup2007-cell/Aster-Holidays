@@ -1,148 +1,110 @@
-import type { TourPackage, Flight, Destination, Testimonial } from '../types';
+import type { TourPackage, Destination, Testimonial, Flight } from '../types';
 
-export const tourPackages: TourPackage[] = [
+export const destinations: Destination[] = [
+  { name: 'Sikkim', tagline: 'Valley of Flowers', image: 'https://images.unsplash.com/photo-1593537975999-51c335b78f4a?q=80&w=1974&auto=format&fit=crop' },
+  { name: 'Darjeeling', tagline: 'The Queen of Hills', image: 'https://images.unsplash.com/photo-1544275223-c2472d2c1a85?q=80&w=1964&auto=format&fit=crop' },
+  { name: 'Bhutan', tagline: 'Land of the Thunder Dragon', image: 'https://images.unsplash.com/photo-1568283661204-4411130e3a53?q=80&w=1974&auto=format&fit=crop' },
+  { name: 'Nepal', tagline: 'Himalayan Paradise', image: 'https://images.unsplash.com/photo-1544439194-e0a5c5315a6b?q=80&w=1968&auto=format&fit=crop' },
+  { name: 'Kalimpong', tagline: 'Orchids & Nurseries', image: 'https://images.unsplash.com/photo-1627895439818-a8b23f85e5ab?q=80&w=2070&auto=format&fit=crop' },
+  { name: 'Gangtok', tagline: 'The Capital City', image: 'https://images.unsplash.com/photo-1603565922096-2b4a539b207d?q=80&w=2070&auto=format&fit=crop' },
+];
+
+export let tourPackages: TourPackage[] = [
   {
     id: '1',
-    name: 'Enchanting Sikkim Wonders',
+    name: 'Enchanting Sikkim Adventure',
     duration: '6 Days / 5 Nights',
     price: 25000,
-    image: 'https://i.ibb.co/rRk0k5Bz/1.png',
-    destinationsCovered: ['Gangtok', 'Pelling', 'Tsomgo Lake'],
-    highlights: ['Tsomgo Lake Excursion', 'Pelling Skywalk', 'Gangtok Ropeway'],
-    category: 'Family',
+    image: 'https://i.ibb.co/k2L3sS3/tour-1.jpg',
+    destinationsCovered: ['Gangtok', 'Pelling', 'Lachung'],
+    highlights: ['Tsomgo Lake', 'Yumthang Valley', 'Khangchendzonga views'],
+    category: 'Adventure',
   },
   {
     id: '2',
-    name: 'Darjeeling Queen of Hills',
-    duration: '4 Days / 3 Nights',
-    price: 15000,
-    image: 'https://i.ibb.co/DPtMw9X6/2.png',
-    destinationsCovered: ['Darjeeling', 'Tiger Hill', 'Batasia Loop'],
-    highlights: ['Sunrise at Tiger Hill', 'Toy Train Ride', 'Tea Garden Visit'],
+    name: 'Romantic Darjeeling & Gangtok',
+    duration: '7 Days / 6 Nights',
+    price: 30000,
+    image: 'https://i.ibb.co/mS2nLq3/tour-2.jpg',
+    destinationsCovered: ['Darjeeling', 'Gangtok'],
+    highlights: ['Tiger Hill Sunrise', 'Batasia Loop', 'MG Marg'],
     category: 'Honeymoon',
   },
   {
     id: '3',
-    name: 'Mystical Bhutan Gateway',
-    duration: '7 Days / 6 Nights',
+    name: 'Majestic Bhutan Cultural Tour',
+    duration: '5 Days / 4 Nights',
     price: 45000,
-    image: 'https://i.ibb.co/twQ0d7N5/3.png',
-    destinationsCovered: ['Paro', 'Thimphu', 'Punakha'],
-    highlights: ["Hike to Tiger's Nest", 'Punakha Dzong', 'Buddha Dordenma'],
+    image: 'https://i.ibb.co/yY1H2Gk/tour-3.jpg',
+    destinationsCovered: ['Paro', 'Thimphu'],
+    highlights: ["Tiger's Nest Monastery", 'Punakha Dzong', 'Buddha Dordenma'],
     category: 'Cultural',
   },
   {
     id: '4',
-    name: 'Spiritual Nepal Discovery',
+    name: 'Nepal Family Expedition',
     duration: '8 Days / 7 Nights',
     price: 35000,
-    image: 'https://picsum.photos/seed/nepal-tour/800/600',
+    image: 'https://i.ibb.co/hL4X1G5/tour-4.jpg',
     destinationsCovered: ['Kathmandu', 'Pokhara', 'Chitwan'],
-    highlights: ['Pashupatinath Temple', 'Phewa Lake Boating', 'Jungle Safari in Chitwan'],
-    category: 'Adventure',
-  },
-  {
-    id: '5',
-    name: 'North Sikkim Adventure',
-    duration: '7 Days / 6 Nights',
-    price: 32000,
-    image: 'https://picsum.photos/seed/north-sikkim/800/600',
-    destinationsCovered: ['Lachen', 'Lachung', 'Gurudongmar Lake'],
-    highlights: ['Gurudongmar Lake', 'Yumthang Valley', 'Zero Point'],
-    category: 'Adventure',
-  },
-  {
-    id: '6',
-    name: 'Darjeeling & Kalimpong Serenity',
-    duration: '5 Days / 4 Nights',
-    price: 18000,
-    image: 'https://picsum.photos/seed/kalimpong-tour/800/600',
-    destinationsCovered: ['Darjeeling', 'Kalimpong'],
-    highlights: ['Deolo Hill', 'Pine View Nursery', 'Toy Train'],
+    highlights: ['Pashupatinath Temple', 'Phewa Lake boating', 'Jungle Safari'],
     category: 'Family',
-  }
+  },
+];
+
+export const testimonials: Testimonial[] = [
+    { name: 'Rahul & Priya', tour: 'Romantic Darjeeling', review: 'An absolutely magical trip! Aster Holidays planned everything perfectly. The sunrise from Tiger Hill was unforgettable. Highly recommended!', image: 'https://i.pravatar.cc/150?u=rahul' },
+    { name: 'The Sharma Family', tour: 'Nepal Expedition', review: 'Our family had an amazing time in Nepal. The jungle safari in Chitwan was a highlight for the kids. Great service and very helpful guides.', image: 'https://i.pravatar.cc/150?u=sharma' },
+    { name: 'Anjali Singh', tour: 'Sikkim Adventure', review: 'As a solo traveler, I felt completely safe and well-cared for. Yumthang Valley was breathtaking. Thank you, Aster Holidays, for a seamless experience.', image: 'https://i.pravatar.cc/150?u=anjali' },
 ];
 
 export const flights: Flight[] = [
   {
     id: 'fl1',
     airline: 'IndiGo',
-    airlineLogo: 'https://www.logo.wine/a/logo/IndiGo/IndiGo-Logo.wine.svg',
+    airlineLogo: 'https://i.ibb.co/yWz3sV1/indigo-logo.png',
     origin: 'DEL',
     destination: 'BOM',
     departureTime: '08:30',
     arrivalTime: '10:45',
     duration: '2h 15m',
-    price: 6000,
     stops: 0,
+    price: 5400
   },
   {
     id: 'fl2',
     airline: 'Vistara',
-    airlineLogo: 'https://www.logo.wine/a/logo/Vistara/Vistara-Logo.wine.svg',
+    airlineLogo: 'https://i.ibb.co/D80R575/vistara-logo.png',
     origin: 'DEL',
     destination: 'BOM',
-    departureTime: '10:00',
-    arrivalTime: '12:10',
-    duration: '2h 10m',
-    price: 7200,
+    departureTime: '09:15',
+    arrivalTime: '11:30',
+    duration: '2h 15m',
     stops: 0,
-  },
-];
-
-export const destinations: Destination[] = [
-  {
-    name: 'Sikkim',
-    tagline: 'Pristine Himalayan Paradise',
-    image: 'https://i.ibb.co/nMcwzgbf/1.png',
+    price: 5850
   },
   {
-    name: 'Darjeeling',
-    tagline: 'The Queen of the Hills',
-    image: 'https://i.ibb.co/pBNWM3Fq/2.png',
+    id: 'fl3',
+    airline: 'Air India',
+    airlineLogo: 'https://i.ibb.co/bJCwL68/airindia-logo.png',
+    origin: 'DEL',
+    destination: 'BOM',
+    departureTime: '11:00',
+    arrivalTime: '13:10',
+    duration: '2h 10m',
+    stops: 0,
+    price: 5200
   },
   {
-    name: 'Kalimpong',
-    tagline: 'Serene Hills & Blooming Orchids',
-    image: 'https://i.ibb.co/XfXNWnT4/3.png',
-  },
-  {
-    name: 'Bhutan',
-    tagline: 'Land of the Thunder Dragon',
-    image: 'https://i.ibb.co/Ps16pF0j/4.png',
-  },
-   {
-    name: 'Nepal',
-    tagline: 'Birthplace of Lord Buddha',
-    image: 'https://i.ibb.co/vCw7p9q9/5.png',
-  },
-   {
-    name: 'North-East',
-    tagline: 'India\'s Unexplored Paradise',
-    image: 'https://i.ibb.co/d4qHRfzv/6.png',
-  },
-];
-
-export const testimonials: Testimonial[] = [
-    {
-        name: 'Anjali & Rohan',
-        location: 'Mumbai, India',
-        tour: 'Darjeeling Honeymoon Package',
-        review: 'Aster Holidays planned the perfect honeymoon for us! The views from Tiger Hill were breathtaking, and the tea garden tour was magical. Everything was seamless, from the hotel to the driver. Highly recommended!',
-        image: 'https://picsum.photos/seed/couple1/100/100',
-    },
-    {
-        name: 'The Sharma Family',
-        location: 'Delhi, India',
-        tour: 'Enchanting Sikkim Wonders',
-        review: 'Our family trip to Sikkim was unforgettable, thanks to the Aster team. The kids loved the ropeway in Gangtok, and Tsomgo Lake was simply out of this world. Excellent service and very knowledgeable guides.',
-        image: 'https://picsum.photos/seed/family1/100/100',
-    },
-    {
-        name: 'David Smith',
-        location: 'London, UK',
-        tour: 'Mystical Bhutan Gateway',
-        review: "An incredible journey into the Kingdom of Bhutan. Aster Holidays handled all the permits and logistics flawlessly. The hike to Tiger's Nest was a life-changing experience. Can't thank them enough for their professionalism.",
-        image: 'https://picsum.photos/seed/traveler1/100/100',
-    }
+    id: 'fl4',
+    airline: 'SpiceJet',
+    airlineLogo: 'https://i.ibb.co/qN99tqR/spicejet-logo.png',
+    origin: 'DEL',
+    destination: 'BOM',
+    departureTime: '07:00',
+    arrivalTime: '10:30',
+    duration: '3h 30m',
+    stops: 1,
+    price: 4800
+  }
 ];
