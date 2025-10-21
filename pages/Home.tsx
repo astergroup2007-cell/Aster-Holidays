@@ -62,11 +62,14 @@ const Home: React.FC = () => {
       {/* Hero Section */}
       <section className="relative h-[600px] md:h-screen flex items-center justify-center text-white text-center overflow-hidden">
         <div className="absolute z-0 top-0 left-0 w-full h-full">
-          <img 
-            src="https://picsum.photos/seed/himalayan-vista/1920/1080" 
-            alt="A breathtaking view of a sunlit Himalayan mountain range, embodying adventure and serenity."
-            className="w-full h-full object-cover"
-          />
+         <iframe 
+            className="absolute top-1/2 left-1/2 min-w-full min-h-full w-auto h-auto object-cover transform -translate-x-1/2 -translate-y-1/2"
+            src="https://www.youtube.com/embed/20gW6-2atGk?autoplay=1&mute=1&loop=1&playlist=20gW6-2atGk&controls=0&showinfo=0&modestbranding=1&iv_load_policy=3&rel=0" 
+            title="Aster Holidays Travel Experience" 
+            frameBorder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            allowFullScreen
+          ></iframe>
         </div>
         
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
@@ -78,7 +81,7 @@ const Home: React.FC = () => {
         <CloudIcon className="absolute bottom-[25%] left-[15%] w-20 h-20 text-white/10 animate-float opacity-0" style={{ animationDelay: '4s' }} />
 
         <div className="relative container mx-auto px-6 h-full flex flex-col justify-center items-center z-20">
-          <h1 className="text-4xl md:text-7xl font-extrabold font-heading mb-4 leading-tight opacity-0 animate-fade-in-up">Your Himalayan Adventure Awaits</h1>
+          <h1 className="text-4xl md:text-7xl font-extrabold font-heading mb-4 leading-tight opacity-0 animate-fade-in-up">Your Journey Begins Here</h1>
           <p className="text-lg md:text-xl mb-8 max-w-2xl opacity-0 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>Discover the magic of Sikkim, Darjeeling, Bhutan & Nepal with Siliguri's most trusted travel experts.</p>
           <div className="w-full max-w-4xl opacity-0 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
              <SearchForm />
