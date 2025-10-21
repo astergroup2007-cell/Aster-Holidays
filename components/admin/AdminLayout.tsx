@@ -18,7 +18,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
       {/* Sidebar */}
       <aside className={`fixed inset-y-0 left-0 z-30 w-64 px-4 py-6 overflow-y-auto bg-gray-800 transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-200 ease-in-out md:relative md:translate-x-0`}>
         <div className="flex items-center justify-between">
-            <Link to="/admin">
+            <Link to="/">
                 <img src="https://i.ibb.co/s9NKvg1W/Logo-text-with-Sikkim-removed.png" alt="Aster Holidays Logo" className="h-12 bg-white p-2 rounded" />
             </Link>
              <button className="md:hidden" onClick={() => setIsSidebarOpen(false)}>
