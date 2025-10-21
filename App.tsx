@@ -14,6 +14,8 @@ import TermsAndConditions from './pages/TermsAndConditions';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import ProtectedRoute from './components/ProtectedRoute';
 import { AuthProvider } from './context/AuthContext';
+import CancellationPolicy from './pages/CancellationPolicy';
+import ShippingPolicy from './pages/ShippingPolicy';
 
 const App: React.FC = () => {
   return (
@@ -40,6 +42,8 @@ const App: React.FC = () => {
             <Route path="/signup" element={<Signup />} />
             <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/cancellation-policy" element={<CancellationPolicy />} />
+            <Route path="/shipping-policy" element={<ShippingPolicy />} />
           </Routes>
         </main>
         <Footer />

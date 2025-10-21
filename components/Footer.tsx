@@ -19,6 +19,8 @@ const Footer: React.FC = () => {
               <li><Link to="/flights" className="hover:text-primary">Flights</Link></li>
               <li><Link to="/privacy-policy" className="hover:text-primary">Privacy Policy</Link></li>
               <li><Link to="/terms-and-conditions" className="hover:text-primary">Terms & Conditions</Link></li>
+              <li><Link to="/cancellation-policy" className="hover:text-primary">Cancellation Policy</Link></li>
+              <li><Link to="/shipping-policy" className="hover:text-primary">Booking Delivery Policy</Link></li>
             </ul>
           </div>
           <div>
