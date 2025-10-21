@@ -13,9 +13,9 @@ const Header: React.FC = () => {
 
   return (
     <header className="bg-white shadow-md sticky top-0 z-50">
-      <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-        <Link to="/" className="text-2xl font-bold text-blue-600">
-          Aster Holidays
+      <div className="container mx-auto px-6 py-3 flex justify-between items-center">
+        <Link to="/">
+          <img src="https://drive.google.com/uc?export=view&id=1jYd_5c5QukwUh739fM8KT1JFuqx9XMVP" alt="Aster Holidays Logo" className="h-10" />
         </Link>
         <nav className="hidden md:flex items-center space-x-8">
           <Link to="/" className="text-gray-600 hover:text-blue-600 transition duration-300">Home</Link>
