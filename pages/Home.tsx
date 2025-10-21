@@ -9,9 +9,17 @@ const Home: React.FC = () => {
 
   return (
     <div>
-      {/* Hero Section */}
-      <div className="relative h-96 bg-cover bg-center" style={{ backgroundImage: "url('https://picsum.photos/1600/900?random=100')" }}>
-        <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+      {/* Hero Section with Video */}
+      <div className="relative h-96 overflow-hidden">
+        <video
+          className="absolute top-0 left-0 w-full h-full object-cover z-0"
+          src="https://videos.pexels.com/video-files/4782879/4782879-hd_1920_1080_30fps.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+        />
+        <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center z-10">
           <div className="text-center text-white">
             <h1 className="text-5xl font-bold mb-4">Find Your Next Stay</h1>
             <p className="text-xl">Search deals on hotels, homes, and much more...</p>
