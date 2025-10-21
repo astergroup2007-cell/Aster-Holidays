@@ -34,31 +34,53 @@ const FlightBooking: React.FC = () => {
     fetchFlight();
   }, [id]);
 
-  const handlePayment = () => {
+  const handlePayment = async () => {
     if (!flight || !authContext?.user) return;
 
-    const options = {
-      key: "rzp_test_1234567890ABCD", // This is a public test key
-      amount: flight.price * 100, // Amount in the smallest currency unit
-      currency: "INR",
-      name: "Aster Holidays.in",
-      description: `Flight from ${flight.origin} to ${flight.destination}`,
-      image: "https://drive.google.com/uc?export=view&id=1isnlkdhdKaSu_pnJ3Pd9AdECpLk-ix8I",
-      handler: function (response: any) {
-        alert(`Payment successful! Payment ID: ${response.razorpay_payment_id}`);
-        navigate('/flights');
-      },
-      prefill: {
-        name: authContext.user.name,
-        email: authContext.user.email,
-      },
-      theme: {
-        color: "#F97316"
-      }
-    };
+    try {
+      // Step 1: Create an order on the backend
+      const response = await fetch('/api/create-razorpay-order', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ amount: flight.price * 100 }), // amount in paise
+      });
 
-    const rzp = new window.Razorpay(options);
-    rzp.open();
+      if (!response.ok) {
+        throw new Error('Failed to create Razorpay order');
+      }
+
+      const order = await response.json();
+
+      // Step 2: Open Razorpay checkout
+      const options = {
+        key: import.meta.env.VITE_RAZORPAY_KEY_ID as string,
+        amount: order.amount,
+        currency: "INR",
+        name: "Aster Holidays.in",
+        description: `Flight from ${flight.origin} to ${flight.destination}`,
+        image: "https://drive.google.com/uc?export=view&id=1isnlkdhdKaSu_pnJ3Pd9AdECpLk-ix8I",
+        order_id: order.id,
+        handler: function (response: any) {
+          alert(`Payment successful! Payment ID: ${response.razorpay_payment_id}`);
+          navigate('/flights');
+        },
+        prefill: {
+          name: authContext.user.name,
+          email: authContext.user.email,
+        },
+        theme: {
+          color: "#F97316"
+        }
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+    } catch (error) {
+      console.error("Payment Error:", error);
+      alert("Payment failed. Please try again.");
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {

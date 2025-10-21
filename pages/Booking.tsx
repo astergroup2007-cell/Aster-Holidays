@@ -34,32 +34,54 @@ const Booking: React.FC = () => {
     fetchHotel();
   }, [id]);
   
-  const handlePayment = () => {
+  const handlePayment = async () => {
     if (!hotel || !authContext?.user) return;
 
-    const options = {
-      key: "rzp_test_1234567890ABCD", // This is a public test key
-      amount: hotel.pricePerNight * 100, // Amount in the smallest currency unit (paise for INR)
-      currency: "INR",
-      name: "Aster Holidays.in",
-      description: `Booking for ${hotel.name}`,
-      image: "https://drive.google.com/uc?export=view&id=1isnlkdhdKaSu_pnJ3Pd9AdECpLk-ix8I",
-      handler: function (response: any) {
-        alert(`Payment successful! Payment ID: ${response.razorpay_payment_id}`);
-        // In a real app, you would verify the payment signature on your backend
-        navigate('/');
-      },
-      prefill: {
-        name: authContext.user.name,
-        email: authContext.user.email,
-      },
-      theme: {
-        color: "#F97316" // Corresponds to your primary color
-      }
-    };
+    try {
+      // Step 1: Create an order on the backend
+      const response = await fetch('/api/create-razorpay-order', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ amount: hotel.pricePerNight * 100 }), // amount in paise
+      });
 
-    const rzp = new window.Razorpay(options);
-    rzp.open();
+      if (!response.ok) {
+        throw new Error('Failed to create Razorpay order');
+      }
+
+      const order = await response.json();
+
+      // Step 2: Open the Razorpay checkout
+      const options = {
+        key: import.meta.env.VITE_RAZORPAY_KEY_ID as string,
+        amount: order.amount,
+        currency: order.currency,
+        name: "Aster Holidays.in",
+        description: `Booking for ${hotel.name}`,
+        image: "https://drive.google.com/uc?export=view&id=1isnlkdhdKaSu_pnJ3Pd9AdECpLk-ix8I",
+        order_id: order.id,
+        handler: function (response: any) {
+          alert(`Payment successful! Payment ID: ${response.razorpay_payment_id}`);
+          // In a real app, you would verify the payment signature on your backend
+          navigate('/');
+        },
+        prefill: {
+          name: authContext.user.name,
+          email: authContext.user.email,
+        },
+        theme: {
+          color: "#F97316" // Corresponds to your primary color
+        }
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+    } catch (error) {
+      console.error("Payment Error:", error);
+      alert("Payment failed. Please try again.");
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {

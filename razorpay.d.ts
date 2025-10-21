@@ -1,3 +1,6 @@
+// FIX: Add reference to vite/client to get types for import.meta.env
+/// <reference types="vite/client" />
+
 // razorpay.d.ts
 interface RazorpayOptions {
   key: string;
@@ -6,7 +9,8 @@ interface RazorpayOptions {
   name: string;
   description: string;
   image: string;
-  handler: (response: { razorpay_payment_id: string }) => void;
+  order_id: string; // Add order_id for server-side order creation
+  handler: (response: { razorpay_payment_id: string; razorpay_order_id: string; razorpay_signature: string; }) => void;
   prefill?: {
     name?: string;
     email?: string;
