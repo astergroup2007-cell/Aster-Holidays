@@ -8,7 +8,7 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="mb-4 md:mb-0">
              <Link to="/">
-                <img src="https://drive.google.com/uc?export=view&id=1isnlkdhdKaSu_pnJ3Pd9AdECpLk-ix8I" alt="Aster Holidays Logo" className="h-14 mb-4" />
+                <img src="https://i.ibb.co/3mZfxCJx/Logo-text-with-Sikkim-removed.png" alt="Aster Holidays Logo" className="h-14 mb-4" />
              </Link>
             <p className="text-gray-400">Your trusted partner for memorable journeys.</p>
           </div>

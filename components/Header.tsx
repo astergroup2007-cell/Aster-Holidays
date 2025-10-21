@@ -16,7 +16,7 @@ const Header: React.FC = () => {
     <header className="bg-white shadow-md sticky top-0 z-50">
       <nav className="container mx-auto px-6 py-3 flex justify-between items-center">
         <Link to="/">
-          <img src="https://drive.google.com/uc?export=view&id=1isnlkdhdKaSu_pnJ3Pd9AdECpLk-ix8I" alt="Aster Holidays Logo" className="h-[60px]" />
+          <img src="https://i.ibb.co/3mZfxCJx/Logo-text-with-Sikkim-removed.png" alt="Aster Holidays Logo" className="h-[60px]" />
         </Link>
         <div className="hidden md:flex items-center space-x-8">
           <NavLink to="/" className={({ isActive }) => isActive ? "text-primary font-semibold border-b-2 border-primary" : "text-gray-600 hover:text-primary"}>Home</NavLink>
