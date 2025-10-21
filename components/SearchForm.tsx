@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // --- INLINE SVG ICONS ---
@@ -33,6 +33,46 @@ const AirplaneIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
     </svg>
 );
 
+// Helper components moved outside the main component to prevent re-creation on render
+const InputField: React.FC<{ id: string, label: string, type: string, value: string, onChange: (e: React.ChangeEvent<HTMLInputElement>) => void, placeholder?: string, required?: boolean, icon: React.ReactNode }> = 
+({ id, label, type, value, onChange, placeholder, required = true, icon }) => (
+  <div className="relative w-full">
+    <label htmlFor={id} className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
+    <div className="absolute left-3 bottom-3.5 text-gray-400 pointer-events-none">
+      {icon}
+    </div>
+    <input
+      type={type}
+      id={id}
+      value={value}
+      onChange={onChange}
+      className="w-full pl-10 pr-3 py-3 border border-gray-200 bg-white/50 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent transition-all duration-300"
+      placeholder={placeholder}
+      required={required}
+    />
+  </div>
+);
+
+const SelectField: React.FC<{ id: string, label: string, value: string, onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void, icon: React.ReactNode, children: React.ReactNode }> = 
+({ id, label, value, onChange, icon, children }) => (
+   <div className="relative w-full">
+    <label htmlFor={id} className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
+    <div className="absolute left-3 bottom-3.5 text-gray-400 pointer-events-none">
+      {icon}
+    </div>
+     <select
+      id={id}
+      value={value}
+      onChange={onChange}
+      className="w-full pl-10 pr-8 py-3 border border-gray-200 bg-white/50 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent transition-all duration-300 appearance-none"
+    >
+      {children}
+    </select>
+     <div className="absolute right-4 bottom-4 text-gray-400 pointer-events-none">
+       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+    </div>
+  </div>
+);
 
 const SearchForm: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'hotels' | 'flights'>('hotels');
@@ -62,47 +102,6 @@ const SearchForm: React.FC = () => {
     navigate('/flights');
   };
   
-  const InputField: React.FC<{ id: string, label: string, type: string, value: string, onChange: (e: React.ChangeEvent<HTMLInputElement>) => void, placeholder?: string, required?: boolean, icon: React.ReactNode }> = 
-  ({ id, label, type, value, onChange, placeholder, required = true, icon }) => (
-    <div className="relative w-full">
-      <label htmlFor={id} className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
-      <div className="absolute left-3 bottom-3.5 text-gray-400 pointer-events-none">
-        {icon}
-      </div>
-      <input
-        type={type}
-        id={id}
-        value={value}
-        onChange={onChange}
-        className="w-full pl-10 pr-3 py-3 border border-gray-200 bg-white/50 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent transition-all duration-300"
-        placeholder={placeholder}
-        required={required}
-      />
-    </div>
-  );
-
-  const SelectField: React.FC<{ id: string, label: string, value: string, onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void, icon: React.ReactNode, children: React.ReactNode }> = 
-  ({ id, label, value, onChange, icon, children }) => (
-     <div className="relative w-full">
-      <label htmlFor={id} className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
-      <div className="absolute left-3 bottom-3.5 text-gray-400 pointer-events-none">
-        {icon}
-      </div>
-       <select
-        id={id}
-        value={value}
-        onChange={onChange}
-        className="w-full pl-10 pr-8 py-3 border border-gray-200 bg-white/50 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent transition-all duration-300 appearance-none"
-      >
-        {children}
-      </select>
-       <div className="absolute right-4 bottom-4 text-gray-400 pointer-events-none">
-         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
-      </div>
-    </div>
-  );
-
-
   return (
     <div className="bg-white/70 backdrop-blur-md p-6 md:p-8 rounded-3xl shadow-2xl w-full transition-all duration-500">
       {/* Tabs */}
