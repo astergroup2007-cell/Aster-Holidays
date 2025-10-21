@@ -7,7 +7,7 @@ export const hotels: Hotel[] = [
     name: 'Seaside Serenity Resort',
     location: 'Goa, India',
     rating: 4.8,
-    pricePerNight: 150,
+    pricePerNight: 12000,
     description: 'A luxurious resort offering breathtaking views of the Arabian Sea. Enjoy our private beach, infinity pool, and world-class spa. Perfect for a romantic getaway or a family vacation.',
     amenities: [Amenity.Wifi, Amenity.Pool, Amenity.Restaurant, Amenity.Parking, Amenity.Gym],
     images: [
@@ -23,7 +23,7 @@ export const hotels: Hotel[] = [
     name: 'Mountain Vista Lodge',
     location: 'Manali, Himachal Pradesh',
     rating: 4.5,
-    pricePerNight: 120,
+    pricePerNight: 9600,
     description: 'Nestled in the Himalayas, our lodge offers cozy rooms with stunning mountain views. Ideal for trekkers and nature lovers, with easy access to popular trails and local attractions.',
     amenities: [Amenity.Wifi, Amenity.Parking, Amenity.Restaurant, Amenity.PetFriendly],
      images: [
@@ -39,7 +39,7 @@ export const hotels: Hotel[] = [
     name: 'The Royal Heritage',
     location: 'Jaipur, Rajasthan',
     rating: 4.9,
-    pricePerNight: 250,
+    pricePerNight: 20000,
     description: 'Experience the grandeur of Rajasthan in our heritage hotel. Converted from a royal palace, it features opulent suites, traditional decor, and exceptional hospitality.',
     amenities: [Amenity.Wifi, Amenity.Pool, Amenity.Restaurant, Amenity.Parking, Amenity.Gym],
      images: [
@@ -55,7 +55,7 @@ export const hotels: Hotel[] = [
     name: 'Backwater Bliss Houseboat',
     location: 'Alleppey, Kerala',
     rating: 4.7,
-    pricePerNight: 180,
+    pricePerNight: 14400,
     description: 'Float through the serene backwaters of Kerala on our luxurious houseboat. Enjoy authentic local cuisine and watch the picturesque villages pass by from the comfort of your room.',
     amenities: [Amenity.Restaurant, Amenity.Wifi],
      images: [
@@ -71,7 +71,7 @@ export const hotels: Hotel[] = [
     name: 'Urban Oasis Suites',
     location: 'Mumbai, Maharashtra',
     rating: 4.6,
-    pricePerNight: 160,
+    pricePerNight: 12800,
     description: 'A modern hotel in the heart of Mumbai, offering a peaceful retreat from the bustling city. Features a rooftop pool, a state-of-the-art gym, and easy access to business districts.',
     amenities: [Amenity.Wifi, Amenity.Pool, Amenity.Gym, Amenity.Restaurant, Amenity.Parking],
      images: [
@@ -87,7 +87,7 @@ export const hotels: Hotel[] = [
     name: 'Jungle Hideaway Resort',
     location: 'Thekkady, Kerala',
     rating: 4.4,
-    pricePerNight: 130,
+    pricePerNight: 10400,
     description: 'Immerse yourself in nature at our eco-friendly resort bordering the Periyar National Park. Stay in private cottages and enjoy wildlife safaris, nature walks, and bird watching.',
     amenities: [Amenity.Parking, Amenity.Restaurant, Amenity.PetFriendly],
      images: [
@@ -110,7 +110,7 @@ export const flights: Flight[] = [
     departureTime: '08:30',
     arrivalTime: '10:45',
     duration: '2h 15m',
-    price: 75,
+    price: 6000,
     stops: 0,
   },
   {
@@ -122,7 +122,7 @@ export const flights: Flight[] = [
     departureTime: '10:00',
     arrivalTime: '12:10',
     duration: '2h 10m',
-    price: 90,
+    price: 7200,
     stops: 0,
   },
   {
@@ -134,7 +134,7 @@ export const flights: Flight[] = [
     departureTime: '11:45',
     arrivalTime: '15:30',
     duration: '3h 45m',
-    price: 65,
+    price: 5200,
     stops: 1,
   },
   {
@@ -146,7 +146,7 @@ export const flights: Flight[] = [
     departureTime: '14:00',
     arrivalTime: '16:20',
     duration: '2h 20m',
-    price: 70,
+    price: 5600,
     stops: 0,
   },
   {
@@ -158,7 +158,7 @@ export const flights: Flight[] = [
     departureTime: '07:00',
     arrivalTime: '08:15',
     duration: '1h 15m',
-    price: 50,
+    price: 4000,
     stops: 0,
   },
   {
@@ -170,7 +170,7 @@ export const flights: Flight[] = [
     departureTime: '18:00',
     arrivalTime: '19:10',
     duration: '1h 10m',
-    price: 45,
+    price: 3600,
     stops: 0,
   },
 ];
