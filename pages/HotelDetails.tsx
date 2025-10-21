@@ -60,7 +60,7 @@ const HotelDetails: React.FC = () => {
   return (
     <div className="container mx-auto px-6 py-12">
       <div className="mb-8">
-        <h1 className="text-4xl font-bold">{hotel.name}</h1>
+        <h1 className="text-4xl font-bold font-heading text-secondary">{hotel.name}</h1>
         <p className="text-gray-600 mt-2">{hotel.location}</p>
         <div className="flex items-center mt-2">
           <div className="flex items-center bg-green-500 text-white text-sm font-bold px-2 py-1 rounded">
@@ -81,14 +81,14 @@ const HotelDetails: React.FC = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
         <div className="lg:col-span-2">
-          <h2 className="text-2xl font-bold mb-4">About this hotel</h2>
+          <h2 className="text-2xl font-bold font-heading text-secondary mb-4">About this hotel</h2>
           <p className="text-gray-700 leading-relaxed">{hotel.description}</p>
           
-          <h2 className="text-2xl font-bold mt-8 mb-4">Amenities</h2>
+          <h2 className="text-2xl font-bold font-heading text-secondary mt-8 mb-4">Amenities</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {hotel.amenities.map(amenity => (
               <div key={amenity} className="flex items-center space-x-3">
-                <span className="text-blue-600">{amenityIcons[amenity]}</span>
+                <span className="text-accent">{amenityIcons[amenity]}</span>
                 <span className="text-gray-700">{amenity}</span>
               </div>
             ))}
@@ -96,8 +96,8 @@ const HotelDetails: React.FC = () => {
         </div>
         
         <div className="bg-white p-6 rounded-lg shadow-lg h-fit">
-          <p className="text-2xl font-bold text-gray-900">${hotel.pricePerNight} <span className="text-base font-normal text-gray-500">/ night</span></p>
-          <Link to={`/booking/${hotel.id}`} className="mt-6 w-full bg-blue-600 text-white py-3 px-4 rounded-md hover:bg-blue-700 text-center block">
+          <p className="text-2xl font-bold text-accent">₹{hotel.pricePerNight.toLocaleString('en-IN')} <span className="text-base font-normal text-gray-500">/ night</span></p>
+          <Link to={`/booking/${hotel.id}`} className="mt-6 w-full bg-primary text-white font-bold py-3 px-4 rounded-md hover:bg-orange-600 text-center block">
             Book Now
           </Link>
         </div>

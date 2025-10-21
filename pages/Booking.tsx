@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+// FIX: Import `Link` from `react-router-dom` to be used in the component.
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import type { Hotel } from '../types';
 import { getHotelById } from '../services/api';
 import { AuthContext } from '../context/AuthContext';
@@ -50,17 +51,17 @@ const Booking: React.FC = () => {
 
   return (
     <div className="container mx-auto px-6 py-12">
-      <h1 className="text-4xl font-bold mb-8">Confirm Your Booking</h1>
+      <h1 className="text-4xl font-bold font-heading mb-8">Confirm Your Booking</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
         <div>
-          <h2 className="text-2xl font-semibold mb-4">{hotel.name}</h2>
+          <h2 className="text-2xl font-semibold font-heading mb-4">{hotel.name}</h2>
           <img src={hotel.images[0]} alt={hotel.name} className="w-full h-64 object-cover rounded-lg shadow-md mb-6" />
-          <p className="text-lg font-bold">Price: ${hotel.pricePerNight} / night</p>
+          <p className="text-lg font-bold text-accent">Price: ₹{hotel.pricePerNight.toLocaleString('en-IN')} / night</p>
           <p className="text-gray-600 mt-2">{hotel.location}</p>
         </div>
         <div>
           <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-lg">
-            <h3 className="text-xl font-bold mb-6">Guest Details</h3>
+            <h3 className="text-xl font-bold font-heading mb-6">Guest Details</h3>
             <div className="mb-4">
               <label htmlFor="name" className="block text-sm font-medium text-gray-700">Full Name</label>
               <input
@@ -68,7 +69,7 @@ const Booking: React.FC = () => {
                 id="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-accent focus:border-accent"
                 required
               />
             </div>
@@ -79,14 +80,14 @@ const Booking: React.FC = () => {
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-accent focus:border-accent"
                 required
               />
             </div>
-            <button type="submit" className="w-full bg-blue-600 text-white py-3 px-4 rounded-md hover:bg-blue-700">
+            <button type="submit" className="w-full bg-primary text-white font-bold py-3 px-4 rounded-md hover:bg-orange-600">
               Confirm & Pay
             </button>
-            <p className="text-xs text-gray-500 mt-4 text-center">By clicking "Confirm & Pay", you agree to our Terms and Conditions.</p>
+            <p className="text-xs text-gray-500 mt-4 text-center">By clicking "Confirm & Pay", you agree to our <Link to="/terms-and-conditions" className="text-accent hover:underline">Terms and Conditions</Link>.</p>
           </form>
         </div>
       </div>
