@@ -1,68 +1,49 @@
 import React from 'react';
 import SearchForm from '../components/SearchForm';
-import { Link } from 'react-router-dom';
-import { hotels } from '../data/mockData';
-import HotelCard from '../components/HotelCard';
 
 const Home: React.FC = () => {
-  const featuredHotels = hotels.slice(0, 3);
-
   return (
     <div>
-      {/* Hero Section with Video */}
-      <div className="relative h-96 overflow-hidden">
-        <video
-          className="absolute top-0 left-0 w-full h-full object-cover z-0"
-          src="https://videos.pexels.com/video-files/4782879/4782879-hd_1920_1080_30fps.mp4"
-          autoPlay
-          loop
-          muted
-          playsInline
-        />
-        <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center z-10">
-          <div className="text-center text-white">
-            <h1 className="text-5xl font-bold mb-4">Find Your Next Stay</h1>
-            <p className="text-xl">Search deals on hotels, homes, and much more...</p>
-          </div>
+      {/* Hero Section */}
+      <div className="relative bg-cover bg-center h-[500px]" style={{ backgroundImage: "url('https://picsum.photos/1600/500?random=42')" }}>
+        <div className="absolute inset-0 bg-black opacity-40"></div>
+        <div className="relative container mx-auto px-6 h-full flex flex-col justify-center items-center text-center">
+          <h1 className="text-5xl font-extrabold text-white mb-4">Find Your Perfect Getaway</h1>
+          <p className="text-xl text-white mb-8">Discover and book amazing hotels and flights at the best prices.</p>
         </div>
       </div>
 
-      {/* Search Form */}
-      <div className="container mx-auto px-6">
+      {/* Search Form Section */}
+      <div className="container mx-auto px-6 -mt-16 relative z-10">
         <SearchForm />
       </div>
 
-      {/* Featured Hotels Section */}
-      <div className="container mx-auto px-6 py-12">
-        <h2 className="text-3xl font-bold text-center mb-8">Popular Destinations</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {featuredHotels.map(hotel => (
-            <HotelCard key={hotel.id} hotel={hotel} />
-          ))}
-        </div>
-        <div className="text-center mt-8">
-          <Link to="/hotels" className="bg-blue-600 text-white py-3 px-6 rounded-md hover:bg-blue-700 transition duration-300 font-semibold">
-            View All Hotels
-          </Link>
-        </div>
-      </div>
-
-       {/* Why Choose Us Section */}
-       <div className="bg-gray-100 py-16">
-        <div className="container mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold mb-8">Why Book With Us?</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="p-6">
-              <h3 className="text-xl font-semibold mb-2">Best Price Guarantee</h3>
-              <p className="text-gray-600">Find the best deals on hotels and flights, backed by our price match promise.</p>
+      {/* Featured Destinations Section */}
+      <div className="container mx-auto px-6 py-20">
+        <h2 className="text-3xl font-bold text-center mb-10">Popular Destinations</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="relative rounded-lg overflow-hidden shadow-lg h-80">
+            <img src="https://picsum.photos/400/500?random=1" alt="Goa" className="w-full h-full object-cover"/>
+            <div className="absolute inset-0 bg-black bg-opacity-40 flex items-end p-4">
+              <h3 className="text-white text-2xl font-bold">Goa</h3>
             </div>
-            <div className="p-6">
-              <h3 className="text-xl font-semibold mb-2">24/7 Customer Support</h3>
-              <p className="text-gray-600">Our team is always here to help you with any questions or issues.</p>
+          </div>
+          <div className="relative rounded-lg overflow-hidden shadow-lg h-80">
+            <img src="https://picsum.photos/400/500?random=2" alt="Manali" className="w-full h-full object-cover"/>
+            <div className="absolute inset-0 bg-black bg-opacity-40 flex items-end p-4">
+              <h3 className="text-white text-2xl font-bold">Manali</h3>
             </div>
-            <div className="p-6">
-              <h3 className="text-xl font-semibold mb-2">Secure Bookings</h3>
-              <p className="text-gray-600">We use secure payment gateways to protect your information.</p>
+          </div>
+          <div className="relative rounded-lg overflow-hidden shadow-lg h-80">
+            <img src="https://picsum.photos/400/500?random=3" alt="Jaipur" className="w-full h-full object-cover"/>
+            <div className="absolute inset-0 bg-black bg-opacity-40 flex items-end p-4">
+              <h3 className="text-white text-2xl font-bold">Jaipur</h3>
+            </div>
+          </div>
+          <div className="relative rounded-lg overflow-hidden shadow-lg h-80">
+            <img src="https://picsum.photos/400/500?random=4" alt="Kerala" className="w-full h-full object-cover"/>
+            <div className="absolute inset-0 bg-black bg-opacity-40 flex items-end p-4">
+              <h3 className="text-white text-2xl font-bold">Kerala</h3>
             </div>
           </div>
         </div>

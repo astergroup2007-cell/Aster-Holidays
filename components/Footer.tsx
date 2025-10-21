@@ -3,33 +3,20 @@ import { Link } from 'react-router-dom';
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-gray-800 text-white mt-12">
+    <footer className="bg-gray-800 text-white mt-auto">
       <div className="container mx-auto px-6 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div>
-            <Link to="/">
-              <img src="https://drive.google.com/uc?export=view&id=1jYd_5c5QukwUh739fM8KT1JFuqx9XMVP" alt="Aster Holidays Logo" className="h-12 mb-4" />
-            </Link>
-            <p className="text-gray-400">Your trusted partner for memorable journeys. Book flights and hotels with ease.</p>
+        <div className="flex flex-col md:flex-row justify-between items-center">
+          <div className="mb-4 md:mb-0">
+            <h3 className="text-xl font-bold">Aster Holidays</h3>
+            <p className="text-gray-400">Your one-stop travel partner.</p>
           </div>
-          <div>
-            <h3 className="text-xl font-bold mb-4">Quick Links</h3>
-            <ul className="space-y-2">
-              <li><Link to="/" className="text-gray-400 hover:text-white">Home</Link></li>
-              <li><Link to="/hotels" className="text-gray-400 hover:text-white">Hotels</Link></li>
-              <li><Link to="/flights" className="text-gray-400 hover:text-white">Flights</Link></li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="text-xl font-bold mb-4">Legal</h3>
-            <ul className="space-y-2">
-              <li><Link to="/terms-and-conditions" className="text-gray-400 hover:text-white">Terms & Conditions</Link></li>
-              <li><Link to="/privacy-policy" className="text-gray-400 hover:text-white">Privacy Policy</Link></li>
-            </ul>
+          <div className="flex space-x-6">
+            <Link to="/privacy-policy" className="hover:text-blue-400">Privacy Policy</Link>
+            <Link to="/terms-and-conditions" className="hover:text-blue-400">Terms & Conditions</Link>
           </div>
         </div>
-        <div className="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400">
-          <p>&copy; {new Date().getFullYear()} Aster Holidays. All rights reserved.</p>
+        <div className="text-center text-gray-500 mt-8 pt-6 border-t border-gray-700">
+          <p>&copy; {new Date().getFullYear()} Aster Holidays.in. All rights reserved.</p>
         </div>
       </div>
     </footer>

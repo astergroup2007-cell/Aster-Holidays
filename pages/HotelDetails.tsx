@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import type { Hotel } from '../types';
@@ -10,13 +9,26 @@ import PoolIcon from '../components/icons/PoolIcon';
 import ParkingIcon from '../components/icons/ParkingIcon';
 import RestaurantIcon from '../components/icons/RestaurantIcon';
 
-const AmenityIconMap: Record<Amenity, React.ReactElement> = {
-  [Amenity.Wifi]: <WifiIcon className="w-6 h-6 text-blue-500" />,
-  [Amenity.Pool]: <PoolIcon className="w-6 h-6 text-blue-500" />,
-  [Amenity.Parking]: <ParkingIcon className="w-6 h-6 text-blue-500" />,
-  [Amenity.Restaurant]: <RestaurantIcon className="w-6 h-6 text-blue-500" />,
-  [Amenity.PetFriendly]: <span className="text-2xl">🐾</span>,
-  [Amenity.Gym]: <span className="text-2xl">🏋️</span>,
+const PetFriendlyIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} {...props}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M15 10l4.55-4.55a2.12 2.12 0 00-3-3L12 7l-4.55-4.55a2.12 2.12 0 00-3 3L9 10m0 0v4.55a2.12 2.12 0 003 3L12 13l4.55 4.55a2.12 2.12 0 003-3V10" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 21.88a9.88 9.88 0 006-2.68 9.88 9.88 0 00-12 0 9.88 9.88 0 006 2.68z" />
+    </svg>
+); 
+
+const GymIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} {...props}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M5 12a2 2 0 01-2-2V8a2 2 0 012-2h14a2 2 0 012 2v2a2 2 0 01-2 2M5 12a2 2 0 002 2h10a2 2 0 002-2" />
+    </svg>
+); 
+
+const amenityIcons: { [key in Amenity]: React.ReactNode } = {
+  [Amenity.Wifi]: <WifiIcon />,
+  [Amenity.Pool]: <PoolIcon />,
+  [Amenity.Parking]: <ParkingIcon />,
+  [Amenity.Restaurant]: <RestaurantIcon />,
+  [Amenity.PetFriendly]: <PetFriendlyIcon />,
+  [Amenity.Gym]: <GymIcon />,
 };
 
 const HotelDetails: React.FC = () => {
@@ -26,12 +38,13 @@ const HotelDetails: React.FC = () => {
 
   useEffect(() => {
     const fetchHotel = async () => {
-      if (id) {
-        setLoading(true);
-        const data = await getHotelById(id);
+      if (!id) return;
+      setLoading(true);
+      const data = await getHotelById(id);
+      if (data) {
         setHotel(data);
-        setLoading(false);
       }
+      setLoading(false);
     };
     fetchHotel();
   }, [id]);
@@ -46,60 +59,47 @@ const HotelDetails: React.FC = () => {
 
   return (
     <div className="container mx-auto px-6 py-12">
-      <div className="bg-white rounded-lg shadow-xl overflow-hidden">
-        <div className="grid grid-cols-1 lg:grid-cols-3">
-            <div className="lg:col-span-2">
-                 <img src={hotel.images[0]} alt={hotel.name} className="w-full h-96 object-cover" />
-            </div>
-            <div className="grid grid-cols-2 gap-1 lg:col-span-1">
-                <img src={hotel.images[1]} alt={hotel.name} className="w-full h-48 object-cover"/>
-                <img src={hotel.images[2]} alt={hotel.name} className="w-full h-48 object-cover"/>
-                <img src={hotel.images[3]} alt={hotel.name} className="w-full h-48 object-cover"/>
-                 <div className="relative w-full h-48">
-                    <img src={hotel.images[4]} alt={hotel.name} className="w-full h-full object-cover"/>
-                    <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                        <span className="text-white font-bold text-lg">+5 more</span>
-                    </div>
-                </div>
-            </div>
+      <div className="mb-8">
+        <h1 className="text-4xl font-bold">{hotel.name}</h1>
+        <p className="text-gray-600 mt-2">{hotel.location}</p>
+        <div className="flex items-center mt-2">
+          <div className="flex items-center bg-green-500 text-white text-sm font-bold px-2 py-1 rounded">
+            <StarIcon className="w-4 h-4 mr-1 text-yellow-300" />
+            <span>{hotel.rating}</span>
+          </div>
         </div>
+      </div>
 
-        <div className="p-8">
-            <div className="flex flex-col md:flex-row justify-between items-start">
-                <div>
-                    <h1 className="text-4xl font-bold text-gray-800">{hotel.name}</h1>
-                    <p className="text-lg text-gray-600 mt-2">{hotel.location}</p>
-                    <div className="flex items-center mt-2">
-                        {[...Array(5)].map((_, i) => (
-                          <StarIcon key={i} className={`w-6 h-6 ${i < Math.round(hotel.rating) ? 'text-yellow-400' : 'text-gray-300'}`} />
-                        ))}
-                        <span className="ml-2 text-gray-600 text-lg">{hotel.rating.toFixed(1)}</span>
-                    </div>
-                </div>
-                <div className="mt-4 md:mt-0 text-right">
-                    <p className="text-3xl font-bold text-blue-600">${hotel.pricePerNight}<span className="text-lg font-normal text-gray-500">/night</span></p>
-                    <Link to={`/booking/${hotel.id}`}>
-                        <button className="mt-4 w-full md:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg shadow-lg hover:bg-blue-700 transition duration-300">Book Now</button>
-                    </Link>
-                </div>
-            </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+        <img src={hotel.images[0]} alt={hotel.name} className="w-full h-96 object-cover rounded-lg shadow-md" />
+        <div className="grid grid-cols-2 gap-4">
+          {hotel.images.slice(1, 5).map((img, index) => (
+            <img key={index} src={img} alt={`${hotel.name} view ${index + 1}`} className="w-full h-full object-cover rounded-lg shadow-md" />
+          ))}
+        </div>
+      </div>
 
-            <div className="mt-8 border-t pt-8">
-                <h2 className="text-2xl font-semibold mb-4">About this hotel</h2>
-                <p className="text-gray-700 leading-relaxed">{hotel.description}</p>
-            </div>
-
-            <div className="mt-8 border-t pt-8">
-                <h2 className="text-2xl font-semibold mb-4">Amenities</h2>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
-                    {hotel.amenities.map(amenity => (
-                        <div key={amenity} className="flex items-center space-x-3">
-                            {AmenityIconMap[amenity]}
-                            <span className="text-gray-700">{amenity}</span>
-                        </div>
-                    ))}
-                </div>
-            </div>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+        <div className="lg:col-span-2">
+          <h2 className="text-2xl font-bold mb-4">About this hotel</h2>
+          <p className="text-gray-700 leading-relaxed">{hotel.description}</p>
+          
+          <h2 className="text-2xl font-bold mt-8 mb-4">Amenities</h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {hotel.amenities.map(amenity => (
+              <div key={amenity} className="flex items-center space-x-3">
+                <span className="text-blue-600">{amenityIcons[amenity]}</span>
+                <span className="text-gray-700">{amenity}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        
+        <div className="bg-white p-6 rounded-lg shadow-lg h-fit">
+          <p className="text-2xl font-bold text-gray-900">${hotel.pricePerNight} <span className="text-base font-normal text-gray-500">/ night</span></p>
+          <Link to={`/booking/${hotel.id}`} className="mt-6 w-full bg-blue-600 text-white py-3 px-4 rounded-md hover:bg-blue-700 text-center block">
+            Book Now
+          </Link>
         </div>
       </div>
     </div>

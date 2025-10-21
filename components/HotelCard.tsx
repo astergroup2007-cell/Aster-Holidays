@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import type { Hotel } from '../types';
@@ -10,24 +9,19 @@ interface HotelCardProps {
 
 const HotelCard: React.FC<HotelCardProps> = ({ hotel }) => {
   return (
-    <div className="bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-1 transition-all duration-300">
-      <Link to={`/hotel/${hotel.id}`} className="block">
+    <div className="bg-white rounded-lg shadow-md overflow-hidden transform hover:scale-105 transition-transform duration-300">
+      <Link to={`/hotel/${hotel.id}`}>
         <img className="w-full h-56 object-cover" src={hotel.images[0]} alt={hotel.name} />
         <div className="p-6">
-          <h3 className="text-xl font-bold text-gray-800 mb-2 truncate">{hotel.name}</h3>
-          <p className="text-gray-600 mb-4">{hotel.location}</p>
-          <div className="flex justify-between items-center">
-            <div className="flex items-center">
-              {[...Array(5)].map((_, i) => (
-                <StarIcon key={i} className={`w-5 h-5 ${i < Math.round(hotel.rating) ? 'text-yellow-400' : 'text-gray-300'}`} />
-              ))}
-              <span className="ml-2 text-gray-600">{hotel.rating.toFixed(1)}</span>
-            </div>
-            <div className="text-right">
-              <span className="text-2xl font-bold text-blue-600">${hotel.pricePerNight}</span>
-              <span className="text-sm text-gray-500">/night</span>
+          <div className="flex justify-between items-start">
+            <h3 className="text-xl font-bold text-gray-800 mb-2">{hotel.name}</h3>
+            <div className="flex items-center bg-green-500 text-white text-sm font-bold px-2 py-1 rounded">
+              <StarIcon className="w-4 h-4 mr-1 text-yellow-300" />
+              <span>{hotel.rating}</span>
             </div>
           </div>
+          <p className="text-gray-600 mb-4">{hotel.location}</p>
+          <p className="text-lg font-semibold text-gray-900">${hotel.pricePerNight} <span className="text-sm font-normal text-gray-500">/ night</span></p>
         </div>
       </Link>
     </div>
