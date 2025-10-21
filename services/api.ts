@@ -1,29 +1,28 @@
 import { hotels, flights } from '../data/mockData';
 import type { Hotel, Flight } from '../types';
 
-const SIMULATED_DELAY = 500; // in milliseconds
-
-export const getHotels = (): Promise<Hotel[]> => {
-  return new Promise((resolve) => {
+const simulateApiCall = <T>(data: T): Promise<T> => {
+  return new Promise(resolve => {
     setTimeout(() => {
-      resolve(hotels);
-    }, SIMULATED_DELAY);
+      resolve(data);
+    }, 500); // 500ms delay
   });
 };
 
-export const getHotelById = (id: string): Promise<Hotel | null> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      const hotel = hotels.find((h) => h.id === id) || null;
-      resolve(hotel);
-    }, SIMULATED_DELAY);
-  });
+export const getHotels = (): Promise<Hotel[]> => {
+  return simulateApiCall(hotels);
+};
+
+export const getHotelById = (id: string): Promise<Hotel | undefined> => {
+  const hotel = hotels.find(h => h.id === id);
+  return simulateApiCall(hotel);
 };
 
 export const getFlights = (): Promise<Flight[]> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(flights);
-    }, SIMULATED_DELAY);
-  });
+  return simulateApiCall(flights);
+};
+
+export const getFlightById = (id: string): Promise<Flight | undefined> => {
+    const flight = flights.find(f => f.id === id);
+    return simulateApiCall(flight);
 };

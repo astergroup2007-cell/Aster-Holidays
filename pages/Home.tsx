@@ -1,37 +1,64 @@
-
 import React from 'react';
 import SearchForm from '../components/SearchForm';
+import { Link } from 'react-router-dom';
+import { hotels } from '../data/mockData';
+import HotelCard from '../components/HotelCard';
 
 const Home: React.FC = () => {
+  const featuredHotels = hotels.slice(0, 3);
+
   return (
     <div>
-      <section 
-        className="h-[500px] bg-cover bg-center flex items-center justify-center" 
-        style={{ backgroundImage: "url('https://picsum.photos/1600/500?grayscale&blur=2')" }}
-      >
-        <div className="text-center text-white p-4 bg-black bg-opacity-40 rounded-lg">
-          <h1 className="text-5xl font-extrabold mb-4">Your Journey Begins Here</h1>
-          <p className="text-xl">Discover and book amazing hotels and flights with Aster Holidays.in</p>
+      {/* Hero Section */}
+      <div className="relative h-96 bg-cover bg-center" style={{ backgroundImage: "url('https://picsum.photos/1600/900?random=100')" }}>
+        <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="text-center text-white">
+            <h1 className="text-5xl font-bold mb-4">Find Your Next Stay</h1>
+            <p className="text-xl">Search deals on hotels, homes, and much more...</p>
+          </div>
         </div>
-      </section>
+      </div>
 
+      {/* Search Form */}
       <div className="container mx-auto px-6">
         <SearchForm />
       </div>
 
-      <section className="container mx-auto px-6 py-16">
+      {/* Featured Hotels Section */}
+      <div className="container mx-auto px-6 py-12">
         <h2 className="text-3xl font-bold text-center mb-8">Popular Destinations</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {['Goa', 'Kerala', 'Rajasthan', 'Himachal'].map(dest => (
-                 <div key={dest} className="relative rounded-lg overflow-hidden shadow-lg h-80 group">
-                    <img src={`https://picsum.photos/400/600?random=${dest}`} alt={dest} className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"/>
-                    <div className="absolute inset-0 bg-black bg-opacity-40 flex items-end p-4">
-                        <h3 className="text-white text-2xl font-bold">{dest}</h3>
-                    </div>
-                </div>
-            ))}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {featuredHotels.map(hotel => (
+            <HotelCard key={hotel.id} hotel={hotel} />
+          ))}
         </div>
-      </section>
+        <div className="text-center mt-8">
+          <Link to="/hotels" className="bg-blue-600 text-white py-3 px-6 rounded-md hover:bg-blue-700 transition duration-300 font-semibold">
+            View All Hotels
+          </Link>
+        </div>
+      </div>
+
+       {/* Why Choose Us Section */}
+       <div className="bg-gray-100 py-16">
+        <div className="container mx-auto px-6 text-center">
+          <h2 className="text-3xl font-bold mb-8">Why Book With Us?</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="p-6">
+              <h3 className="text-xl font-semibold mb-2">Best Price Guarantee</h3>
+              <p className="text-gray-600">Find the best deals on hotels and flights, backed by our price match promise.</p>
+            </div>
+            <div className="p-6">
+              <h3 className="text-xl font-semibold mb-2">24/7 Customer Support</h3>
+              <p className="text-gray-600">Our team is always here to help you with any questions or issues.</p>
+            </div>
+            <div className="p-6">
+              <h3 className="text-xl font-semibold mb-2">Secure Bookings</h3>
+              <p className="text-gray-600">We use secure payment gateways to protect your information.</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
