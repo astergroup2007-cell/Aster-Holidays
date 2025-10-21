@@ -20,6 +20,18 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": [".", "razorpay.d.ts"],
+  "include": [
+    "api", 
+    "components", 
+    "context", 
+    "data", 
+    "pages", 
+    "services", 
+    "index.tsx", 
+    "App.tsx", 
+    "types.ts", 
+    "firebase.ts", 
+    "razorpay.d.ts"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
