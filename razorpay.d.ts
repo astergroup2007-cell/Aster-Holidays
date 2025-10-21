@@ -19,6 +19,15 @@ interface RazorpayOptions {
 }
 
 declare global {
+  // FIX: Add type definitions for Vite environment variables to resolve issues with `import.meta.env`.
+  interface ImportMetaEnv {
+    readonly VITE_RAZORPAY_KEY_ID: string;
+  }
+
+  interface ImportMeta {
+    readonly env: ImportMetaEnv;
+  }
+
   interface Window {
     Razorpay: new (options: RazorpayOptions) => {
       open: () => void;

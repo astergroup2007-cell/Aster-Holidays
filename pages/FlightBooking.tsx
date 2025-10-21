@@ -1,5 +1,5 @@
-/// <reference types="vite/client" />
 
+// FIX: Removed reference to vite/client as it was causing a type definition error. Types are now handled globally in razorpay.d.ts.
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import type { Flight } from '../types';
@@ -57,7 +57,8 @@ const FlightBooking: React.FC = () => {
 
       // Step 2: Open Razorpay checkout
       const options = {
-        key: import.meta.env.VITE_RAZORPAY_KEY_ID as string,
+        // FIX: Use environment variable from import.meta.env. The type definition is now in razorpay.d.ts.
+        key: import.meta.env.VITE_RAZORPAY_KEY_ID,
         amount: order.amount,
         currency: "INR",
         name: "Aster Holidays.in",
