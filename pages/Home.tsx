@@ -22,9 +22,17 @@ const Home: React.FC = () => {
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative bg-cover bg-center h-[500px]" style={{ backgroundImage: "url('https://picsum.photos/1600/500?random=42')" }}>
-        <div className="absolute inset-0 bg-black bg-opacity-40"></div>
-        <div className="relative container mx-auto px-6 h-full flex flex-col justify-center items-center text-center text-white">
+      <section className="relative h-[500px] flex items-center justify-center text-white text-center">
+        <video 
+          autoPlay 
+          loop 
+          muted 
+          playsInline
+          className="absolute top-0 left-0 w-full h-full object-cover z-0"
+          src="https://videos.pexels.com/video-files/3254002/3254002-hd_1920_1080_25fps.mp4"
+        />
+        <div className="absolute inset-0 bg-black bg-opacity-40 z-10"></div>
+        <div className="relative container mx-auto px-6 h-full flex flex-col justify-center items-center z-20">
           <h1 className="text-4xl md:text-6xl font-extrabold font-heading mb-4 leading-tight">Your Journey Begins Here</h1>
           <p className="text-lg md:text-xl mb-8 max-w-2xl">Discover and book flights, hotels, and holiday packages at the best prices.</p>
           <div className="w-full max-w-4xl">
