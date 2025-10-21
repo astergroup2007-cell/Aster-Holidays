@@ -1,12 +1,12 @@
 import type { Destination, TourPackage, Testimonial, Flight, Hotel, HotelBooking } from '../types';
 
 export const destinations: Destination[] = [
-  { name: 'Sikkim', image: 'https://images.unsplash.com/photo-1591148479901-52514b8a2e57?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80', tagline: 'Valley of Flowers' },
-  { name: 'Darjeeling', image: 'https://images.unsplash.com/photo-1544275218-1372b680d28d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80', tagline: 'The Queen of Hills' },
-  { name: 'Bhutan', image: 'https://images.unsplash.com/photo-1512413317822-e42a1b32de9c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80', tagline: 'Land of the Thunder Dragon' },
-  { name: 'Nepal', image: 'https://images.unsplash.com/photo-1544439133-f3942891da32?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80', tagline: 'Roof of the World' },
-  { name: 'Kalimpong', image: 'https://images.unsplash.com/photo-1623351934085-8d762118320b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80', tagline: 'Orchids and Nurseries' },
-  { name: 'Goa', image: 'https://images.unsplash.com/photo-1560179407-dc35c3336183?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80', tagline: 'Sun, Sand, and Sea' },
+  { name: 'Sikkim', image: 'https://i.ibb.co/nMcwzgbf/1.png', tagline: 'Valley of Flowers' },
+  { name: 'Darjeeling', image: 'https://i.ibb.co/pBNWM3Fq/2.png', tagline: 'The Queen of Hills' },
+  { name: 'Kalimpong', image: 'https://i.ibb.co/XfXNWnT4/3.png', tagline: 'Orchids and Nurseries' },
+  { name: 'Bhutan', image: 'https://i.ibb.co/Ps16pF0j/4.png', tagline: 'Land of the Thunder Dragon' },
+  { name: 'Nepal', image: 'https://i.ibb.co/vCw7p9q9/5.png', tagline: 'Roof of the World' },
+  { name: 'North East', image: 'https://i.ibb.co/d4qHRfzv/6.png', tagline: 'Seven Sisters' },
 ];
 
 export const tourPackages: TourPackage[] = [
