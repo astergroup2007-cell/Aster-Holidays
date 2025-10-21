@@ -1,5 +1,5 @@
-import { hotels, flights } from '../data/mockData';
-import type { Hotel, Flight } from '../types';
+import { tourPackages, flights } from '../data/mockData';
+import type { TourPackage, Flight } from '../types';
 
 const simulateApiCall = <T>(data: T): Promise<T> => {
   return new Promise(resolve => {
@@ -9,13 +9,13 @@ const simulateApiCall = <T>(data: T): Promise<T> => {
   });
 };
 
-export const getHotels = (): Promise<Hotel[]> => {
-  return simulateApiCall(hotels);
+export const getTourPackages = (): Promise<TourPackage[]> => {
+  return simulateApiCall(tourPackages);
 };
 
-export const getHotelById = (id: string): Promise<Hotel | undefined> => {
-  const hotel = hotels.find(h => h.id === id);
-  return simulateApiCall(hotel);
+export const getTourPackageById = (id: string): Promise<TourPackage | undefined> => {
+  const tour = tourPackages.find(h => h.id === id);
+  return simulateApiCall(tour);
 };
 
 export const getFlights = (): Promise<Flight[]> => {

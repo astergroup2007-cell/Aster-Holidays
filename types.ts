@@ -1,28 +1,29 @@
-export enum Amenity {
-  Wifi = 'Wifi',
-  Pool = 'Pool',
-  Parking = 'Parking',
-  Restaurant = 'Restaurant',
-  PetFriendly = 'Pet-Friendly',
-  Gym = 'Gym',
-}
+import React from 'react';
 
-export interface Hotel {
+export interface TourPackage {
   id: string;
   name: string;
+  duration: string;
+  price: number;
+  image: string;
+  destinationsCovered: string[];
+  highlights: string[];
+  category: 'Honeymoon' | 'Family' | 'Adventure' | 'Cultural';
+}
+
+export interface Testimonial {
+  name: string;
   location: string;
-  rating: number;
-  pricePerNight: number;
-  description: string;
-  amenities: Amenity[];
-  images: string[];
+  tour: string;
+  review: string;
+  image: string;
 }
 
 export interface User {
   id: string;
   name: string;
   email: string;
-  password?: string; // Password is used for storage, but should not be exposed in context
+  password?: string;
 }
 
 export interface Flight {

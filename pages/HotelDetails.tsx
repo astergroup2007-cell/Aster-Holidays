@@ -1,109 +1,75 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import type { Hotel } from '../types';
-import { Amenity } from '../types';
-import { getHotelById } from '../services/api';
-import StarIcon from '../components/icons/StarIcon';
-import WifiIcon from '../components/icons/WifiIcon';
-import PoolIcon from '../components/icons/PoolIcon';
-import ParkingIcon from '../components/icons/ParkingIcon';
-import RestaurantIcon from '../components/icons/RestaurantIcon';
+import type { TourPackage } from '../types';
+import { getTourPackageById } from '../services/api';
 
-const PetFriendlyIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} {...props}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M15 10l4.55-4.55a2.12 2.12 0 00-3-3L12 7l-4.55-4.55a2.12 2.12 0 00-3 3L9 10m0 0v4.55a2.12 2.12 0 003 3L12 13l4.55 4.55a2.12 2.12 0 003-3V10" />
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 21.88a9.88 9.88 0 006-2.68 9.88 9.88 0 00-12 0 9.88 9.88 0 006 2.68z" />
-    </svg>
-); 
-
-const GymIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} {...props}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M5 12a2 2 0 01-2-2V8a2 2 0 012-2h14a2 2 0 012 2v2a2 2 0 01-2 2M5 12a2 2 0 002 2h10a2 2 0 002-2" />
-    </svg>
-); 
-
-const amenityIcons: { [key in Amenity]: React.ReactNode } = {
-  [Amenity.Wifi]: <WifiIcon />,
-  [Amenity.Pool]: <PoolIcon />,
-  [Amenity.Parking]: <ParkingIcon />,
-  [Amenity.Restaurant]: <RestaurantIcon />,
-  [Amenity.PetFriendly]: <PetFriendlyIcon />,
-  [Amenity.Gym]: <GymIcon />,
-};
-
-const HotelDetails: React.FC = () => {
+const TourPackageDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const [hotel, setHotel] = useState<Hotel | null>(null);
+  const [tour, setTour] = useState<TourPackage | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchHotel = async () => {
+    const fetchTour = async () => {
       if (!id) return;
       setLoading(true);
-      const data = await getHotelById(id);
+      const data = await getTourPackageById(id);
       if (data) {
-        setHotel(data);
+        setTour(data);
       }
       setLoading(false);
     };
-    fetchHotel();
+    fetchTour();
   }, [id]);
 
   if (loading) {
-    return <div className="text-center py-20">Loading hotel details...</div>;
+    return <div className="text-center py-20">Loading tour details...</div>;
   }
 
-  if (!hotel) {
-    return <div className="text-center py-20">Hotel not found.</div>;
+  if (!tour) {
+    return <div className="text-center py-20">Tour package not found.</div>;
   }
 
   return (
     <div className="container mx-auto px-6 py-12">
       <div className="mb-8">
-        <h1 className="text-4xl font-bold font-heading text-secondary">{hotel.name}</h1>
-        <p className="text-gray-600 mt-2">{hotel.location}</p>
-        <div className="flex items-center mt-2">
-          <div className="flex items-center bg-green-500 text-white text-sm font-bold px-2 py-1 rounded">
-            <StarIcon className="w-4 h-4 mr-1 text-yellow-300" />
-            <span>{hotel.rating}</span>
-          </div>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-        <img src={hotel.images[0]} alt={hotel.name} className="w-full h-96 object-cover rounded-lg shadow-md" />
-        <div className="grid grid-cols-2 gap-4">
-          {hotel.images.slice(1, 5).map((img, index) => (
-            <img key={index} src={img} alt={`${hotel.name} view ${index + 1}`} className="w-full h-full object-cover rounded-lg shadow-md" />
-          ))}
+        <h1 className="text-4xl font-bold font-heading text-secondary">{tour.name}</h1>
+        <p className="text-gray-600 mt-2">{tour.destinationsCovered.join(' • ')}</p>
+         <div className="mt-2 inline-block bg-blue-100 text-secondary text-sm font-semibold px-3 py-1 rounded-full">
+            {tour.duration}
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
         <div className="lg:col-span-2">
-          <h2 className="text-2xl font-bold font-heading text-secondary mb-4">About this hotel</h2>
-          <p className="text-gray-700 leading-relaxed">{hotel.description}</p>
+            <img src={tour.image} alt={tour.name} className="w-full h-96 object-cover rounded-lg shadow-md mb-8" />
+          <h2 className="text-2xl font-bold font-heading text-secondary mb-4">Tour Highlights</h2>
+           <ul className="list-disc list-inside space-y-2 text-gray-700">
+                {tour.highlights.map((highlight, index) => (
+                    <li key={index}>{highlight}</li>
+                ))}
+            </ul>
           
-          <h2 className="text-2xl font-bold font-heading text-secondary mt-8 mb-4">Amenities</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {hotel.amenities.map(amenity => (
-              <div key={amenity} className="flex items-center space-x-3">
-                <span className="text-accent">{amenityIcons[amenity]}</span>
-                <span className="text-gray-700">{amenity}</span>
-              </div>
-            ))}
-          </div>
+          <h2 className="text-2xl font-bold font-heading text-secondary mt-8 mb-4">About this Tour</h2>
+          <p className="text-gray-700 leading-relaxed">
+            Embark on an unforgettable journey with our "{tour.name}" package. This tour is perfectly crafted for travelers seeking a blend of adventure, culture, and relaxation. Explore iconic landmarks, savor local cuisines, and create memories that will last a lifetime. Our expert guides and seamless arrangements ensure you have a comfortable and enriching experience.
+          </p>
         </div>
         
-        <div className="bg-white p-6 rounded-lg shadow-lg h-fit">
-          <p className="text-2xl font-bold text-accent">₹{hotel.pricePerNight.toLocaleString('en-IN')} <span className="text-base font-normal text-gray-500">/ night</span></p>
-          <Link to={`/booking/${hotel.id}`} className="mt-6 w-full bg-primary text-white font-bold py-3 px-4 rounded-md hover:bg-orange-600 text-center block">
+        <div className="bg-white p-6 rounded-lg shadow-lg h-fit sticky top-28">
+          <p className="text-2xl font-bold text-accent">₹{tour.price.toLocaleString('en-IN')} <span className="text-base font-normal text-gray-500">/ person</span></p>
+           <p className="text-sm text-gray-500 mt-1">Starting price. Taxes extra.</p>
+          <Link to={`/booking/${tour.id}`} className="mt-6 w-full bg-primary text-white font-bold py-3 px-4 rounded-md hover:bg-orange-600 text-center block">
             Book Now
           </Link>
+           <div className="mt-6 text-sm text-gray-600">
+                <h4 className="font-bold text-secondary mb-2">Need Help?</h4>
+                <p>Contact us for customizations and queries.</p>
+                <a href="tel:+917047514663" className="text-primary font-semibold hover:underline">+91 7047514663</a>
+            </div>
         </div>
       </div>
     </div>
   );
 };
 
-export default HotelDetails;
+export default TourPackageDetails;

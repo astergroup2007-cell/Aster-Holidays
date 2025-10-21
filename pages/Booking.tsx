@@ -1,15 +1,12 @@
-
-// FIX: Removed reference to vite/client as it was causing a type definition error. Types are now handled globally in razorpay.d.ts.
 import React, { useState, useEffect, useContext } from 'react';
-// FIX: Import `Link` from `react-router-dom` to be used in the component.
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import type { Hotel } from '../types';
-import { getHotelById } from '../services/api';
+import type { TourPackage } from '../types';
+import { getTourPackageById } from '../services/api';
 import { AuthContext } from '../context/AuthContext';
 
 const Booking: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const [hotel, setHotel] = useState<Hotel | null>(null);
+  const [tour, setTour] = useState<TourPackage | null>(null);
   const [loading, setLoading] = useState(true);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -24,20 +21,20 @@ const Booking: React.FC = () => {
   }, [authContext]);
 
   useEffect(() => {
-    const fetchHotel = async () => {
+    const fetchTour = async () => {
       if (!id) return;
       setLoading(true);
-      const data = await getHotelById(id);
+      const data = await getTourPackageById(id);
       if (data) {
-        setHotel(data);
+        setTour(data);
       }
       setLoading(false);
     };
-    fetchHotel();
+    fetchTour();
   }, [id]);
   
   const handlePayment = async () => {
-    if (!hotel || !authContext?.user) return;
+    if (!tour || !authContext?.user) return;
 
     try {
       // Step 1: Create an order on the backend
@@ -46,7 +43,7 @@ const Booking: React.FC = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ amount: hotel.pricePerNight * 100 }), // amount in paise
+        body: JSON.stringify({ amount: tour.price * 100 }), // amount in paise
       });
 
       if (!response.ok) {
@@ -57,17 +54,15 @@ const Booking: React.FC = () => {
 
       // Step 2: Open the Razorpay checkout
       const options = {
-        // FIX: Use environment variable from import.meta.env. The type definition is now in razorpay.d.ts.
         key: import.meta.env.VITE_RAZORPAY_KEY_ID,
         amount: order.amount,
         currency: order.currency,
         name: "Aster Holidays.in",
-        description: `Booking for ${hotel.name}`,
+        description: `Booking for ${tour.name}`,
         image: "https://i.ibb.co/3mZfxCJx/Logo-text-with-Sikkim-removed.png",
         order_id: order.id,
         handler: function (response: any) {
           alert(`Payment successful! Payment ID: ${response.razorpay_payment_id}`);
-          // In a real app, you would verify the payment signature on your backend
           navigate('/');
         },
         prefill: {
@@ -75,7 +70,7 @@ const Booking: React.FC = () => {
           email: authContext.user.email,
         },
         theme: {
-          color: "#F97316" // Corresponds to your primary color
+          color: "#FF6B35"
         }
       };
 
@@ -96,8 +91,8 @@ const Booking: React.FC = () => {
     return <div className="text-center py-20">Loading booking details...</div>;
   }
 
-  if (!hotel) {
-    return <div className="text-center py-20">Hotel not found.</div>;
+  if (!tour) {
+    return <div className="text-center py-20">Tour Package not found.</div>;
   }
 
   return (
@@ -105,10 +100,10 @@ const Booking: React.FC = () => {
       <h1 className="text-4xl font-bold font-heading mb-8">Confirm Your Booking</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
         <div>
-          <h2 className="text-2xl font-semibold font-heading mb-4">{hotel.name}</h2>
-          <img src={hotel.images[0]} alt={hotel.name} className="w-full h-64 object-cover rounded-lg shadow-md mb-6" />
-          <p className="text-lg font-bold text-accent">Price: ₹{hotel.pricePerNight.toLocaleString('en-IN')} / night</p>
-          <p className="text-gray-600 mt-2">{hotel.location}</p>
+          <h2 className="text-2xl font-semibold font-heading mb-4">{tour.name}</h2>
+          <img src={tour.image} alt={tour.name} className="w-full h-64 object-cover rounded-lg shadow-md mb-6" />
+          <p className="text-lg font-bold text-accent">Price: ₹{tour.price.toLocaleString('en-IN')} / person</p>
+          <p className="text-gray-600 mt-2">Duration: {tour.duration}</p>
         </div>
         <div>
           <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-lg">

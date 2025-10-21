@@ -1,20 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import SearchForm from '../components/SearchForm';
-import { destinations } from '../data/mockData';
-import type { Destination } from '../types';
+import { destinations, tourPackages, testimonials } from '../data/mockData';
+import type { Destination, TourPackage, Testimonial } from '../types';
+import TourPackageCard from '../components/HotelCard'; // Repurposed as TourPackageCard
 
 // --- INLINE COMPONENTS (DUE TO FILE CONSTRAINTS) ---
 
 // Floating Icons for Hero Section
-// FIX: Updated component to accept all SVG props, allowing `style` to be passed for animations.
 const AirplaneIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
     <path d="M21.435 11.109l-8.02-6.526a.502.502 0 00-.415-.083l-1.041.347-4.14-3.411a.502.502 0 00-.736.386v3.785l-4.173-1.42a.502.502 0 00-.547.746l3.5 6.062a.502.502 0 00.468.254h.001l5.908.002 2.158 5.679a.502.502 0 00.95.045l1.83-4.814 4.212 1.43a.5.5 0 00.547-.746l-2.01-3.483a.502.502 0 00-.033-.502z" />
   </svg>
 );
 
-// FIX: Updated component to accept all SVG props, allowing `style` to be passed for animations.
 const CloudIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
         <path d="M17.555 13.163C19.859 12.58 21.5 10.486 21.5 8c0-2.923-2.221-5.323-5.063-5.48A7.5 7.5 0 004.5 8c0 2.898 1.63 5.42 3.938 6.671a5.502 5.502 0 00-3.42 5.223 1 1 0 001 1.006h14.965a1 1 0 001-1.006c0-2.32-1.39-4.393-3.428-5.225z" />
@@ -44,6 +43,18 @@ const DestinationCard: React.FC<DestinationCardProps> = ({ destination }) => (
   </div>
 );
 
+// Testimonial Card
+const TestimonialCard: React.FC<{testimonial: Testimonial}> = ({ testimonial }) => (
+    <div className="bg-white p-8 rounded-xl shadow-lg text-center h-full flex flex-col items-center">
+        <img src={testimonial.image} alt={testimonial.name} className="w-20 h-20 rounded-full mb-4 ring-4 ring-accent p-1"/>
+        <p className="text-gray-600 flex-grow">"{testimonial.review}"</p>
+        <div className="mt-4">
+            <h4 className="font-bold text-secondary text-lg">{testimonial.name}</h4>
+            <p className="text-sm text-gray-500">{testimonial.tour}</p>
+        </div>
+    </div>
+);
+
 
 const Home: React.FC = () => {
   return (
@@ -70,18 +81,28 @@ const Home: React.FC = () => {
         <CloudIcon className="absolute bottom-[25%] left-[15%] w-20 h-20 text-white/10 animate-float opacity-0" style={{ animationDelay: '4s' }} />
 
         <div className="relative container mx-auto px-6 h-full flex flex-col justify-center items-center z-20">
-          <h1 className="text-4xl md:text-7xl font-extrabold font-heading mb-4 leading-tight opacity-0 animate-fade-in-up">Your Journey Begins Here</h1>
-          <p className="text-lg md:text-xl mb-8 max-w-2xl opacity-0 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>Discover and book flights, hotels, and holiday packages at the best prices.</p>
+          <h1 className="text-4xl md:text-7xl font-extrabold font-heading mb-4 leading-tight opacity-0 animate-fade-in-up">Your Himalayan Adventure Awaits</h1>
+          <p className="text-lg md:text-xl mb-8 max-w-2xl opacity-0 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>Discover the magic of Sikkim, Darjeeling, Bhutan & Nepal with Siliguri's most trusted travel experts.</p>
           <div className="w-full max-w-4xl opacity-0 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
              <SearchForm />
           </div>
         </div>
       </section>
 
+       {/* Welcome Section */}
+       <section className="py-20 bg-background">
+          <div className="container mx-auto px-6 text-center">
+              <h2 className="text-4xl font-bold font-heading text-secondary mb-4">Welcome to Aster Holidays</h2>
+              <p className="max-w-3xl mx-auto text-gray-600 leading-relaxed">
+                  Based in the foothills of the Himalayas in Siliguri, Aster Holidays is your dedicated partner for crafting unforgettable journeys. With deep local knowledge and a passion for travel, we specialize in creating personalized tour packages for Sikkim, Darjeeling, Kalimpong, Bhutan, and Nepal. Our commitment is to provide you with a seamless, authentic, and memorable travel experience from start to finish.
+              </p>
+          </div>
+       </section>
+
       {/* Top Destinations Section */}
-      <section className="py-20 bg-background">
+      <section className="py-20 bg-white">
         <div className="container mx-auto px-6">
-          <h2 className="text-4xl font-bold font-heading text-center text-secondary mb-12">Top Destinations</h2>
+          <h2 className="text-4xl font-bold font-heading text-center text-secondary mb-12">Popular Destinations</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6">
             {destinations.slice(0, 6).map((dest, index) => (
                <div key={dest.name} className="opacity-0 animate-fade-in-up" style={{ animationDelay: `${0.2 * index}s` }}>
@@ -92,25 +113,25 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Feel the Adventure Video Section */}
-      <section className="py-20">
-        <div className="container mx-auto px-6 text-center">
-            <h2 className="text-4xl font-bold font-heading text-secondary mb-12 opacity-0 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>Feel the Adventure</h2>
-             <div className="relative max-w-4xl mx-auto rounded-xl shadow-2xl overflow-hidden group opacity-0 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
-                <div className="aspect-w-16 aspect-h-9">
-                    <iframe src="https://www.youtube.com/embed/20gW6-2atGk?si=iznB0zzG7ZKzpWHA&autoplay=0&mute=1&loop=1&playlist=20gW6-2atGk&controls=1&showinfo=0&modestbranding=1&rel=0" 
-                    title="Aster Holidays Travel Experience" 
-                    frameBorder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen
-                    className="rounded-xl transition-all duration-400 group-hover:shadow-[0_0_35px_8px_rgba(255,211,105,0.6)]"
-                    ></iframe>
-                </div>
+      {/* Featured Tour Packages Section */}
+      <section className="py-20 bg-background">
+        <div className="container mx-auto px-6">
+            <h2 className="text-4xl font-bold font-heading text-center text-secondary mb-12">Featured Tour Packages</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {tourPackages.slice(0,3).map(tour => (
+                    <TourPackageCard key={tour.id} tour={tour} />
+                ))}
+            </div>
+            <div className="text-center mt-12">
+                <Link to="/hotels" className="bg-primary text-white font-bold py-3 px-8 rounded-full hover:bg-orange-600 transition-colors duration-300 shadow-lg text-lg">
+                    View All Packages
+                </Link>
             </div>
         </div>
       </section>
 
        {/* Why Choose Us Section */}
-       <section className="py-20 bg-background">
+       <section className="py-20 bg-white">
         <div className="container mx-auto px-6 text-center">
           <h2 className="text-4xl font-bold font-heading text-secondary mb-12">Why Choose Aster Holidays?</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
@@ -118,25 +139,37 @@ const Home: React.FC = () => {
               <div className="text-primary mb-4">
                  <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5-2.5-6.5s-7 3-7 3a8 8 0 0011.314 11.314z" /></svg>
               </div>
+              <h3 className="text-2xl font-bold font-heading text-secondary mb-2">Local Expertise</h3>
+              <p className="text-gray-600">Our deep-rooted local knowledge ensures you get the most authentic experience.</p>
+            </div>
+            <div className="p-6">
+              <div className="text-primary mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              </div>
+              <h3 className="text-2xl font-bold font-heading text-secondary mb-2">24/7 Support</h3>
+              <p className="text-gray-600">We are always available to assist you, ensuring a hassle-free journey.</p>
+            </div>
+            <div className="p-6">
+              <div className="text-primary mb-4">
+                 <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+              </div>
               <h3 className="text-2xl font-bold font-heading text-secondary mb-2">Best Price Guarantee</h3>
-              <p className="text-gray-600">We offer competitive prices on millions of flights and hotels.</p>
-            </div>
-            <div className="p-6">
-              <div className="text-primary mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
-              </div>
-              <h3 className="text-2xl font-bold font-heading text-secondary mb-2">Secure Bookings</h3>
-              <p className="text-gray-600">Your data is safe with us. We use top-tier security for all transactions.</p>
-            </div>
-            <div className="p-6">
-              <div className="text-primary mb-4">
-                 <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a2 2 0 01-2-2V7a2 2 0 012-2h6l2-2h2l-2 2z" /></svg>
-              </div>
-              <h3 className="text-2xl font-bold font-heading text-secondary mb-2">24/7 Customer Support</h3>
-              <p className="text-gray-600">Our team is here to help you around the clock with any questions.</p>
+              <p className="text-gray-600">We offer competitive prices and transparent billing with no hidden costs.</p>
             </div>
           </div>
         </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-20 bg-background">
+          <div className="container mx-auto px-6">
+              <h2 className="text-4xl font-bold font-heading text-center text-secondary mb-12">What Our Travelers Say</h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                  {testimonials.map(testimonial => (
+                      <TestimonialCard key={testimonial.name} testimonial={testimonial} />
+                  ))}
+              </div>
+          </div>
       </section>
 
       {/* CTA Banner Section */}
