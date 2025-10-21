@@ -34,10 +34,36 @@ const FlightBooking: React.FC = () => {
     fetchFlight();
   }, [id]);
 
+  const handlePayment = () => {
+    if (!flight || !authContext?.user) return;
+
+    const options = {
+      key: "rzp_test_1234567890ABCD", // This is a public test key
+      amount: flight.price * 100, // Amount in the smallest currency unit
+      currency: "INR",
+      name: "Aster Holidays.in",
+      description: `Flight from ${flight.origin} to ${flight.destination}`,
+      image: "https://drive.google.com/uc?export=view&id=1isnlkdhdKaSu_pnJ3Pd9AdECpLk-ix8I",
+      handler: function (response: any) {
+        alert(`Payment successful! Payment ID: ${response.razorpay_payment_id}`);
+        navigate('/flights');
+      },
+      prefill: {
+        name: authContext.user.name,
+        email: authContext.user.email,
+      },
+      theme: {
+        color: "#F97316"
+      }
+    };
+
+    const rzp = new window.Razorpay(options);
+    rzp.open();
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    alert('Flight booking successful! (This is a demo)');
-    navigate('/flights');
+    handlePayment();
   };
 
   if (loading) {

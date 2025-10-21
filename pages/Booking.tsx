@@ -34,11 +34,37 @@ const Booking: React.FC = () => {
     fetchHotel();
   }, [id]);
   
+  const handlePayment = () => {
+    if (!hotel || !authContext?.user) return;
+
+    const options = {
+      key: "rzp_test_1234567890ABCD", // This is a public test key
+      amount: hotel.pricePerNight * 100, // Amount in the smallest currency unit (paise for INR)
+      currency: "INR",
+      name: "Aster Holidays.in",
+      description: `Booking for ${hotel.name}`,
+      image: "https://drive.google.com/uc?export=view&id=1isnlkdhdKaSu_pnJ3Pd9AdECpLk-ix8I",
+      handler: function (response: any) {
+        alert(`Payment successful! Payment ID: ${response.razorpay_payment_id}`);
+        // In a real app, you would verify the payment signature on your backend
+        navigate('/');
+      },
+      prefill: {
+        name: authContext.user.name,
+        email: authContext.user.email,
+      },
+      theme: {
+        color: "#F97316" // Corresponds to your primary color
+      }
+    };
+
+    const rzp = new window.Razorpay(options);
+    rzp.open();
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically integrate with a payment gateway like Razorpay
-    alert('Booking successful! (This is a demo)');
-    navigate('/');
+    handlePayment();
   };
 
   if (loading) {
