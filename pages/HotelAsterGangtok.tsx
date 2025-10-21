@@ -146,6 +146,14 @@ const HotelAsterGangtok: React.FC = () => {
                       </tbody>
                     </table>
                   </div>
+                  <div className="mt-6 text-right">
+                    <Link
+                        to={`/booking/hotel-aster-${room.name.toLowerCase().replace(/\s+/g, '-').replace(/[()]/g, '')}`}
+                        className="bg-primary text-white font-bold py-2 px-6 rounded-full hover:bg-orange-600 transition-colors duration-300 shadow-md inline-block"
+                    >
+                        Book Now
+                    </Link>
+                  </div>
                 </div>
               </div>
             ))}
