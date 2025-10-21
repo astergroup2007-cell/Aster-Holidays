@@ -23,6 +23,7 @@ import { AuthProvider } from './context/AuthContext';
 import { AdminAuthProvider } from './context/AdminAuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import AdminProtectedRoute from './components/AdminProtectedRoute';
+import NotFound from './pages/NotFound';
 
 function App() {
   const location = useLocation();
@@ -57,6 +58,9 @@ function App() {
               <Route path="/admin" element={<AdminProtectedRoute><AdminDashboard /></AdminProtectedRoute>} />
               <Route path="/admin/manage-tours" element={<AdminProtectedRoute><ManageTours /></AdminProtectedRoute>} />
               <Route path="/admin/settings" element={<AdminProtectedRoute><AdminSettings /></AdminProtectedRoute>} />
+
+              {/* Catch-all 404 Route */}
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </main>
           {!isAdminRoute && <Footer />}
