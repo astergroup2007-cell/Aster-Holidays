@@ -61,15 +61,12 @@ const Home: React.FC = () => {
     <div className="overflow-x-hidden">
       {/* Hero Section */}
       <section className="relative h-[600px] md:h-screen flex items-center justify-center text-white text-center overflow-hidden">
-        <div className="absolute z-0 top-0 left-0 w-full h-full pointer-events-none">
-           <iframe
-            className="absolute top-1/2 left-1/2 min-w-full min-h-full w-auto h-auto"
-            style={{ transform: 'translate(-50%, -50%) scale(1.5)' }}
-            src="https://www.youtube.com/embed/mn0aroU24YQ?autoplay=1&mute=1&loop=1&playlist=mn0aroU24YQ&controls=0&showinfo=0&modestbranding=1&rel=0"
-            title="Aster Holidays background video"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          ></iframe>
+        <div className="absolute z-0 top-0 left-0 w-full h-full">
+          <img 
+            src="https://picsum.photos/seed/himalayan-vista/1920/1080" 
+            alt="A breathtaking view of a sunlit Himalayan mountain range, embodying adventure and serenity."
+            className="w-full h-full object-cover"
+          />
         </div>
         
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
