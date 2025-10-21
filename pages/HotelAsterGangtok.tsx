@@ -12,7 +12,7 @@ const roomData = [
             season: { ep: 1200, cp: 1500, map: 1800 },
             offSeason: { ep: 1000, cp: 1300, map: 1600 }
         },
-        image: "https://i.ibb.co/217YVtMH/Whats-App-Image-2025-10-21-at-4-23-23-PM-1.jpg"
+        image: "https://i.ibb.co/hF1yRtbC/Whats-App-Image-2025-10-21-at-4-23-27-PM-1.jpg"
     },
     {
         name: "Deluxe Double Room",
@@ -72,7 +72,7 @@ const galleryImages = [
     { src: "https://i.ibb.co/sDZRqR6/Whats-App-Image-2025-10-21-at-4-23-25-PM-1.jpg", alt: "Family room setup at Hotel Aster" },
     { src: "https://i.ibb.co/jZ92Z3Th/Whats-App-Image-2025-10-21-at-4-23-25-PM.jpg", alt: "Triple bed arrangement in Super Deluxe Triple Room" },
     { src: "https://i.ibb.co/HWyzWZd/Whats-App-Image-2025-10-21-at-4-23-26-PM-1.jpg", alt: "Well-maintained hotel corridor" },
-    { src: "https://i.ibb.co/99K0SK45/Whats-App-Image-2025-10-21-at-4-23-26-PM.jpg", alt: "Modern and clean attached bathroom" },
+    { src: "https://i.ibb.co/FLJbWJdv/Whats-App-Image-2025-10-21-at-4-23-28-PM-1.jpg", alt: "Modern and clean attached bathroom" },
     { src: "https://i.ibb.co/k21W34sz/Whats-App-Image-2025-10-21-at-4-23-27-PM-2.jpg", alt: "View from a hotel room window" },
     { src: "https://i.ibb.co/hF1yRtbC/Whats-App-Image-2025-10-21-at-4-23-27-PM-1.jpg", alt: "Bright and airy room interior" },
     { src: "https://i.ibb.co/bMKN1W8J/Whats-App-Image-2025-10-21-at-4-23-27-PM.jpg", alt: "Lobby and reception area" },
