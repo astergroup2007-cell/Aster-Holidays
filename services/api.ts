@@ -1,96 +1,154 @@
-import { tourPackages, flights, hotels as mockHotels, hotelBookings as mockHotelBookings } from '../data/mockData';
+// services/api.ts
+
+import {
+  collection,
+  getDocs,
+  doc,
+  getDoc,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  query,
+  where,
+} from 'firebase/firestore';
+import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
+import { db, storage } from '../firebase';
 import type { TourPackage, Flight, Hotel, HotelBooking } from '../types';
+import { tourPackages, flights, hotels, hotelBookings } from '../data/mockData'; // Using mock data as a fallback
 
-// Simulate API delay
-const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
+// --- Tour Package API ---
 
-// --- Tour Packages API ---
+const tourCollection = collection(db, 'tours');
 
 export const getTourPackages = async (): Promise<TourPackage[]> => {
-  await delay(500);
-  return tourPackages;
+  try {
+    const snapshot = await getDocs(tourCollection);
+    if (snapshot.empty) {
+        console.warn("No tour packages found in Firestore, returning mock data.");
+        return tourPackages;
+    }
+    return snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id } as TourPackage));
+  } catch (error) {
+    console.error("Error fetching tours from Firestore, returning mock data: ", error);
+    return tourPackages;
+  }
 };
 
-export const getTourPackageById = async (id: string): Promise<TourPackage | undefined> => {
-  await delay(500);
-  return tourPackages.find(tour => tour.id === id);
+export const getTourPackageById = async (id: string): Promise<TourPackage | null> => {
+  try {
+    const docRef = doc(db, 'tours', id);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      return { ...docSnap.data(), id: docSnap.id } as TourPackage;
+    }
+    console.warn(`Tour with id ${id} not found in Firestore, checking mock data.`);
+  } catch (error) {
+     console.error(`Error fetching tour ${id} from Firestore, checking mock data: `, error);
+  }
+  return tourPackages.find(p => p.id === id) || null;
 };
 
-// --- Flights API ---
+export const addTourPackage = async (tourData: Omit<TourPackage, 'id'>): Promise<void> => {
+  await addDoc(tourCollection, tourData);
+};
+
+export const updateTourPackage = async (tourData: TourPackage): Promise<void> => {
+  const { id, ...data } = tourData;
+  const docRef = doc(db, 'tours', id);
+  await updateDoc(docRef, data);
+};
+
+export const deleteTourPackage = async (tourId: string): Promise<void> => {
+  const docRef = doc(db, 'tours', tourId);
+  await deleteDoc(docRef);
+};
+
+
+// --- Flight API (using mock data) ---
 
 export const getFlights = async (): Promise<Flight[]> => {
-    await delay(500);
-    return flights;
-}
+  return Promise.resolve(flights);
+};
 
-export const getFlightById = async (id: string): Promise<Flight | undefined> => {
-    await delay(500);
-    return flights.find(flight => flight.id === id);
-}
+export const getFlightById = async (id: string): Promise<Flight | null> => {
+  return Promise.resolve(flights.find(f => f.id === id) || null);
+};
 
-// --- Hotels API (Firebase Mock) ---
-// This is a mock implementation. In a real app, these would interact with Firebase.
+// --- Hotel API ---
 
-let hotels: Hotel[] = [...mockHotels];
-let hotelBookings: HotelBooking[] = [...mockHotelBookings];
+const hotelCollection = collection(db, 'hotels');
 
 export const getHotels = async (): Promise<Hotel[]> => {
-    console.warn("Using mock API for getHotels. Data is not persisted.");
-    await delay(1000);
+  try {
+    const snapshot = await getDocs(hotelCollection);
+    if (snapshot.empty) {
+        console.warn("No hotels found in Firestore, returning mock data.");
+        return hotels;
+    }
+    return snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id } as Hotel));
+  } catch(error) {
+    console.error("Error fetching hotels from Firestore, returning mock data: ", error);
     return hotels;
+  }
 };
 
-export const addHotel = async (hotel: Omit<Hotel, 'id'>): Promise<Hotel> => {
-    console.warn("Using mock API for addHotel. Data is not persisted.");
-    await delay(1000);
-    const newHotel: Hotel = { ...hotel, id: `hotel-${Date.now()}` };
-    hotels.push(newHotel);
-    return newHotel;
+export const addHotel = async (hotelData: Omit<Hotel, 'id'>): Promise<void> => {
+    await addDoc(hotelCollection, hotelData);
 };
 
-export const updateHotel = async (updatedHotel: Hotel): Promise<Hotel> => {
-    console.warn("Using mock API for updateHotel. Data is not persisted.");
-    await delay(1000);
-    hotels = hotels.map(hotel => hotel.id === updatedHotel.id ? updatedHotel : hotel);
-    return updatedHotel;
+export const updateHotel = async (hotelData: Hotel): Promise<void> => {
+    const { id, ...data } = hotelData;
+    const docRef = doc(db, 'hotels', id);
+    await updateDoc(docRef, data);
 };
 
-export const deleteHotel = async (hotelToDelete: Hotel): Promise<void> => {
-    console.warn("Using mock API for deleteHotel. Data is not persisted.");
-    await delay(1000);
-    hotels = hotels.filter(hotel => hotel.id !== hotelToDelete.id);
+export const deleteHotel = async (hotel: Hotel): Promise<void> => {
+    // Delete images from storage first
+    if (hotel.images) {
+      const deletePromises = hotel.images.map(imageUrl => {
+        try {
+          const imageRef = ref(storage, imageUrl);
+          return deleteObject(imageRef);
+        } catch (error) {
+          console.error(`Failed to create ref for image ${imageUrl}: `, error);
+          return Promise.resolve();
+        }
+      });
+      await Promise.all(deletePromises);
+    }
+    
+    // Delete hotel document from firestore
+    const docRef = doc(db, 'hotels', hotel.id);
+    await deleteDoc(docRef);
 };
 
-export const uploadImage = async (file: File): Promise<string> => {
-    console.warn("Using mock API for uploadImage. A placeholder URL is returned.");
-    await delay(1500);
-    // In a real Firebase app, this would upload the file and return the download URL.
-    // Here, we'll return a placeholder or the local blob URL for display.
-    return new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            resolve(reader.result as string);
-        };
-        reader.readAsDataURL(file);
-    });
-};
-
-
-// --- Hotel Bookings API (Mock) ---
+// --- Hotel Booking API ---
+const bookingCollection = collection(db, 'hotelBookings');
 
 export const getHotelBookings = async (): Promise<HotelBooking[]> => {
-    console.warn("Using mock API for getHotelBookings. Data is not persisted.");
-    await delay(1000);
-    return hotelBookings;
+    try {
+        const snapshot = await getDocs(bookingCollection);
+        if (snapshot.empty) {
+            console.warn("No bookings found in Firestore, returning mock data.");
+            return hotelBookings;
+        }
+        return snapshot.docs.map(doc => ({...doc.data(), id: doc.id} as HotelBooking));
+    } catch (error) {
+        console.error("Error fetching bookings from Firestore, returning mock data: ", error);
+        return hotelBookings;
+    }
 };
 
-export const updateBookingStatus = async (bookingId: string, status: HotelBooking['status']): Promise<HotelBooking> => {
-    console.warn("Using mock API for updateBookingStatus. Data is not persisted.");
-    await delay(500);
-    const bookingIndex = hotelBookings.findIndex(b => b.id === bookingId);
-    if (bookingIndex > -1) {
-        hotelBookings[bookingIndex].status = status;
-        return hotelBookings[bookingIndex];
-    }
-    throw new Error("Booking not found");
+export const updateBookingStatus = async (bookingId: string, status: HotelBooking['status']): Promise<void> => {
+    const docRef = doc(db, 'hotelBookings', bookingId);
+    await updateDoc(docRef, { status });
+};
+
+
+// --- Firebase Storage for Images ---
+export const uploadImage = async (file: File): Promise<string> => {
+  const storageRef = ref(storage, `images/${Date.now()}_${file.name}`);
+  await uploadBytes(storageRef, file);
+  const downloadURL = await getDownloadURL(storageRef);
+  return downloadURL;
 };

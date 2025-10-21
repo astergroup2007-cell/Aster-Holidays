@@ -1,3 +1,12 @@
+// types.ts
+
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  password?: string; // Should not be sent to client
+}
+
 export interface Destination {
   name: string;
   image: string;
@@ -6,13 +15,20 @@ export interface Destination {
 
 export interface TourPackage {
   id: string;
-  name: string;
+  name:string;
   duration: string;
   price: number;
   image: string;
   destinationsCovered: string[];
   highlights: string[];
-  category: 'Family' | 'Honeymoon' | 'Adventure' | 'Cultural';
+  category: 'Family' | 'Honeymoon' | 'Cultural' | 'Adventure';
+  itinerary?: ItineraryDay[];
+}
+
+export interface ItineraryDay {
+  day: number;
+  title: string;
+  description: string;
 }
 
 export interface Testimonial {
@@ -20,13 +36,6 @@ export interface Testimonial {
   image: string;
   review: string;
   tour: string;
-}
-
-export interface User {
-  id: string;
-  name: string;
-  email: string;
-  password?: string; // Should be optional as we'll omit it
 }
 
 export interface Flight {
@@ -60,5 +69,5 @@ export interface HotelBooking {
   checkInDate: string;
   checkOutDate: string;
   totalPrice: number;
-  status: 'Confirmed' | 'Pending' | 'Cancelled';
+  status: 'Pending' | 'Confirmed' | 'Cancelled';
 }

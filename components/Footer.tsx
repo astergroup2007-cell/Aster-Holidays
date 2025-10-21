@@ -26,7 +26,7 @@ const Footer: React.FC = () => {
       <div className="container mx-auto px-6 py-12 text-center">
         
         <Link to="/" className="inline-block mb-6">
-            <img src="https://i.ibb.co/3mZfxCJx/Logo-text-with-Sikkim-removed.png" alt="Aster Holidays Logo" className="h-14" />
+            <img src="https://i.ibb.co/s9NKvg1W/Logo-text-with-Sikkim-removed.png" alt="Aster Holidays Logo" className="h-14" />
         </Link>
         
         <p className="max-w-md mx-auto text-gray-400 mb-8">

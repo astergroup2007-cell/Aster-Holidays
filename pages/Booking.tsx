@@ -59,7 +59,7 @@ const Booking: React.FC = () => {
         currency: order.currency,
         name: "Aster Holidays.in",
         description: `Booking for ${tour.name}`,
-        image: "https://i.ibb.co/3mZfxCJx/Logo-text-with-Sikkim-removed.png",
+        image: "https://i.ibb.co/s9NKvg1W/Logo-text-with-Sikkim-removed.png",
         order_id: order.id,
         handler: function (response: any) {
           alert(`Payment successful! Payment ID: ${response.razorpay_payment_id}`);

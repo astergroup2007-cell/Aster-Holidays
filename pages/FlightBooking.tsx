@@ -1,4 +1,5 @@
 
+
 // FIX: Removed reference to vite/client as it was causing a type definition error. Types are now handled globally in razorpay.d.ts.
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -63,7 +64,7 @@ const FlightBooking: React.FC = () => {
         currency: "INR",
         name: "Aster Holidays.in",
         description: `Flight from ${flight.origin} to ${flight.destination}`,
-        image: "https://i.ibb.co/3mZfxCJx/Logo-text-with-Sikkim-removed.png",
+        image: "https://i.ibb.co/s9NKvg1W/Logo-text-with-Sikkim-removed.png",
         order_id: order.id,
         handler: function (response: any) {
           alert(`Payment successful! Payment ID: ${response.razorpay_payment_id}`);

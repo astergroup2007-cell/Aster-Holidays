@@ -32,7 +32,7 @@ const AdminLogin: React.FC = () => {
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="max-w-md w-full space-y-8 bg-white p-10 rounded-xl shadow-lg">
         <div>
-          <img src="https://i.ibb.co/3mZfxCJx/Logo-text-with-Sikkim-removed.png" alt="Aster Holidays Logo" className="h-16 mx-auto" />
+          <img src="https://i.ibb.co/s9NKvg1W/Logo-text-with-Sikkim-removed.png" alt="Aster Holidays Logo" className="h-16 mx-auto" />
           <h2 className="mt-6 text-center text-3xl font-extrabold font-heading text-secondary">
             Admin Panel Login
           </h2>

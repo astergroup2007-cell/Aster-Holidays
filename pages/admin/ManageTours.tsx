@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import type { TourPackage } from '../../types';
-import { getTourPackages } from '../../services/api'; // Using the mock API
+import { getTourPackages, addTourPackage, updateTourPackage, deleteTourPackage } from '../../services/api';
 import TourForm from '../../components/admin/TourForm';
 
 const ManageTours: React.FC = () => {
@@ -9,13 +9,14 @@ const ManageTours: React.FC = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingTour, setEditingTour] = useState<TourPackage | null>(null);
 
+  const fetchTours = async () => {
+    setLoading(true);
+    const data = await getTourPackages();
+    setTours(data);
+    setLoading(false);
+  };
+
   useEffect(() => {
-    const fetchTours = async () => {
-      setLoading(true);
-      const data = await getTourPackages();
-      setTours(data);
-      setLoading(false);
-    };
     fetchTours();
   }, []);
 
@@ -29,37 +30,43 @@ const ManageTours: React.FC = () => {
     setIsFormOpen(true);
   };
 
-  const handleDelete = (tourId: string) => {
-    if (window.confirm('Are you sure you want to delete this tour? This action cannot be undone.')) {
-      // In a real app, you would call an API to delete.
-      // Here, we'll just filter it out from the state.
-      setTours(prevTours => prevTours.filter(tour => tour.id !== tourId));
-      alert('Tour deleted successfully. (Note: This change is not persisted.)');
+  const handleDelete = async (tourId: string) => {
+    if (window.confirm('Are you sure you want to delete this tour package?')) {
+      try {
+        await deleteTourPackage(tourId);
+        await fetchTours(); // Refresh list
+        alert('Tour package deleted successfully.');
+      } catch (error) {
+        console.error("Failed to delete tour:", error);
+        alert('Failed to delete tour.');
+      }
     }
   };
-  
-  const handleSave = (tour: TourPackage) => {
-    // In a real app, you'd send this to a backend API.
-    // Here we'll simulate it by updating the state.
-    if (editingTour) { // Editing existing
-      setTours(prevTours => prevTours.map(t => t.id === tour.id ? tour : t));
-    } else { // Adding new
-      const newTour = { ...tour, id: `tour-${Date.now()}` };
-      setTours(prevTours => [...prevTours, newTour]);
+
+  const handleSave = async (tourData: Omit<TourPackage, 'id'>) => {
+    try {
+      if (editingTour) {
+        await updateTourPackage({ ...tourData, id: editingTour.id });
+      } else {
+        await addTourPackage(tourData);
+      }
+      await fetchTours(); // Refresh list
+      setIsFormOpen(false);
+      alert('Tour package saved successfully.');
+    } catch (error) {
+      console.error("Failed to save tour:", error);
+      alert('Failed to save tour.');
     }
-    alert('Tour saved successfully. (Note: This change is not persisted.)');
-    setIsFormOpen(false);
   };
 
-
-  if (loading) return <div>Loading tours...</div>;
+  if (loading) return <div className="text-center p-8">Loading tour packages...</div>;
 
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">Manage Tour Packages</h1>
         <button onClick={handleAdd} className="bg-primary text-white px-4 py-2 rounded-md hover:bg-orange-600">
-          Add New Tour
+          + Add New Tour
         </button>
       </div>
 
@@ -70,7 +77,8 @@ const ManageTours: React.FC = () => {
               <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Name</th>
               <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Duration</th>
               <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Price</th>
-              <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Actions</th>
+              <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Category</th>
+              <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100"></th>
             </tr>
           </thead>
           <tbody>
@@ -79,7 +87,8 @@ const ManageTours: React.FC = () => {
                 <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">{tour.name}</td>
                 <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">{tour.duration}</td>
                 <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">₹{tour.price.toLocaleString('en-IN')}</td>
-                <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">{tour.category}</td>
+                <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm text-right">
                   <button onClick={() => handleEdit(tour)} className="text-indigo-600 hover:text-indigo-900 mr-4">Edit</button>
                   <button onClick={() => handleDelete(tour.id)} className="text-red-600 hover:text-red-900">Delete</button>
                 </td>
@@ -90,7 +99,7 @@ const ManageTours: React.FC = () => {
       </div>
 
       {isFormOpen && (
-        <TourForm 
+        <TourForm
           tour={editingTour}
           onSave={handleSave}
           onCancel={() => setIsFormOpen(false)}
