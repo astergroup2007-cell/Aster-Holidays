@@ -94,32 +94,32 @@ export const destinations: Destination[] = [
   {
     name: 'Sikkim',
     tagline: 'Pristine Himalayan Paradise',
-    image: 'https://picsum.photos/seed/sikkim-dest/400/500',
+    image: 'https://i.ibb.co/nMcwzgbf/1.png',
   },
   {
     name: 'Darjeeling',
     tagline: 'The Queen of the Hills',
-    image: 'https://picsum.photos/seed/darjeeling-dest/400/500',
+    image: 'https://i.ibb.co/pBNWM3Fq/2.png',
   },
   {
     name: 'Kalimpong',
     tagline: 'Serene Hills & Blooming Orchids',
-    image: 'https://picsum.photos/seed/kalimpong-dest/400/500',
+    image: 'https://i.ibb.co/XfXNWnT4/3.png',
   },
   {
     name: 'Bhutan',
     tagline: 'Land of the Thunder Dragon',
-    image: 'https://picsum.photos/seed/bhutan-dest/400/500',
+    image: 'https://i.ibb.co/Ps16pF0j/4.png',
   },
    {
     name: 'Nepal',
     tagline: 'Birthplace of Lord Buddha',
-    image: 'https://picsum.photos/seed/nepal-dest/400/500',
+    image: 'https://i.ibb.co/vCw7p9q9/5.png',
   },
    {
     name: 'North-East',
     tagline: 'India\'s Unexplored Paradise',
-    image: 'https://picsum.photos/seed/northeast-dest/400/500',
+    image: 'https://i.ibb.co/d4qHRfzv/6.png',
   },
 ];
 
