@@ -28,12 +28,17 @@ export default {
          floatReverse: {
           '0%, 100%': { transform: 'translateY(-15px) rotate(4deg)' },
           '50%': { transform: 'translateY(0px) rotate(-4deg)' },
+        },
+        slideDown: {
+          '0%': { opacity: '0', transform: 'translateY(-10px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
         }
       },
       animation: {
         'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
         'float': 'float 8s ease-in-out infinite',
         'float-reverse': 'floatReverse 10s ease-in-out infinite',
+        'slide-down': 'slideDown 0.5s ease-out forwards',
       }
     },
   },
