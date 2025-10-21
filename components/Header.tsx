@@ -21,6 +21,7 @@ const Header: React.FC = () => {
         <div className="hidden md:flex items-center space-x-8">
           <NavLink to="/" className={({ isActive }) => isActive ? "text-primary font-semibold border-b-2 border-primary" : "text-gray-600 hover:text-primary"}>Home</NavLink>
           <NavLink to="/hotels" className={({ isActive }) => isActive ? "text-primary font-semibold border-b-2 border-primary" : "text-gray-600 hover:text-primary"}>Tour Packages</NavLink>
+          <NavLink to="/hotel-aster-gangtok" className={({ isActive }) => isActive ? "text-primary font-semibold border-b-2 border-primary" : "text-gray-600 hover:text-primary"}>Our Hotel</NavLink>
           <NavLink to="/flights" className={({ isActive }) => isActive ? "text-primary font-semibold border-b-2 border-primary" : "text-gray-600 hover:text-primary"}>Flights</NavLink>
           <button onClick={handleContactClick} className="text-gray-600 hover:text-primary">Contact</button>
         </div>

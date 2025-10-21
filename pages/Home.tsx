@@ -64,7 +64,7 @@ const Home: React.FC = () => {
         <div className="absolute z-0 top-0 left-0 w-full h-full">
          <iframe 
             className="absolute top-1/2 left-1/2 min-w-full min-h-full w-auto h-auto object-cover transform -translate-x-1/2 -translate-y-1/2"
-            src="https://www.youtube.com/embed/20gW6-2atGk?autoplay=1&mute=1&loop=1&playlist=20gW6-2atGk&controls=0&showinfo=0&modestbranding=1&iv_load_policy=3&rel=0" 
+            src="https://www.youtube.com/embed/20gW6-2atGk?si=IaKhE_iBngnd-cfZ&autoplay=1&mute=1&loop=1&playlist=20gW6-2atGk&controls=0&showinfo=0&modestbranding=1&iv_load_policy=3&rel=0"
             title="YouTube video player" 
             frameBorder="0" 
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
@@ -130,8 +130,33 @@ const Home: React.FC = () => {
         </div>
       </section>
 
+      {/* Our Hotel Section */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-6">
+          <div className="flex flex-col lg:flex-row items-center gap-12">
+            <div className="lg:w-1/2">
+              <img 
+                src="https://i.ibb.co/cKSqXWVT/Whats-App-Image-2025-10-21-at-4-23-24-PM-1.jpg" 
+                alt="Hotel Aster Gangtok Exterior"
+                className="rounded-xl shadow-2xl w-full h-auto object-cover"
+              />
+            </div>
+            <div className="lg:w-1/2 text-center lg:text-left">
+              <h2 className="text-4xl font-bold font-heading text-secondary mb-4">Our Signature Stay in Gangtok</h2>
+              <p className="text-gray-600 leading-relaxed mb-6">
+                Experience authentic Sikkimese hospitality at Hotel Aster Gangtok. Located in the prime Tadong area, our hotel offers a perfect blend of comfort and convenience, making it the ideal base for your Himalayan adventures. As part of the Aster Holidays family, we provide a seamless travel experience, combining your stay with expert-led tours across Sikkim.
+              </p>
+              <Link to="/hotel-aster-gangtok" className="bg-secondary text-white font-bold py-3 px-8 rounded-full hover:bg-opacity-90 transition-all duration-300 shadow-lg text-lg inline-block">
+                Explore The Hotel
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
        {/* Why Choose Us Section */}
-       <section className="py-20 bg-white">
+       <section className="py-20 bg-background">
         <div className="container mx-auto px-6 text-center">
           <h2 className="text-4xl font-bold font-heading text-secondary mb-12">Why Choose Aster Holidays?</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">

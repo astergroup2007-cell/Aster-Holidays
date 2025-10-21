@@ -16,6 +16,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import { AuthProvider } from './context/AuthContext';
 import CancellationPolicy from './pages/CancellationPolicy';
 import ShippingPolicy from './pages/ShippingPolicy';
+import HotelAsterGangtok from './pages/HotelAsterGangtok';
 
 const App: React.FC = () => {
   return (
@@ -27,6 +28,7 @@ const App: React.FC = () => {
             <Route path="/" element={<Home />} />
             <Route path="/hotels" element={<HotelList />} />
             <Route path="/hotel/:id" element={<HotelDetails />} />
+            <Route path="/hotel-aster-gangtok" element={<HotelAsterGangtok />} />
             <Route path="/booking/:id" element={
               <ProtectedRoute>
                 <Booking />
