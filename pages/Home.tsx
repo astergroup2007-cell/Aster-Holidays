@@ -22,43 +22,25 @@ const Home: React.FC = () => {
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative h-[500px] flex items-center justify-center text-white text-center">
-        <video 
-          autoPlay 
-          loop 
-          muted 
-          playsInline
-          className="absolute top-0 left-0 w-full h-full object-cover z-0"
-          src="https://videos.pexels.com/video-files/3254002/3254002-hd_1920_1080_25fps.mp4"
-        />
+      <section className="relative h-[500px] flex items-center justify-center text-white text-center overflow-hidden">
+        {/* YouTube Background Wrapper */}
+        <div className="absolute z-0 top-0 left-0 w-full h-full pointer-events-none">
+           <iframe
+            className="absolute top-1/2 left-1/2 w-full h-full"
+            style={{ transform: 'translate(-50%, -50%) scale(1.5)' }} // Scale to cover the container
+            src="https://www.youtube.com/embed/20gW6-2atGk?autoplay=1&mute=1&loop=1&playlist=20gW6-2atGk&controls=0&showinfo=0&modestbranding=1&rel=0"
+            title="Aster Holidays Travel Experience"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          ></iframe>
+        </div>
+        
         <div className="absolute inset-0 bg-black bg-opacity-40 z-10"></div>
         <div className="relative container mx-auto px-6 h-full flex flex-col justify-center items-center z-20">
           <h1 className="text-4xl md:text-6xl font-extrabold font-heading mb-4 leading-tight">Your Journey Begins Here</h1>
           <p className="text-lg md:text-xl mb-8 max-w-2xl">Discover and book flights, hotels, and holiday packages at the best prices.</p>
           <div className="w-full max-w-4xl">
              <SearchForm />
-          </div>
-        </div>
-      </section>
-
-      {/* Video Experience Section */}
-      <section className="py-20 bg-gradient-to-b from-gray-50 to-background">
-        <div className="container mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold font-heading text-secondary mb-10">
-            Experience the Journey Before You Travel
-          </h2>
-          <div className="max-w-4xl mx-auto shadow-xl rounded-xl overflow-hidden">
-            <div className="relative" style={{ paddingTop: '56.25%' }}> {/* 16:9 Aspect Ratio */}
-              <iframe
-                className="absolute top-0 left-0 w-full h-full"
-                src="https://www.youtube.com/embed/20gW6-2atGk?si=iznB0zzG7ZKzpWHA&autoplay=1&mute=1&loop=1&playlist=20gW6-2atGk"
-                title="Aster Holidays Travel Experience"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
-              ></iframe>
-            </div>
           </div>
         </div>
       </section>
