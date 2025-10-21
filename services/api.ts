@@ -1,103 +1,96 @@
-import { tourPackages, flights, hotels as mockHotels } from '../data/mockData';
-import type { TourPackage, Flight, Hotel } from '../types';
-import { db, storage } from '../firebase';
-import { 
-  collection, 
-  getDocs, 
-  addDoc, 
-  updateDoc, 
-  deleteDoc, 
-  doc 
-} from 'firebase/firestore';
-import { 
-  ref, 
-  uploadBytes, 
-  getDownloadURL, 
-  deleteObject
-} from 'firebase/storage';
+import { tourPackages, flights, hotels as mockHotels, hotelBookings as mockHotelBookings } from '../data/mockData';
+import type { TourPackage, Flight, Hotel, HotelBooking } from '../types';
 
+// Simulate API delay
+const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
 
-// --- Tour Packages API (Local Mock) ---
-const simulateApiCall = <T>(data: T): Promise<T> => {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      resolve(data);
-    }, 500);
-  });
+// --- Tour Packages API ---
+
+export const getTourPackages = async (): Promise<TourPackage[]> => {
+  await delay(500);
+  return tourPackages;
 };
 
-export const getTourPackages = (): Promise<TourPackage[]> => {
-  return simulateApiCall(tourPackages);
+export const getTourPackageById = async (id: string): Promise<TourPackage | undefined> => {
+  await delay(500);
+  return tourPackages.find(tour => tour.id === id);
 };
 
-export const getTourPackageById = (id: string): Promise<TourPackage | undefined> => {
-  const tour = tourPackages.find(p => p.id === id || `hotel-aster-${p.name.toLowerCase().replace(/\s+/g, '-').replace(/[()]/g, '')}` === id);
-  return simulateApiCall(tour);
-};
+// --- Flights API ---
 
+export const getFlights = async (): Promise<Flight[]> => {
+    await delay(500);
+    return flights;
+}
 
-// --- Flights API (Local Mock) ---
-export const getFlights = (): Promise<Flight[]> => {
-    return simulateApiCall(flights);
-};
+export const getFlightById = async (id: string): Promise<Flight | undefined> => {
+    await delay(500);
+    return flights.find(flight => flight.id === id);
+}
 
-export const getFlightById = (id: string): Promise<Flight | undefined> => {
-    const flight = flights.find(f => f.id === id);
-    return simulateApiCall(flight);
-};
+// --- Hotels API (Firebase Mock) ---
+// This is a mock implementation. In a real app, these would interact with Firebase.
 
-
-// --- Hotel Management API (Firebase) ---
-const hotelsCollectionRef = collection(db, 'hotels');
+let hotels: Hotel[] = [...mockHotels];
+let hotelBookings: HotelBooking[] = [...mockHotelBookings];
 
 export const getHotels = async (): Promise<Hotel[]> => {
-  const data = await getDocs(hotelsCollectionRef);
-  const hotels = data.docs.map(doc => ({ ...doc.data(), id: doc.id } as Hotel));
-  
-  // If firestore is empty, populate with mock data once.
-  if (hotels.length === 0 && mockHotels.length > 0) {
-    console.log("Firestore 'hotels' collection is empty. Populating with initial mock data...");
-    await Promise.all(mockHotels.map(hotel => addDoc(hotelsCollectionRef, { ...hotel, id: undefined })));
-    // Refetch after populating
-    const newData = await getDocs(hotelsCollectionRef);
-    return newData.docs.map(doc => ({ ...doc.data(), id: doc.id } as Hotel));
-  }
-  
-  return hotels;
+    console.warn("Using mock API for getHotels. Data is not persisted.");
+    await delay(1000);
+    return hotels;
 };
 
-export const addHotel = async (hotel: Omit<Hotel, 'id'>): Promise<string> => {
-  const docRef = await addDoc(hotelsCollectionRef, hotel);
-  return docRef.id;
+export const addHotel = async (hotel: Omit<Hotel, 'id'>): Promise<Hotel> => {
+    console.warn("Using mock API for addHotel. Data is not persisted.");
+    await delay(1000);
+    const newHotel: Hotel = { ...hotel, id: `hotel-${Date.now()}` };
+    hotels.push(newHotel);
+    return newHotel;
 };
 
-export const updateHotel = async (hotel: Hotel): Promise<void> => {
-  const hotelDoc = doc(db, 'hotels', hotel.id);
-  const { id, ...hotelData } = hotel;
-  await updateDoc(hotelDoc, hotelData);
+export const updateHotel = async (updatedHotel: Hotel): Promise<Hotel> => {
+    console.warn("Using mock API for updateHotel. Data is not persisted.");
+    await delay(1000);
+    hotels = hotels.map(hotel => hotel.id === updatedHotel.id ? updatedHotel : hotel);
+    return updatedHotel;
+};
+
+export const deleteHotel = async (hotelToDelete: Hotel): Promise<void> => {
+    console.warn("Using mock API for deleteHotel. Data is not persisted.");
+    await delay(1000);
+    hotels = hotels.filter(hotel => hotel.id !== hotelToDelete.id);
 };
 
 export const uploadImage = async (file: File): Promise<string> => {
-  const storageRef = ref(storage, `hotels/${Date.now()}-${file.name}`);
-  await uploadBytes(storageRef, file);
-  const downloadURL = await getDownloadURL(storageRef);
-  return downloadURL;
+    console.warn("Using mock API for uploadImage. A placeholder URL is returned.");
+    await delay(1500);
+    // In a real Firebase app, this would upload the file and return the download URL.
+    // Here, we'll return a placeholder or the local blob URL for display.
+    return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            resolve(reader.result as string);
+        };
+        reader.readAsDataURL(file);
+    });
 };
 
-export const deleteHotel = async (hotel: Hotel): Promise<void> => {
-  // Delete all associated images from Storage
-  const imageDeletePromises = hotel.images.map(imageUrl => {
-    try {
-      const imageRef = ref(storage, imageUrl);
-      return deleteObject(imageRef);
-    } catch (error) {
-      console.error(`Failed to create ref from URL: ${imageUrl}`, error);
-      return Promise.resolve(); // Don't block deletion if one image fails
-    }
-  });
-  await Promise.all(imageDeletePromises);
 
-  // Delete the hotel document from Firestore
-  const hotelDoc = doc(db, 'hotels', hotel.id);
-  await deleteDoc(hotelDoc);
+// --- Hotel Bookings API (Mock) ---
+
+export const getHotelBookings = async (): Promise<HotelBooking[]> => {
+    console.warn("Using mock API for getHotelBookings. Data is not persisted.");
+    await delay(1000);
+    return hotelBookings;
+};
+
+export const updateBookingStatus = async (bookingId: string, status: HotelBooking['status']): Promise<HotelBooking> => {
+    console.warn("Using mock API for updateBookingStatus. Data is not persisted.");
+    await delay(500);
+    const bookingIndex = hotelBookings.findIndex(b => b.id === bookingId);
+    if (bookingIndex > -1) {
+        hotelBookings[bookingIndex].status = status;
+        return hotelBookings[bookingIndex];
+    }
+    throw new Error("Booking not found");
 };

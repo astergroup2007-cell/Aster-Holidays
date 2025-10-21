@@ -1,46 +1,66 @@
-import React, { useContext } from 'react';
-import { NavLink, Outlet, useNavigate } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
+import { NavLink, Link } from 'react-router-dom';
 import { AdminAuthContext } from '../../context/AdminAuthContext';
 
-const AdminLayout: React.FC = () => {
-  const authContext = useContext(AdminAuthContext);
-  const navigate = useNavigate();
+interface AdminLayoutProps {
+  children: React.ReactNode;
+}
 
-  const handleLogout = () => {
-    if (authContext) {
-      authContext.logout();
-      navigate('/admin/login');
-    }
-  };
+const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const authContext = useContext(AdminAuthContext);
+
+  const navLinkClasses = ({ isActive }: { isActive: boolean }) =>
+    `flex items-center px-4 py-2 mt-2 text-gray-100 transition-colors duration-200 transform rounded-md hover:bg-gray-700 ${isActive ? 'bg-gray-700' : ''}`;
 
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Sidebar */}
-      <aside className="w-64 bg-secondary text-white flex flex-col">
-        <div className="p-6 text-center border-b border-gray-700">
-           <img src="https://i.ibb.co/3mZfxCJx/Logo-text-with-Sikkim-removed.png" alt="Aster Holidays Logo" className="h-12 mx-auto bg-white p-2 rounded-md" />
-          <h2 className="mt-4 text-xl font-semibold">Admin Panel</h2>
+      <aside className={`fixed inset-y-0 left-0 z-30 w-64 px-4 py-6 overflow-y-auto bg-gray-800 transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-200 ease-in-out md:relative md:translate-x-0`}>
+        <div className="flex items-center justify-between">
+            <Link to="/admin">
+                <img src="https://i.ibb.co/3mZfxCJx/Logo-text-with-Sikkim-removed.png" alt="Aster Holidays Logo" className="h-12 bg-white p-2 rounded" />
+            </Link>
+             <button className="md:hidden" onClick={() => setIsSidebarOpen(false)}>
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
         </div>
-        <nav className="flex-1 px-4 py-6 space-y-2">
-          <NavLink to="/admin" end className={({ isActive }) => `block px-4 py-2 rounded-md transition-colors ${isActive ? 'bg-primary' : 'hover:bg-gray-700'}`}>Dashboard</NavLink>
-          <NavLink to="/admin/tours" className={({ isActive }) => `block px-4 py-2 rounded-md transition-colors ${isActive ? 'bg-primary' : 'hover:bg-gray-700'}`}>Manage Tours</NavLink>
-          <NavLink to="/admin/manage-hotels" className={({ isActive }) => `block px-4 py-2 rounded-md transition-colors ${isActive ? 'bg-primary' : 'hover:bg-gray-700'}`}>Manage Hotels</NavLink>
-          <NavLink to="/admin/settings" className={({ isActive }) => `block px-4 py-2 rounded-md transition-colors ${isActive ? 'bg-primary' : 'hover:bg-gray-700'}`}>Settings</NavLink>
+
+        <nav className="mt-10">
+          <NavLink to="/admin" end className={navLinkClasses}>Dashboard</NavLink>
+          <NavLink to="/admin/tours" className={navLinkClasses}>Tours</NavLink>
+          <NavLink to="/admin/hotels" className={navLinkClasses}>Hotels</NavLink>
+          <NavLink to="/admin/bookings" className={navLinkClasses}>Bookings</NavLink>
+          <NavLink to="/admin/settings" className={navLinkClasses}>Settings</NavLink>
         </nav>
-        <div className="p-4 border-t border-gray-700">
-           <p className="text-sm text-center text-gray-400">Logged in as {authContext?.admin?.email}</p>
-        </div>
       </aside>
 
-      {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
-        <header className="bg-white shadow-md p-4 flex justify-end items-center">
-          <button onClick={handleLogout} className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">
-            Logout
-          </button>
+        {/* Header */}
+        <header className="flex items-center justify-between px-6 py-4 bg-white border-b-4 border-primary">
+            <div className="flex items-center">
+                <button className="text-gray-500 focus:outline-none md:hidden" onClick={() => setIsSidebarOpen(true)}>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+                 <h1 className="text-2xl font-semibold text-gray-800 ml-4">Admin Panel</h1>
+            </div>
+
+            <div className="flex items-center">
+                <button onClick={authContext?.logout} className="px-4 py-2 text-sm font-medium text-white bg-secondary rounded-md hover:bg-opacity-90">
+                    Logout
+                </button>
+            </div>
         </header>
-        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-6">
-          <Outlet />
+
+        {/* Main Content */}
+        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
+          <div className="container mx-auto px-6 py-8">
+            {children}
+          </div>
         </main>
       </div>
     </div>

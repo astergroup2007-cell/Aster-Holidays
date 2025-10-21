@@ -1,3 +1,9 @@
+export interface Destination {
+  name: string;
+  image: string;
+  tagline: string;
+}
+
 export interface TourPackage {
   id: string;
   name: string;
@@ -9,6 +15,33 @@ export interface TourPackage {
   category: 'Family' | 'Honeymoon' | 'Adventure' | 'Cultural';
 }
 
+export interface Testimonial {
+  name: string;
+  image: string;
+  review: string;
+  tour: string;
+}
+
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  password?: string; // Should be optional as we'll omit it
+}
+
+export interface Flight {
+  id: string;
+  airline: string;
+  airlineLogo: string;
+  origin: string;
+  destination: string;
+  departureTime: string;
+  arrivalTime: string;
+  duration: string;
+  price: number;
+  stops: number;
+}
+
 export interface Hotel {
   id: string;
   name: string;
@@ -18,35 +51,14 @@ export interface Hotel {
   images: string[];
 }
 
-export interface Destination {
-  name: string;
-  tagline: string;
-  image: string;
-}
-
-export interface Testimonial {
-  name: string;
-  tour: string;
-  review: string;
-  image: string;
-}
-
-export interface User {
+export interface HotelBooking {
   id: string;
-  name: string;
-  email: string;
-  password?: string; // Password is optional as we omit it
-}
-
-export interface Flight {
-  id: string;
-  airline: string;
-  airlineLogo: string;
-  origin: string; // e.g., 'DEL'
-  destination: string; // e.g., 'BOM'
-  departureTime: string; // e.g., '08:30'
-  arrivalTime: string; // e.g., '10:45'
-  duration: string; // e.g., '2h 15m'
-  stops: number;
-  price: number;
+  hotelId: string;
+  hotelName: string;
+  userName: string;
+  userEmail: string;
+  checkInDate: string;
+  checkOutDate: string;
+  totalPrice: number;
+  status: 'Confirmed' | 'Pending' | 'Cancelled';
 }
