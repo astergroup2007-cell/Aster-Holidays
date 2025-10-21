@@ -28,8 +28,8 @@ const Home: React.FC = () => {
            <iframe
             className="absolute top-1/2 left-1/2 w-full h-full"
             style={{ transform: 'translate(-50%, -50%) scale(1.5)' }} // Scale to cover the container
-            src="https://www.youtube.com/embed/20gW6-2atGk?autoplay=1&mute=1&loop=1&playlist=20gW6-2atGk&controls=0&showinfo=0&modestbranding=1&rel=0"
-            title="Aster Holidays Travel Experience"
+            src="https://www.youtube.com/embed/mn0aroU24YQ?autoplay=1&mute=1&loop=1&playlist=mn0aroU24YQ&controls=0&showinfo=0&modestbranding=1&rel=0"
+            title="YouTube video player"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           ></iframe>
