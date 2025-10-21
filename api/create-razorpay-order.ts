@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-// FIX: Changed import to fix "not constructable" error with Razorpay CJS module.
+// FIX: Changed import to a namespace import and used a type assertion to handle the CommonJS module.
 import * as Razorpay from 'razorpay';
 import crypto from 'crypto';
 
@@ -12,7 +12,7 @@ export default async function handler(
   }
 
   try {
-    const razorpay = new Razorpay({
+    const razorpay = new (Razorpay as any)({
       key_id: process.env.RAZORPAY_KEY_ID as string,
       key_secret: process.env.RAZORPAY_KEY_SECRET as string,
     });

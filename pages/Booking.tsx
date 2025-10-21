@@ -1,3 +1,5 @@
+/// <reference types="vite/client" />
+
 import React, { useState, useEffect, useContext } from 'react';
 // FIX: Import `Link` from `react-router-dom` to be used in the component.
 import { useParams, useNavigate, Link } from 'react-router-dom';

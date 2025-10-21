@@ -1,6 +1,3 @@
-// FIX: Add reference to vite/client to get types for import.meta.env
-/// <reference types="vite/client" />
-
 // razorpay.d.ts
 interface RazorpayOptions {
   key: string;

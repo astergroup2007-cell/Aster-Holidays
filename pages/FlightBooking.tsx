@@ -1,3 +1,5 @@
+/// <reference types="vite/client" />
+
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import type { Flight } from '../types';
