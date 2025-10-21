@@ -46,7 +46,7 @@ const InputField: React.FC<{ id: string, label: string, type: string, value: str
       id={id}
       value={value}
       onChange={onChange}
-      className="w-full pl-10 pr-3 py-3 border border-gray-300 bg-white/75 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 text-secondary placeholder:text-gray-500"
+      className="w-full pl-10 pr-3 py-3 border border-gray-300 bg-white/75 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 text-gray-800 placeholder:text-gray-600"
       placeholder={placeholder}
       required={required}
     />
@@ -64,7 +64,7 @@ const SelectField: React.FC<{ id: string, label: string, value: string, onChange
       id={id}
       value={value}
       onChange={onChange}
-      className="w-full pl-10 pr-8 py-3 border border-gray-300 bg-white/75 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 appearance-none text-secondary"
+      className="w-full pl-10 pr-8 py-3 border border-gray-300 bg-white/75 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 appearance-none text-gray-800"
     >
       {children}
     </select>
@@ -125,7 +125,7 @@ const SearchForm: React.FC = () => {
       {/* Hotels Form */}
       <div style={{ display: activeTab === 'hotels' ? 'block' : 'none' }}>
         <form onSubmit={handleHotelSearch} className="space-y-4 animate-fade-in-up">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <InputField id="destination" label="Destination" type="text" value={destination} onChange={(e) => setDestination(e.target.value)} placeholder="e.g. Goa, Manali..." icon={<LocationIcon />} />
             <SelectField id="guests" label="Guests" value={guests} onChange={(e) => setGuests(e.target.value)} icon={<UserIcon />}>
               <option>1 Guest</option>
@@ -135,14 +135,16 @@ const SearchForm: React.FC = () => {
               <option>5+ Guests</option>
             </SelectField>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <InputField id="check-in" label="Check-in" type="date" value={checkIn} onChange={(e) => setCheckIn(e.target.value)} icon={<CalendarIcon />} />
             <InputField id="check-out" label="Check-out" type="date" value={checkOut} onChange={(e) => setCheckOut(e.target.value)} icon={<CalendarIcon />} />
           </div>
-          <button type="submit" className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-orange-500 to-primary text-white font-bold py-3.5 px-4 rounded-xl shadow-lg hover:shadow-xl hover:scale-[1.03] transform transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
-            <HotelIcon />
-            <span>Search Hotels</span>
-          </button>
+          <div className="pt-2">
+            <button type="submit" className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-orange-500 to-primary text-white font-bold py-3.5 px-4 rounded-xl shadow-lg hover:shadow-xl hover:scale-[1.03] transform transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+              <HotelIcon />
+              <span>Search Hotels</span>
+            </button>
+          </div>
         </form>
       </div>
 
@@ -160,13 +162,11 @@ const SearchForm: React.FC = () => {
                  <InputField id="return-date" label="Return" type="date" value={returnDate} onChange={(e) => setReturnDate(e.target.value)} icon={<CalendarIcon />} />
               )}
             </div>
-             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <SelectField id="passengers" label="Passengers & Class" value={passengers} onChange={(e) => setPassengers(e.target.value)} icon={<UserIcon />}>
-                    <option>1 Passenger, Economy</option>
-                    <option>2 Passengers, Economy</option>
-                    <option>1 Passenger, Business</option>
-                </SelectField>
-             </div>
+            <SelectField id="passengers" label="Passengers & Class" value={passengers} onChange={(e) => setPassengers(e.target.value)} icon={<UserIcon />}>
+                <option>1 Passenger, Economy</option>
+                <option>2 Passengers, Economy</option>
+                <option>1 Passenger, Business</option>
+            </SelectField>
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
                 <label className="flex items-center space-x-2 text-gray-700 select-none cursor-pointer">
                   <input type="checkbox" checked={isReturn} onChange={() => setIsReturn(!isReturn)} className="rounded text-primary focus:ring-primary/50 h-4 w-4" />
