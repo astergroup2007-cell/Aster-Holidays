@@ -33,6 +33,7 @@ const AdminDashboard: React.FC = () => {
           <h2 className="text-xl font-semibold text-secondary">Quick Links</h2>
           <div className="mt-4 space-y-2">
             <Link to="/admin/tours" className="block text-primary hover:underline">Manage Tours</Link>
+            <Link to="/admin/manage-hotels" className="block text-primary hover:underline">Manage Hotels</Link>
             <Link to="/admin/settings" className="block text-primary hover:underline">Account Settings</Link>
           </div>
         </div>

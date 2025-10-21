@@ -23,6 +23,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import AdminLogin from './pages/admin/AdminLogin';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import ManageTours from './pages/admin/ManageTours';
+import ManageHotels from './pages/admin/ManageHotels';
 import AdminSettings from './pages/admin/AdminSettings';
 import { AdminAuthProvider } from './context/AdminAuthContext';
 import AdminProtectedRoute from './components/AdminProtectedRoute';
@@ -44,6 +45,7 @@ const App: React.FC = () => {
           }>
             <Route index element={<AdminDashboard />} />
             <Route path="tours" element={<ManageTours />} />
+            <Route path="manage-hotels" element={<ManageHotels />} />
             <Route path="settings" element={<AdminSettings />} />
           </Route>
         </Routes>

@@ -9,6 +9,15 @@ export interface TourPackage {
   category: 'Family' | 'Honeymoon' | 'Adventure' | 'Cultural';
 }
 
+export interface Hotel {
+  id: string;
+  name: string;
+  location: string;
+  price: number;
+  description: string;
+  images: string[];
+}
+
 export interface Destination {
   name: string;
   tagline: string;

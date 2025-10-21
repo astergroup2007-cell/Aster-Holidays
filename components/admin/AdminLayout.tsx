@@ -24,6 +24,7 @@ const AdminLayout: React.FC = () => {
         <nav className="flex-1 px-4 py-6 space-y-2">
           <NavLink to="/admin" end className={({ isActive }) => `block px-4 py-2 rounded-md transition-colors ${isActive ? 'bg-primary' : 'hover:bg-gray-700'}`}>Dashboard</NavLink>
           <NavLink to="/admin/tours" className={({ isActive }) => `block px-4 py-2 rounded-md transition-colors ${isActive ? 'bg-primary' : 'hover:bg-gray-700'}`}>Manage Tours</NavLink>
+          <NavLink to="/admin/manage-hotels" className={({ isActive }) => `block px-4 py-2 rounded-md transition-colors ${isActive ? 'bg-primary' : 'hover:bg-gray-700'}`}>Manage Hotels</NavLink>
           <NavLink to="/admin/settings" className={({ isActive }) => `block px-4 py-2 rounded-md transition-colors ${isActive ? 'bg-primary' : 'hover:bg-gray-700'}`}>Settings</NavLink>
         </nav>
         <div className="p-4 border-t border-gray-700">

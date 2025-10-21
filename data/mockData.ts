@@ -1,4 +1,4 @@
-import type { TourPackage, Destination, Testimonial, Flight } from '../types';
+import type { TourPackage, Destination, Testimonial, Flight, Hotel } from '../types';
 
 export const destinations: Destination[] = [
   { name: 'Sikkim', tagline: 'Valley of Flowers', image: 'https://images.unsplash.com/photo-1593537975999-51c335b78f4a?q=80&w=1974&auto=format&fit=crop' },
@@ -106,5 +106,31 @@ export const flights: Flight[] = [
     duration: '3h 30m',
     stops: 1,
     price: 4800
+  }
+];
+
+// FIX: Added mock hotel data to be used for seeding the Firebase database.
+export const hotels: Hotel[] = [
+  {
+    id: 'hotel-1',
+    name: 'Hotel Aster Gangtok',
+    location: 'Tadong, Gangtok',
+    price: 1500,
+    description: 'Experience authentic Sikkimese hospitality at Hotel Aster Gangtok. Located in the prime Tadong area, our hotel offers a perfect blend of comfort and convenience, making it the ideal base for your Himalayan adventures.',
+    images: [
+      'https://i.ibb.co/cKSqXWVT/Whats-App-Image-2025-10-21-at-4-23-24-PM-1.jpg',
+      'https://i.ibb.co/5hDC4XrC/Whats-App-Image-2025-10-21-at-4-23-24-PM.jpg',
+      'https://i.ibb.co/jZ92Z3Th/Whats-App-Image-2025-10-21-at-4-23-25-PM.jpg',
+    ]
+  },
+  {
+    id: 'hotel-2',
+    name: 'The Elgin, Darjeeling',
+    location: 'Darjeeling, West Bengal',
+    price: 8000,
+    description: 'A luxury heritage hotel in Darjeeling, The Elgin is a celebration of the elegance and grace of the Colonial Era in the Queen of Hill Stations.',
+    images: [
+      'https://images.unsplash.com/photo-1544275223-c2472d2c1a85?q=80&w=1964&auto=format&fit=crop'
+    ]
   }
 ];
