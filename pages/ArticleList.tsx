@@ -19,7 +19,9 @@ const ArticleCard: React.FC<{ article: Article }> = ({ article }) => (
 
 const ArticleList: React.FC = () => {
     const [articles, setArticles] = useState<Article[]>([]);
+    const [filteredArticles, setFilteredArticles] = useState<Article[]>([]);
     const [loading, setLoading] = useState(true);
+    const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
         const fetchArticles = async () => {
@@ -27,6 +29,7 @@ const ArticleList: React.FC = () => {
             try {
                 const data = await getArticles();
                 setArticles(data);
+                setFilteredArticles(data);
             } catch (error) {
                 console.error("Failed to fetch articles:", error);
             } finally {
@@ -36,21 +39,59 @@ const ArticleList: React.FC = () => {
         fetchArticles();
     }, []);
 
+    useEffect(() => {
+        const lowercasedQuery = searchQuery.toLowerCase();
+        const filtered = articles.filter(article =>
+            article.title.toLowerCase().includes(lowercasedQuery) ||
+            article.content.toLowerCase().replace(/<[^>]*>?/gm, '').includes(lowercasedQuery)
+        );
+        setFilteredArticles(filtered);
+    }, [searchQuery, articles]);
+
+
     if (loading) {
         return <div className="text-center py-20">Loading articles...</div>;
     }
 
     return (
         <div className="container mx-auto px-6 py-12">
-            <h1 className="text-4xl font-bold font-heading text-secondary mb-8 text-center">Our Blog & Articles</h1>
+            <h1 className="text-4xl font-bold font-heading text-secondary mb-4 text-center">Our Blog & Articles</h1>
             <p className="text-center text-gray-600 max-w-2xl mx-auto mb-12">
                 Travel stories, tips, and insights from our experts.
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {articles.map(article => (
-                    <ArticleCard key={article.id} article={article} />
-                ))}
+
+            {/* Search Bar */}
+            <div className="mb-12 max-w-lg mx-auto">
+                <div className="relative">
+                    <span className="absolute inset-y-0 left-0 flex items-center pl-4">
+                        <svg className="w-5 h-5 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </span>
+                    <input
+                        type="text"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        placeholder="Search articles by keyword..."
+                        className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                        aria-label="Search articles"
+                    />
+                </div>
             </div>
+
+            {filteredArticles.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {filteredArticles.map(article => (
+                        <ArticleCard key={article.id} article={article} />
+                    ))}
+                </div>
+            ) : (
+                <div className="text-center py-10">
+                    <h3 className="text-xl font-semibold text-secondary">No Articles Found</h3>
+                    <p className="text-gray-500 mt-2">Try adjusting your search query to find what you're looking for.</p>
+                </div>
+            )}
         </div>
     );
 };
