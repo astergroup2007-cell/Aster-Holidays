@@ -1,4 +1,4 @@
-import type { Destination, TourPackage, Testimonial, Flight, Hotel, HotelBooking } from '../types';
+import type { Destination, TourPackage, Testimonial, Hotel, HotelBooking, Flight } from '../types';
 
 export const destinations: Destination[] = [
   { name: 'Sikkim', image: 'https://i.ibb.co/nMcwzgbf/1.png', tagline: 'Valley of Flowers' },
@@ -73,43 +73,44 @@ export const testimonials: Testimonial[] = [
     }
 ];
 
+// FIX: Add mock flight data to be used by the flight-related API functions.
 export const flights: Flight[] = [
-    {
-        id: 'fl-1',
-        airline: 'IndiGo',
-        airlineLogo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Indigo_logo.svg/200px-Indigo_logo.svg.png',
-        origin: 'DEL',
-        destination: 'BOM',
-        departureTime: '08:30',
-        arrivalTime: '10:45',
-        duration: '2h 15m',
-        price: 4500,
-        stops: 0
-    },
-    {
-        id: 'fl-2',
-        airline: 'Vistara',
-        airlineLogo: 'https://upload.wikimedia.org/wikipedia/en/thumb/8/82/Vistara_logo.svg/200px-Vistara_logo.svg.png',
-        origin: 'DEL',
-        destination: 'BOM',
-        departureTime: '10:00',
-        arrivalTime: '12:10',
-        duration: '2h 10m',
-        price: 5200,
-        stops: 0
-    },
-    {
-        id: 'fl-3',
-        airline: 'Air India',
-        airlineLogo: 'https://upload.wikimedia.org/wikipedia/en/thumb/d/d8/Air_India_logo.svg/200px-Air_India_logo.svg.png',
-        origin: 'DEL',
-        destination: 'BOM',
-        departureTime: '14:00',
-        arrivalTime: '17:50',
-        duration: '3h 50m',
-        price: 4800,
-        stops: 1
-    }
+  {
+    id: 'flight-1',
+    airline: 'IndiGo',
+    airlineLogo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/IndiGo_logo.svg/2560px-IndiGo_logo.svg.png',
+    origin: 'Delhi (DEL)',
+    destination: 'Mumbai (BOM)',
+    departureTime: '08:30',
+    arrivalTime: '10:45',
+    duration: '2h 15m',
+    stops: 0,
+    price: 4500
+  },
+  {
+    id: 'flight-2',
+    airline: 'Vistara',
+    airlineLogo: 'https://upload.wikimedia.org/wikipedia/en/thumb/9/9c/Vistara_logo.svg/2560px-Vistara_logo.svg.png',
+    origin: 'Delhi (DEL)',
+    destination: 'Mumbai (BOM)',
+    departureTime: '10:00',
+    arrivalTime: '12:10',
+    duration: '2h 10m',
+    stops: 0,
+    price: 5200
+  },
+  {
+    id: 'flight-3',
+    airline: 'Air India',
+    airlineLogo: 'https://upload.wikimedia.org/wikipedia/en/thumb/d/d8/Air_India_logo.svg/2560px-Air_India_logo.svg.png',
+    origin: 'Delhi (DEL)',
+    destination: 'Mumbai (BOM)',
+    departureTime: '11:45',
+    arrivalTime: '15:30',
+    duration: '3h 45m',
+    stops: 1,
+    price: 4800
+  }
 ];
 
 export const hotels: Hotel[] = [

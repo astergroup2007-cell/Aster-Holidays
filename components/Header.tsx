@@ -23,7 +23,6 @@ const Header: React.FC = () => {
         <nav className="hidden md:flex items-center space-x-6">
           <NavLink to="/" className={navLinkClass}>Home</NavLink>
           <NavLink to="/hotels" className={navLinkClass}>Packages</NavLink>
-          <NavLink to="/flights" className={navLinkClass}>Flights</NavLink>
           <NavLink to="/hotel-aster-gangtok" className={navLinkClass}>Our Hotel</NavLink>
           <NavLink to="/articles" className={navLinkClass}>Blog</NavLink>
         </nav>
@@ -75,7 +74,6 @@ const Header: React.FC = () => {
           <nav className="flex flex-col items-center space-y-4 py-4">
             <NavLink to="/" className={navLinkClass} onClick={() => setIsMenuOpen(false)}>Home</NavLink>
             <NavLink to="/hotels" className={navLinkClass} onClick={() => setIsMenuOpen(false)}>Packages</NavLink>
-            <NavLink to="/flights" className={navLinkClass} onClick={() => setIsMenuOpen(false)}>Flights</NavLink>
             <NavLink to="/hotel-aster-gangtok" className={navLinkClass} onClick={() => setIsMenuOpen(false)}>Our Hotel</NavLink>
             <NavLink to="/articles" className={navLinkClass} onClick={() => setIsMenuOpen(false)}>Blog</NavLink>
             <div className="border-t w-full my-2"></div>

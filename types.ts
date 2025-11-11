@@ -32,19 +32,6 @@ export interface User {
   password?: string; // Should be optional for security
 }
 
-export interface Flight {
-  id: string;
-  airline: string;
-  airlineLogo: string;
-  origin: string;
-  destination: string;
-  departureTime: string;
-  arrivalTime: string;
-  duration: string;
-  price: number;
-  stops: number;
-}
-
 export interface Hotel {
   id: string;
   name: string;
@@ -75,4 +62,18 @@ export interface Article {
   createdAt: string; // ISO string date
   tags: string[];
   slug: string; // for URL-friendly paths
+}
+
+// FIX: Add missing Flight interface to resolve type errors.
+export interface Flight {
+  id: string;
+  airline: string;
+  airlineLogo: string;
+  origin: string;
+  destination: string;
+  departureTime: string;
+  arrivalTime: string;
+  duration: string;
+  stops: number;
+  price: number;
 }

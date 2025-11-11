@@ -5,9 +5,7 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import HotelList from './pages/HotelList';
 import HotelDetails from './pages/HotelDetails';
-import FlightList from './pages/FlightList';
 import Booking from './pages/Booking';
-import FlightBooking from './pages/FlightBooking';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import PrivacyPolicy from './pages/PrivacyPolicy';
@@ -66,9 +64,7 @@ const App: React.FC = () => {
                     <Route path="/" element={<Home />} />
                     <Route path="/hotels" element={<HotelList />} />
                     <Route path="/hotel/:id" element={<HotelDetails />} />
-                    <Route path="/flights" element={<FlightList />} />
                     <Route path="/booking/:id" element={<ProtectedRoute><Booking /></ProtectedRoute>} />
-                    <Route path="/flight-booking/:id" element={<ProtectedRoute><FlightBooking /></ProtectedRoute>} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<Signup />} />
                     <Route path="/privacy-policy" element={<PrivacyPolicy />} />

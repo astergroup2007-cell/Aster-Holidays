@@ -46,8 +46,7 @@ const Footer: React.FC = () => {
         </div>
         
         <div className="flex justify-center flex-wrap gap-x-6 gap-y-2 mb-8 text-gray-300">
-            <Link to="/hotels" className="hover:text-primary transition-colors duration-300">Hotels</Link>
-            <Link to="/flights" className="hover:text-primary transition-colors duration-300">Flights</Link>
+            <Link to="/hotels" className="hover:text-primary transition-colors duration-300">Packages</Link>
             <Link to="/privacy-policy" className="hover:text-primary transition-colors duration-300">Privacy Policy</Link>
             <Link to="/terms-and-conditions" className="hover:text-primary transition-colors duration-300">Terms & Conditions</Link>
         </div>

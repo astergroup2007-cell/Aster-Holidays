@@ -27,12 +27,6 @@ const HotelIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
     </svg>
 );
 
-const AirplaneIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} {...props}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-    </svg>
-);
-
 // Helper components moved outside the main component to prevent re-creation on render
 const InputField: React.FC<{ id: string, label: string, type: string, value: string, onChange: (e: React.ChangeEvent<HTMLInputElement>) => void, placeholder?: string, required?: boolean, icon: React.ReactNode }> = 
 ({ id, label, type, value, onChange, placeholder, required = true, icon }) => (
@@ -75,56 +69,34 @@ const SelectField: React.FC<{ id: string, label: string, value: string, onChange
 );
 
 const SearchForm: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'hotels' | 'flights'>('hotels');
   const navigate = useNavigate();
 
-  // Hotel state
+  // Package search state
   const [destination, setDestination] = useState('');
   const [checkIn, setCheckIn] = useState('');
   const [checkOut, setCheckOut] = useState('');
   const [guests, setGuests] = useState('2 Guests');
 
-  // Flight state
-  const [origin, setOrigin] = useState('');
-  const [flightDestination, setFlightDestination] = useState('');
-  const [departureDate, setDepartureDate] = useState('');
-  const [returnDate, setReturnDate] = useState('');
-  const [passengers, setPassengers] = useState('1 Passenger, Economy');
-  const [isReturn, setIsReturn] = useState(true);
-
-  const handleHotelSearch = (e: React.FormEvent) => {
+  const handlePackageSearch = (e: React.FormEvent) => {
     e.preventDefault();
     navigate('/hotels');
   };
   
-  const handleFlightSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    navigate('/flights');
-  };
-  
   return (
     <div className="bg-white/80 backdrop-blur-lg p-6 rounded-2xl shadow-lg w-full transition-all duration-500">
-      {/* Tabs */}
+      {/* Static Header */}
       <div className="flex mb-6 border-b border-gray-200">
-        <button 
-          onClick={() => setActiveTab('hotels')}
-          className={`relative py-3 px-6 text-lg font-bold transition-colors duration-300 ${activeTab === 'hotels' ? 'text-secondary' : 'text-gray-500 hover:text-secondary'}`}
+        <div 
+          className="relative py-3 px-6 text-lg font-bold text-secondary"
         >
-          <span className="flex items-center gap-2"><HotelIcon />Hotels</span>
-          {activeTab === 'hotels' && <div className="absolute bottom-[-1px] left-0 w-full h-1 bg-primary rounded-full" />}
-        </button>
-        <button 
-          onClick={() => setActiveTab('flights')}
-          className={`relative py-3 px-6 text-lg font-bold transition-colors duration-300 ${activeTab === 'flights' ? 'text-secondary' : 'text-gray-500 hover:text-secondary'}`}
-        >
-          <span className="flex items-center gap-2"><AirplaneIcon />Flights</span>
-          {activeTab === 'flights' && <div className="absolute bottom-[-1px] left-0 w-full h-1 bg-primary rounded-full" />}
-        </button>
+          <span className="flex items-center gap-2"><HotelIcon />Packages</span>
+          <div className="absolute bottom-[-1px] left-0 w-full h-1 bg-primary rounded-full" />
+        </div>
       </div>
       
-      {/* Hotels Form */}
-      <div style={{ display: activeTab === 'hotels' ? 'block' : 'none' }}>
-        <form onSubmit={handleHotelSearch} className="space-y-4 animate-fade-in-up">
+      {/* Packages Form */}
+      <div>
+        <form onSubmit={handlePackageSearch} className="space-y-4 animate-fade-in-up">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <InputField id="destination" label="Destination" type="text" value={destination} onChange={(e) => setDestination(e.target.value)} placeholder="e.g. Goa, Manali..." icon={<LocationIcon />} />
             <SelectField id="guests" label="Guests" value={guests} onChange={(e) => setGuests(e.target.value)} icon={<UserIcon />}>
@@ -142,41 +114,9 @@ const SearchForm: React.FC = () => {
           <div className="pt-2">
             <button type="submit" className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-orange-500 to-primary text-white font-bold py-3.5 px-4 rounded-xl shadow-lg hover:shadow-xl hover:scale-[1.03] transform transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
               <HotelIcon />
-              <span>Search Hotels</span>
+              <span>Search Packages</span>
             </button>
           </div>
-        </form>
-      </div>
-
-
-      {/* Flights Form */}
-      <div style={{ display: activeTab === 'flights' ? 'block' : 'none' }}>
-         <form onSubmit={handleFlightSearch} className="space-y-4 animate-fade-in-up">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <InputField id="origin" label="From" type="text" value={origin} onChange={(e) => setOrigin(e.target.value)} placeholder="Origin" icon={<LocationIcon />} />
-              <InputField id="flight-destination" label="To" type="text" value={flightDestination} onChange={(e) => setFlightDestination(e.target.value)} placeholder="Destination" icon={<LocationIcon />} />
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-               <InputField id="departure-date" label="Departure" type="date" value={departureDate} onChange={(e) => setDepartureDate(e.target.value)} icon={<CalendarIcon />} />
-              {isReturn && (
-                 <InputField id="return-date" label="Return" type="date" value={returnDate} onChange={(e) => setReturnDate(e.target.value)} icon={<CalendarIcon />} />
-              )}
-            </div>
-            <SelectField id="passengers" label="Passengers & Class" value={passengers} onChange={(e) => setPassengers(e.target.value)} icon={<UserIcon />}>
-                <option>1 Passenger, Economy</option>
-                <option>2 Passengers, Economy</option>
-                <option>1 Passenger, Business</option>
-            </SelectField>
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
-                <label className="flex items-center space-x-2 text-gray-700 select-none cursor-pointer">
-                  <input type="checkbox" checked={isReturn} onChange={() => setIsReturn(!isReturn)} className="rounded text-primary focus:ring-primary/50 h-4 w-4" />
-                  <span>Return trip</span>
-                </label>
-                <button type="submit" className="w-full sm:w-auto flex items-center justify-center gap-2 bg-gradient-to-r from-orange-500 to-primary text-white font-bold py-3.5 px-8 rounded-xl shadow-lg hover:shadow-xl hover:scale-[1.03] transform transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
-                  <AirplaneIcon />
-                  <span>Search Flights</span>
-                </button>
-            </div>
         </form>
       </div>
     </div>

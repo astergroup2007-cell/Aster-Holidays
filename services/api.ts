@@ -12,8 +12,8 @@ import {
 } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
 
-import type { TourPackage, Flight, Hotel, HotelBooking, Article } from '../types';
-import { tourPackages, flights, hotels, hotelBookings } from '../data/mockData';
+import type { TourPackage, Hotel, HotelBooking, Article, Flight } from '../types';
+import { tourPackages, hotels, hotelBookings, flights } from '../data/mockData';
 
 // --- Local Storage Fallback for simpler setup ---
 // This part can be used if Firebase isn't fully configured
@@ -98,14 +98,22 @@ export const deleteTourPackage = async (id: string): Promise<void> => {
     await deleteDoc(doc(db, "tourPackages", id));
 };
 
-
-// --- Flights API --- (Likely to stay mock as flight APIs are complex)
+// --- Flights API ---
+// FIX: Add missing getFlights function to resolve API errors.
 export const getFlights = async (): Promise<Flight[]> => {
-    return Promise.resolve(flights);
+    if (useLocalStorage) return getFromStorage('flights', flights);
+    // Firebase implementation would go here
+    return Promise.resolve([]); // Fallback for firebase
 };
 
+// FIX: Add missing getFlightById function to resolve API errors.
 export const getFlightById = async (id: string): Promise<Flight | null> => {
-    return Promise.resolve(flights.find(f => f.id === id) || null);
+    if (useLocalStorage) {
+        const allFlights = getFromStorage('flights', flights);
+        return allFlights.find(flight => flight.id === id) || null;
+    }
+    // Firebase implementation would go here
+    return Promise.resolve(null); // Fallback for firebase
 };
 
 
