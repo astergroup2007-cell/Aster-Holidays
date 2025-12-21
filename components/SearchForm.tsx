@@ -27,43 +27,46 @@ const HotelIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
     </svg>
 );
 
-// Helper components moved outside the main component to prevent re-creation on render
 const InputField: React.FC<{ id: string, label: string, type: string, value: string, onChange: (e: React.ChangeEvent<HTMLInputElement>) => void, placeholder?: string, required?: boolean, icon: React.ReactNode }> = 
 ({ id, label, type, value, onChange, placeholder, required = true, icon }) => (
-  <div className="relative w-full">
-    <label htmlFor={id} className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
-    <div className="absolute left-3 bottom-3.5 text-gray-400 pointer-events-none">
-      {icon}
+  <div className="relative w-full group">
+    <label htmlFor={id} className="block text-xs md:text-sm font-bold text-gray-700 mb-1.5 uppercase tracking-wide px-1">{label}</label>
+    <div className="relative">
+      <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-primary transition-colors">
+        {icon}
+      </div>
+      <input
+        type={type}
+        id={id}
+        value={value}
+        onChange={onChange}
+        className="w-full pl-11 pr-4 py-3.5 md:py-4 bg-white border border-gray-200 rounded-2xl shadow-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-300 text-secondary placeholder:text-gray-400 font-medium"
+        placeholder={placeholder}
+        required={required}
+      />
     </div>
-    <input
-      type={type}
-      id={id}
-      value={value}
-      onChange={onChange}
-      className="w-full pl-10 pr-3 py-3 border border-gray-300 bg-white/75 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 text-gray-800 placeholder:text-gray-600"
-      placeholder={placeholder}
-      required={required}
-    />
   </div>
 );
 
 const SelectField: React.FC<{ id: string, label: string, value: string, onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void, icon: React.ReactNode, children: React.ReactNode }> = 
 ({ id, label, value, onChange, icon, children }) => (
-   <div className="relative w-full">
-    <label htmlFor={id} className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
-    <div className="absolute left-3 bottom-3.5 text-gray-400 pointer-events-none">
-      {icon}
-    </div>
-     <select
-      id={id}
-      value={value}
-      onChange={onChange}
-      className="w-full pl-10 pr-8 py-3 border border-gray-300 bg-white/75 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 appearance-none text-gray-800"
-    >
-      {children}
-    </select>
-     <div className="absolute right-4 bottom-4 text-gray-400 pointer-events-none">
-       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+   <div className="relative w-full group">
+    <label htmlFor={id} className="block text-xs md:text-sm font-bold text-gray-700 mb-1.5 uppercase tracking-wide px-1">{label}</label>
+    <div className="relative">
+      <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-primary transition-colors pointer-events-none z-10">
+        {icon}
+      </div>
+      <select
+        id={id}
+        value={value}
+        onChange={onChange}
+        className="w-full pl-11 pr-10 py-3.5 md:py-4 bg-white border border-gray-200 rounded-2xl shadow-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-300 appearance-none text-secondary font-medium cursor-pointer"
+      >
+        {children}
+      </select>
+      <div className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+      </div>
     </div>
   </div>
 );
@@ -71,7 +74,6 @@ const SelectField: React.FC<{ id: string, label: string, value: string, onChange
 const SearchForm: React.FC = () => {
   const navigate = useNavigate();
 
-  // Package search state
   const [destination, setDestination] = useState('');
   const [checkIn, setCheckIn] = useState('');
   const [checkOut, setCheckOut] = useState('');
@@ -83,42 +85,81 @@ const SearchForm: React.FC = () => {
   };
   
   return (
-    <div className="bg-white/80 backdrop-blur-lg p-6 rounded-2xl shadow-lg w-full transition-all duration-500">
-      {/* Static Header */}
-      <div className="flex mb-6 border-b border-gray-200">
-        <div 
-          className="relative py-3 px-6 text-lg font-bold text-secondary"
-        >
-          <span className="flex items-center gap-2"><HotelIcon />Packages</span>
-          <div className="absolute bottom-[-1px] left-0 w-full h-1 bg-primary rounded-full" />
+    <div className="bg-white/95 backdrop-blur-xl p-5 md:p-8 rounded-[2rem] shadow-2xl w-full max-w-5xl mx-auto border border-white/20">
+      <div className="flex items-center gap-3 mb-8 border-b border-gray-100 pb-4">
+        <div className="p-2.5 bg-primary/10 rounded-xl text-primary">
+          <HotelIcon />
+        </div>
+        <div>
+          <h2 className="text-xl md:text-2xl font-bold text-secondary">Find Your Package</h2>
+          <p className="text-xs md:text-sm text-gray-500 font-medium">Explore North East India with experts</p>
         </div>
       </div>
       
-      {/* Packages Form */}
-      <div>
-        <form onSubmit={handlePackageSearch} className="space-y-4 animate-fade-in-up">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <InputField id="destination" label="Destination" type="text" value={destination} onChange={(e) => setDestination(e.target.value)} placeholder="e.g. Goa, Manali..." icon={<LocationIcon />} />
-            <SelectField id="guests" label="Guests" value={guests} onChange={(e) => setGuests(e.target.value)} icon={<UserIcon />}>
-              <option>1 Guest</option>
-              <option>2 Guests</option>
-              <option>3 Guests</option>
-              <option>4 Guests</option>
-              <option>5+ Guests</option>
-            </SelectField>
+      <form onSubmit={handlePackageSearch} className="space-y-6 md:space-y-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
+          <InputField 
+            id="destination" 
+            label="Destination" 
+            type="text" 
+            value={destination} 
+            onChange={(e) => setDestination(e.target.value)} 
+            placeholder="Goa, Sikkim, Bhutan..." 
+            icon={<LocationIcon />} 
+          />
+          
+          <SelectField 
+            id="guests" 
+            label="Travelers" 
+            value={guests} 
+            onChange={(e) => setGuests(e.target.value)} 
+            icon={<UserIcon />}
+          >
+            <option>1 Guest</option>
+            <option>2 Guests</option>
+            <option>3 Guests</option>
+            <option>4 Guests</option>
+            <option>5+ Guests</option>
+          </SelectField>
+
+          <InputField 
+            id="check-in" 
+            label="Departure" 
+            type="date" 
+            value={checkIn} 
+            onChange={(e) => setCheckIn(e.target.value)} 
+            icon={<CalendarIcon />} 
+          />
+          
+          <InputField 
+            id="check-out" 
+            label="Return" 
+            type="date" 
+            value={checkOut} 
+            onChange={(e) => setCheckOut(e.target.value)} 
+            icon={<CalendarIcon />} 
+          />
+        </div>
+
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pt-2 border-t border-gray-100 mt-6">
+          <div className="hidden lg:flex items-center gap-4 text-gray-400">
+            <div className="flex -space-x-2">
+              {[1, 2, 3].map(i => (
+                <div key={i} className="w-8 h-8 rounded-full border-2 border-white bg-gray-200" />
+              ))}
+            </div>
+            <p className="text-xs font-semibold uppercase tracking-wider">+10k Happy Travelers</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <InputField id="check-in" label="Check-in" type="date" value={checkIn} onChange={(e) => setCheckIn(e.target.value)} icon={<CalendarIcon />} />
-            <InputField id="check-out" label="Check-out" type="date" value={checkOut} onChange={(e) => setCheckOut(e.target.value)} icon={<CalendarIcon />} />
-          </div>
-          <div className="pt-2">
-            <button type="submit" className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-orange-500 to-primary text-white font-bold py-3.5 px-4 rounded-xl shadow-lg hover:shadow-xl hover:scale-[1.03] transform transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
-              <HotelIcon />
-              <span>Search Packages</span>
-            </button>
-          </div>
-        </form>
-      </div>
+          
+          <button 
+            type="submit" 
+            className="w-full md:w-auto min-w-[200px] flex items-center justify-center gap-3 bg-gradient-to-r from-orange-500 to-primary text-white font-bold py-4 px-10 rounded-2xl shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-1 transform transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-primary/20 active:scale-95"
+          >
+            <span className="text-lg">Search Packages</span>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+          </button>
+        </div>
+      </form>
     </div>
   );
 };
